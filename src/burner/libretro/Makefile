@@ -584,6 +584,9 @@ else
 		# sadly, we can't use -Os for memory constrained systems here, the performance impact is too big
 		CFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
 		CXXFLAGS += -O3 -DNDEBUG -fomit-frame-pointer
+	else ifeq ($(platform), emscripten)
+		CFLAGS += -O3 -DNDEBUG
+		CXXFLAGS += -O3 -DNDEBUG
 	else
 		CFLAGS += -O2 -DNDEBUG
 		CXXFLAGS += -O2 -DNDEBUG
