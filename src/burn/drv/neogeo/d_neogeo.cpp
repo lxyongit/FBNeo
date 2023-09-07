@@ -15372,21 +15372,14 @@ static void sbpCallback()
 {
 	UINT16* ROM = (UINT16*)Neo68KROMActive;
 
-	for (INT32 i = 0x200 / 2; i < 0x2000 / 2; i++) {
-		UINT16 OrigData = ROM[i];
-		UINT16 Data =  BITSWAP16(OrigData, 11, 10, 9, 8, 15, 14, 13, 12, 3, 2, 1, 0, 7, 6, 5, 4);
-
-		if (i == 0xf5e) {
-			ROM[i] = OrigData;
-		} else {
-			ROM[i] = Data;
-		}
+	for (INT32 i = 0x1000; i < 0x1080; i++) {
+		Neo68KROMActive[i] = ((Neo68KROMActive[i] >> 4) & 0x0f) | ((Neo68KROMActive[i] << 4) & 0xf0);
 	}
 
-	// stop the game overwriting the text layer data
 	ROM[0x2a6f8 / 2] = 0x4e71;
 	ROM[0x2a6fa / 2] = 0x4e71;
 	ROM[0x2a6fc / 2] = 0x4e71;
+	ROM[0x3ff2d / 2] = 0x7001;
 
 	nNeoTextROMSize[nNeoActiveSlot] = 0x20000;
 }
@@ -15402,7 +15395,7 @@ struct BurnDriverD BurnDrvsbp = {
 	"sbp", NULL, "neogeo", NULL, "2004",
 	"Super Bubble Pop\0", NULL, "Vektorlogic", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_SPORTSMISC, 0,
 	NULL, sbpRomInfo, sbpRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	sbpInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
@@ -16733,6 +16726,40 @@ struct BurnDriver BurnDrvGaroub = {
 };
 
 
+// Karnov's Revenge / Fighter's History Dynamite - Revolution
+// https://gamehackfan.github.io/karnovre/
+
+static struct BurnRomInfo karnovreRomDesc[] = {
+	{ "066-p1kre.p1",	0x100000, 0x06b066a0, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "066-s1.s1",		0x020000, 0xbae5d5e5, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "066-c1.c1",		0x200000, 0x09dfe061, 3 | BRF_GRA },           //  2 Sprite data
+	{ "066-c2.c2",		0x200000, 0xe0f6682a, 3 | BRF_GRA },           //  3
+	{ "066-c3.c3",		0x200000, 0xa673b4f7, 3 | BRF_GRA },           //  4
+	{ "066-c4.c4",		0x200000, 0xcb3dc5f4, 3 | BRF_GRA },           //  5
+	{ "066-c5.c5",		0x200000, 0x9a28785d, 3 | BRF_GRA },           //  6
+	{ "066-c6.c6",		0x200000, 0xc15c01ed, 3 | BRF_GRA },           //  7
+
+	{ "066-m1.m1",		0x020000, 0x030beae4, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+
+	{ "066-v1.v1",		0x200000, 0x0b7ea37a, 5 | BRF_SND },           //  9 Sound data
+};
+
+STDROMPICKEXT(karnovre, karnovre, neogeo)
+STD_ROM_FN(karnovre)
+
+struct BurnDriver BurnDrvkarnovre = {
+	"karnovre", "karnovr", "neogeo", NULL, "2023",
+	"Karnov's Revenge / Fighter's History Dynamite (Revolution v0.1, Hack)\0", NULL, "GameHackFan", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, karnovreRomInfo, karnovreRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+
 // Idol Mahjong Final Romance 2 (Neo-Geo, bootleg of CD version)
 
 static struct BurnRomInfo froman2bRomDesc[] = {
@@ -17273,12 +17300,13 @@ struct BurnDriver BurnDrvsdodgebh = {
 
 // The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)
 // Modified by: GSC2007
-// Version number: Ver 1.1-FINAL
+// Version number: Ver 2.0-FINAL
+// GOTVG 20230802
 
 static struct BurnRomInfo lastbladspRomDesc[] = {
-	{ "234-p1sp.p1",	0x100000, 0xf8adc621, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "234-p2sp.sp2",	0x600000, 0x8ff3fb6d, 1 | BRF_ESS | BRF_PRG }, //  1
-	{ "234-p3sp.p3",	0x020000, 0x3c1770df, 1 | BRF_ESS | BRF_PRG }, //  2
+	{ "234-p1sp.p1",	0x100000, 0x264f191b, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "234-p2sp.sp2",	0x600000, 0x6e5914ce, 1 | BRF_ESS | BRF_PRG }, //  1
+	{ "234-p3sp.p3",	0x020000, 0xd6a50f04, 1 | BRF_ESS | BRF_PRG }, //  2
 
 	{ "234-s1.s1",		0x020000, 0x95561412, 2 | BRF_GRA },           //  3 Text layer tiles
 
@@ -17289,12 +17317,12 @@ static struct BurnRomInfo lastbladspRomDesc[] = {
 	{ "234-c5sp.c5",	0x400000, 0x4ea22fe0, 3 | BRF_GRA },           //  8
 	{ "234-c6sp.c6",	0x400000, 0xa863c882, 3 | BRF_GRA },           //  9
 
-	{ "234-m1.m1",		0x020000, 0x087628ea, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
+	{ "234-m1sp.m1",	0x020000, 0xb37b89e0, 4 | BRF_ESS | BRF_PRG }, // 10 Z80 code
 
 	{ "234-v1.v1",		0x400000, 0xed66b76f, 5 | BRF_SND },           // 11 Sound data
 	{ "234-v2.v2",		0x400000, 0xa0e7f6e2, 5 | BRF_SND },           // 12
 	{ "234-v3.v3",		0x400000, 0xa506e1e2, 5 | BRF_SND },           // 13
-	{ "234-v4.v4",		0x400000, 0x0e34157f, 5 | BRF_SND },           // 14
+	{ "234-v4sp.v4",	0x400000, 0xbb72113a, 5 | BRF_SND },           // 14
 };
 
 STDROMPICKEXT(lastbladsp, lastbladsp, neogeo)
@@ -17321,7 +17349,8 @@ static void LastbladspPatchCallback()
 		if (rom[i] == 0x4e7c) rom[i] = 0x4e75;
 	}
 
-	rom[0x11036 >> 1] = 0x4e75; // lbsp v1.1 fix, thanks HBMAME :)
+//	rom[0x11036 >> 1] = 0x4e75; // lbsp v1.1 fix, thanks HBMAME :)
+	rom[0x1102c >> 1] = 0x4e75; // lbsp v2.0 fix
 
 }
 
@@ -17336,7 +17365,7 @@ static INT32 LastbladspInit()
 }
 
 struct BurnDriver BurnDrvlastbladsp = {
-	"lastbladsp", "lastblad", "neogeo", NULL, "2017",
+	"lastbladsp", "lastblad", "neogeo", NULL, "2023",
 	"The Last Blade / Bakumatsu Roman - Gekka no Kenshi (Special 2017, hack)\0", NULL, "hack", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
@@ -20090,9 +20119,9 @@ static struct BurnRomInfo kof99tRomDesc[] = {
 
 	{ "251-s1jh.s1",	0x020000, 0x599f5fac, 0 | BRF_GRA },           // 18 Text layer tiles
 
-	/* Fluent and Refreshing - 20230520 */
-	{ "152-p1sk.p1",	0x100000, 0x50aba523, 0 | BRF_ESS | BRF_PRG }, // 19 68K code
-	{ "152-p2sk.sp2",	0x400000, 0x5acf1b01, 0 | BRF_ESS | BRF_PRG }, // 20
+	/* Fluent and Refreshing - 20230721 */
+	{ "152-p1sk.p1",	0x100000, 0x8106680b, 0 | BRF_ESS | BRF_PRG }, // 19 68K code
+	{ "152-p2sk.sp2",	0x400000, 0x6b99bd2f, 0 | BRF_ESS | BRF_PRG }, // 20
 
 	/* Full Decryption */
 	{ "152-p1.p1",		0x100000, 0xf2c7ddfa, 0 | BRF_ESS | BRF_PRG }, // 21 68K code
@@ -20126,8 +20155,7 @@ static void kof99tCallback()
 	RomDiffPatch(Neo68KROMActive + 0x000000, nIndex + 0, 0, 1);
 	RomDiffPatch(Neo68KROMActive + 0x100000, nIndex + 1, 0, 1);
 
-	if (VerSwitcher & 0x01)
-	{
+	if (VerSwitcher & 0x01) {
 		RomDiffPatch(NeoTextROM[nNeoActiveSlot], 18, 0, 1);
 		Kof99TimePatchCallback();
 	}
@@ -21536,8 +21564,8 @@ static struct BurnRomInfo mslugaksRomDesc[] = {
 	/* 1v2 Mode - 20230626 */
 	{ "201-p11v2.p1",	0x200000, 0x45822261, 1 | BRF_ESS | BRF_PRG }, //  9 68K code
 
-	/* Origins - 20230301 */
-	{ "201-p1qy.p1",	0x200000, 0x1226d6b8, 1 | BRF_ESS | BRF_PRG }, // 10 68K code
+	/* Origins - 20230819 */
+	{ "201-p1qy.p1",	0x200000, 0x9c39a144, 1 | BRF_ESS | BRF_PRG }, // 10 68K code
 };
 
 STDROMPICKEXT(mslugaks, mslugaks, neogeo)
@@ -22663,9 +22691,9 @@ struct BurnDriver BurnDrvmslug3cb = {
 // Metal Slug 3 (Modified by 合金弹头爱克斯, Hack)
 
 static struct BurnRomInfo mslug3aksRomDesc[] = {
-	/* Legendary - 20230612 */
-	{ "256-p1cq.p1",	0x100000, 0xa1d0a37a, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
-	{ "256-p2cq.sp2",	0x400000, 0x8585d898, 1 | BRF_ESS | BRF_PRG }, //  1
+	/* Legendary - 20230813 */
+	{ "256-p1cq.p1",	0x100000, 0x6449cc07, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+	{ "256-p2cq.sp2",	0x400000, 0x3fd5a93c, 1 | BRF_ESS | BRF_PRG }, //  1
 
 	{ "256-s1d.s1",		0x020000, 0x8458fff9, 2 | BRF_GRA },           //  2 Text layer tiles
 
@@ -25331,6 +25359,35 @@ struct BurnDriver BurnDrvngmontst = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
 	NULL, ngmontstRomInfo, ngmontstRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
+};
+
+// 240p Test Suite
+// https://artemiourbina.itch.io/240p-test-suite
+
+static struct BurnRomInfo testsuite240pRomDesc[] = {
+	{ "2501-p1.p1",    0x100000, 0x69196380, 1 | BRF_ESS | BRF_PRG }, //  0 68K code
+
+	{ "2501-s1.s1",    0x020000, 0x5023f1ee, 2 | BRF_GRA },           //  1 Text layer tiles
+
+	{ "2501-c1.c1",    0x100000, 0x1df22c5b, 3 | BRF_GRA },           //  2 Sprite data
+	{ "2501-c2.c2",    0x100000, 0x68fbb87d, 3 | BRF_GRA },           //  3
+
+	{ "2501-m1.m1",    0x010000, 0x25058131, 4 | BRF_ESS | BRF_PRG }, //  4 Z80 code
+
+	{ "2501-v1.v1",    0x080000, 0x74730639, 5 | BRF_SND },           //  5 Sound data
+};
+
+STDROMPICKEXT(testsuite240p, testsuite240p, neogeo)
+STD_ROM_FN(testsuite240p)
+
+struct BurnDriver BurnDrvtestsuite240p = {
+	"testsuite240p", NULL, "neogeo", NULL, "2023",
+	"240p Test Suite (v1.0)\0", NULL, "Artemio", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_MISC, 0,
+	NULL, testsuite240pRomInfo, testsuite240pRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
 	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
 	0x1000,	304, 224, 4, 3
 };

@@ -17832,8 +17832,27 @@ struct BurnDriver BurnDrvgg_sainttal = {
 	"gg_sainttal", NULL, NULL, NULL, "1996",
 	"Kaitou Saint Tale (Japan)\0", NULL, "Sega", "Sega Game Gear",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_RUNGUN, 0,
+	BDF_GAME_WORKING, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MINIGAMES | GBF_ADV, 0,
 	GGGetZipName, gg_sainttalRomInfo, gg_sainttalRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Kaitou Saint Tale (Hack, English)
+
+static struct BurnRomInfo gg_sainttaleRomDesc[] = {
+	{ "Kaitou Saint Tale T-Eng (2021)(Matt's Messy Room).gg",	540672, 0xa54621a4, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_sainttale)
+STD_ROM_FN(gg_sainttale)
+
+struct BurnDriver BurnDrvgg_sainttale = {
+	"gg_sainttale", "gg_sainttal", NULL, NULL, "2021",
+	"Kaitou Saint Tale (Hack, English)\0", NULL, "Matt's Messy Room", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_GAME_GEAR, GBF_MINIGAMES | GBF_ADV, 0,
+	GGGetZipName, gg_sainttaleRomInfo, gg_sainttaleRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -30453,6 +30472,25 @@ struct BurnDriver BurnDrvsms_sutoroku = {
 	256, 192, 4, 3
 };
 
+// Bishoujo Mahjong Puzzle (HB)
+
+static struct BurnRomInfo gg_bmpuzzleRomDesc[] = {
+	{ "Bishoujo Mahjong Puzzle (2022)(Habit Soft).gg",	262144, 0x57122381, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_bmpuzzle)
+STD_ROM_FN(gg_bmpuzzle)
+
+struct BurnDriver BurnDrvgg_bmpuzzle = {
+	"gg_bmpuzzle", NULL, NULL, NULL, "2022",
+	"Bishoujo Mahjong Puzzle (HB)\0", NULL, "Habit Soft", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_PUZZLE, 0,
+	GGGetZipName, gg_bmpuzzleRomInfo, gg_bmpuzzleRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // BitLogic a Cyberpunk Arcade Adventure (HB)
 
 static struct BurnRomInfo sms_bitlogicRomDesc[] = {
@@ -30548,10 +30586,29 @@ struct BurnDriver BurnDrvsms_leknievel = {
 	256, 192, 4, 3
 };
 
-// Monaco Master (HB, v2.9)
+// Line Runner (HB, v1.3)
+
+static struct BurnRomInfo sms_linerunnerRomDesc[] = {
+	{ "Line Runner v1.3 (2023)(Louis The SEGA Nerd).sms",	32768, 0x93f690b5, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_linerunner)
+STD_ROM_FN(sms_linerunner)
+
+struct BurnDriver BurnDrvsms_linerunner = {
+	"sms_linerunner", NULL, NULL, NULL, "2023",
+	"Line Runner (HB, v1.3)\0", NULL, "Louis The SEGA Nerd", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 2, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION, 0,
+	SMSGetZipName, sms_linerunnerRomInfo, sms_linerunnerRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Monaco Master (HB, v2.9.2)
 
 static struct BurnRomInfo sms_mcmasterRomDesc[] = {
-	{ "Monaco Master v2.9 (2023)(Louis The SEGA Nerd).sms",	65536, 0xdb0071cf, BRF_PRG | BRF_ESS },
+	{ "Monaco Master v2.9.2 (2023)(Louis The SEGA Nerd).sms",	81920, 0x355330b6, BRF_PRG | BRF_ESS },
 };
 
 STD_ROM_PICK(sms_mcmaster)
@@ -30559,10 +30616,10 @@ STD_ROM_FN(sms_mcmaster)
 
 struct BurnDriver BurnDrvsms_mcmaster = {
 	"sms_mcmaster", NULL, NULL, NULL, "2023",
-	"Monaco Master (HB, v2.9)\0", NULL, "Louis The SEGA Nerd", "Sega Master System",
+	"Monaco Master (HB, v2.9.2)\0", "YM2413 FM sound chip supported", "Louis The SEGA Nerd", "Sega Master System",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_ACTION | GBF_RACING, 0,
-	SMSGetZipName, sms_mcmasterRomInfo, sms_mcmasterRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSGetZipName, sms_mcmasterRomInfo, sms_mcmasterRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSFMDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };
@@ -30586,6 +30643,25 @@ struct BurnDriver BurnDrvgg_mcmastergg = {
 	256, 192, 4, 3
 };
 
+// Princess Gardening (HB)
+
+static struct BurnRomInfo gg_prgardenRomDesc[] = {
+	{ "Princess Gardening (2022)(Habit Soft).gg",	262144, 0x8129b269, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(gg_prgarden)
+STD_ROM_FN(gg_prgarden)
+
+struct BurnDriver BurnDrvgg_prgarden = {
+	"gg_prgarden", NULL, NULL, NULL, "2022",
+	"Princess Gardening (HB)\0", NULL, "Habit Soft", "Sega Game Gear",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_GAME_GEAR, GBF_ACTION | GBF_MAZE, 0,
+	GGGetZipName, gg_prgardenRomInfo, gg_prgardenRomName, NULL, NULL, NULL, NULL, SMSInputInfo, GGDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
 // Snappy Snorg and the Seven Silver Stones (GlobalHack, v1.4)
 
 static struct BurnRomInfo sms_snappysnorgRomDesc[] = {
@@ -30601,6 +30677,25 @@ struct BurnDriver BurnDrvsms_snappysnorg = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HOMEBREW | BDF_HACK, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_PLATFORM, 0,
 	SMSGetZipName, sms_snappysnorgRomInfo, sms_snappysnorgRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
+	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
+	256, 192, 4, 3
+};
+
+// Sub-Assault (HB, v1.4)
+
+static struct BurnRomInfo sms_subassaultRomDesc[] = {
+	{ "Sub-Assault v1.4 (2023)(Louis The SEGA Nerd).sms",	49152, 0x57234578, BRF_PRG | BRF_ESS },
+};
+
+STD_ROM_PICK(sms_subassault)
+STD_ROM_FN(sms_subassault)
+
+struct BurnDriver BurnDrvsms_subassault = {
+	"sms_subassault", NULL, NULL, NULL, "2023",
+	"Sub-Assault (HB, v1.4)\0", NULL, "Louis The SEGA Nerd", "Sega Master System",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_HOMEBREW, 1, HARDWARE_SEGA_MASTER_SYSTEM, GBF_SHOOT, 0,
+	SMSGetZipName, sms_subassaultRomInfo, sms_subassaultRomName, NULL, NULL, NULL, NULL, SMSInputInfo, SMSDIPInfo,
 	SMSInit, SMSExit, SMSFrame, SMSDraw, SMSScan, &SMSPaletteRecalc, 0x1E00,
 	256, 192, 4, 3
 };

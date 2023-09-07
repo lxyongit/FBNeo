@@ -1827,7 +1827,7 @@ static inline void NeoIRQUpdate(UINT16 wordValue)
 {
 	nIRQAcknowledge |= (wordValue & 7);
 
-//	bprintf(PRINT_NORMAL, _T("  - IRQ Ack -> %02X (at line %3i).\n"), nIRQAcknowledge, NeoCurrentScanline());
+	//bprintf(PRINT_NORMAL, _T("  - IRQ Ack -> %02X (at line %3i). data %x\n"), nIRQAcknowledge, NeoCurrentScanline(), wordValue);
 
 	if ((nIRQAcknowledge & 7) == 7) {
 		SekSetIRQLine(7, CPU_IRQSTATUS_NONE);
@@ -1846,9 +1846,9 @@ static inline void NeoIRQUpdate(UINT16 wordValue)
 
 static inline void NeoCDIRQUpdate(UINT8 byteValue)
 {
-	nIRQAcknowledge |= (byteValue & 0x38);
+	nIRQAcknowledge |= (byteValue & 0x3f);
 
-//	bprintf(PRINT_NORMAL, _T("  - IRQ Ack -> %02X (CD, at line %3i).\n"), nIRQAcknowledge, NeoCurrentScanline());
+	//bprintf(PRINT_NORMAL, _T("  - IRQ Ack -> %02X (CD, at line %3i) data %x.\n"), nIRQAcknowledge, NeoCurrentScanline(), byteValue);
 
 	if ((nIRQAcknowledge & 0x3F) == 0x3F) {
 		SekSetIRQLine(7, CPU_IRQSTATUS_NONE);
@@ -1947,8 +1947,9 @@ static UINT8 ReadInput3(INT32 nOffset)
 
 static UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 {
-	if (sekAddress >= 0x200000 && sekAddress <= 0x2fffff)
-		return ~0; // data from open bus should be read here
+	if ( (sekAddress >= 0x200000 && sekAddress <= 0x2fffff) ||
+		 (sekAddress & 0xf00000) == 0xd00000
+		) return ~0; // data from open bus should be read here
 
 	switch (sekAddress & 0xFE0000) {
 		case 0x300000:
@@ -1991,8 +1992,9 @@ static UINT8 __fastcall neogeoReadByte(UINT32 sekAddress)
 
 static UINT16 __fastcall neogeoReadWord(UINT32 sekAddress)
 {
-	if (sekAddress >= 0x200000 && sekAddress <= 0x2fffff)
-		return ~0; // data from open bus should be read here
+	if ( (sekAddress >= 0x200000 && sekAddress <= 0x2fffff) ||
+		 (sekAddress & 0xf00000) == 0xd00000
+		) return ~0; // data from open bus should be read here
 
 	switch (sekAddress & 0xFE0000) {
 		case 0x300000:
@@ -2388,7 +2390,7 @@ static void __fastcall neogeoWriteWordVideo(UINT32 sekAddress, UINT16 wordValue)
 		}
 
 		case 0x0C: {
-			NeoIRQUpdate(wordValue);
+			IsNeoGeoCD() ? NeoCDIRQUpdate(wordValue) : NeoIRQUpdate(wordValue);
 			break;
 		}
 	}
@@ -3162,13 +3164,6 @@ static void NeoCDReadSector()
 			NeoCDSectorLBA = CDEmuLoadSector(NeoCDSectorLBA, NeoCDSectorData) - 1;
 
 			if (LC8951RegistersW[10] & 0x80) {                                      // DECEN (sector decoder enabled)
-
-				if (nIRQControl & 0x10) {
-					// raster irq enabled while loading & decoding?  this bothers street hoops w/PR #1029
-					// recreate: disable this block :) boot, select demo, press X - loads insanely slow
-					bprintf(0, _T("NeoGeoCD: disabling raster irq while loading data from CD\n"));
-					nIRQControl &= ~0x10;
-				}
 
 				LC8951UpdateHeader();
 
@@ -4041,8 +4036,27 @@ static INT32 NeoInitCommon()
 	}
 
 	// Mapping extra rom.
-	if (bDoIpsPatch && (nIpsMemExpLen[EXTR_ROM] > 0))
+	// For ips
+	if (bDoIpsPatch && (nIpsMemExpLen[EXTR_ROM] > 0)) {
 		SekMapMemory(Neo68KROMActive + (nAllCodeSize - nIpsMemExpLen[EXTR_ROM]), 0x900000, 0x900000 + (nIpsMemExpLen[EXTR_ROM] - 1), MAP_ROM);
+	}
+	// For romdata
+	if ((NULL != pDataRomDesc) && (NULL != pRDI->szExtraRom))
+	{
+		UINT32 nRomLen = 0, nExtraRomLen = 0;
+		for (INT32 i = 0; i < pRDI->nDescCount; i++) {
+			if (1 == (pDataRomDesc[i].nType & 7)) {								// P Roms
+				nRomLen += pDataRomDesc[i].nLen;
+
+				if (0 == strcmp(pDataRomDesc[i].szName, pRDI->szExtraRom)) {	// Extra rom
+					nExtraRomLen = pDataRomDesc[i].nLen;
+				}
+			}
+		}
+		if ((nExtraRomLen > 0) && (nExtraRomLen < nRomLen)) {
+			SekMapMemory(Neo68KROMActive + (nRomLen - nExtraRomLen), 0x900000, 0x900000 + (nExtraRomLen - 1), MAP_ROM);
+		}
+	}
 
 	ZetClose();
 	SekClose();

@@ -13327,7 +13327,10 @@ static INT32 CkonggInit()
 	GalPostLoadCallbackFunction = CkonggPostLoad;
 	
 	nRet = GalInit();
-	
+
+	GalSet4WAY( 0, GalInputPort0 + 4, GalInputPort0 + 5, GalInputPort0 + 2, GalInputPort0 + 3 );
+	GalSet4WAY( 1, GalInputPort0 + 1, GalInputPort1 + 5, GalInputPort1 + 2, GalInputPort1 + 3 );
+
 	GalExtendSpriteInfoFunction = MshuttleExtendSpriteInfo;
 	
 	GalSpriteClipStart = 7;
@@ -13365,7 +13368,10 @@ static INT32 CkongmcInit()
 	GalPostLoadCallbackFunction = CkongmcPostLoad;
 	
 	nRet = GalInit();
-	
+
+	GalSet4WAY( 0, GalInputPort0 + 4, GalInputPort0 + 7, GalInputPort0 + 2, GalInputPort0 + 3 );
+	GalSet4WAY( 1, GalInputPort0 + 1, GalInputPort1 + 5, GalInputPort1 + 2, GalInputPort1 + 3 );
+
 	GalExtendSpriteInfoFunction = MshuttleExtendSpriteInfo;
 	
 	GalSpriteClipStart = 7;
@@ -15855,6 +15861,12 @@ static void FroggerEncGfxPostLoad()
 	MapFrogger();
 }
 
+static void Frogger4WayInit()
+{
+	GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+	GalSet4WAY( 1, GalInputPort0 + 0, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+}
+
 static INT32 FroggerEncGfxInit()
 {
 	INT32 nRet;
@@ -15864,6 +15876,8 @@ static INT32 FroggerEncGfxInit()
 
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
+
+	Frogger4WayInit();
 
 	GalScreenUnflipper = 1; // unflip coctail!
 
@@ -15901,6 +15915,10 @@ static INT32 FroggermcInit()
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
 
+	// different from other frogger sets
+	GalSet4WAY( 0, GalInputPort0 + 4, GalInputPort0 + 5, GalInputPort0 + 2, GalInputPort0 + 3 );
+	GalSet4WAY( 1, GalInputPort1 + 4, GalInputPort1 + 5, GalInputPort1 + 2, GalInputPort1 + 3 );
+
 	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalRenderBackgroundFunction = FroggerDrawBackground;
@@ -15920,6 +15938,8 @@ static INT32 FroggersInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
+
+	Frogger4WayInit();
 
 	GalScreenUnflipper = 1; // unflip coctail!
 	
@@ -15960,7 +15980,9 @@ static INT32 FrogfInit()
 
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
-	
+
+	Frogger4WayInit();
+
 	KonamiPPIInit();
 	
 	GalRenderBackgroundFunction = FroggerDrawBackground;
@@ -15987,7 +16009,9 @@ static INT32 FroggInit()
 	GalPostLoadCallbackFunction = FroggPostLoad;
 
 	nRet = GalInit();
-	
+
+	Frogger4WayInit();
+
 	GalRenderBackgroundFunction = FroggerDrawBackground;
 	GalExtendTileInfoFunction = FroggerExtendTileInfo;
 	GalExtendSpriteInfoFunction = FroggerExtendSpriteInfo;
@@ -16017,6 +16041,8 @@ static INT32 FroggrsInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	FroggerSoundInit();
+
+	Frogger4WayInit();
 
 	GalScreenUnflipper = 1; // unflip coctail!
 	
@@ -16433,6 +16459,9 @@ static INT32 TurtlesInit()
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
 
+	GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+	GalSet4WAY( 1, GalInputPort0 + 0, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+
 	GalScreenUnflipper = 1; // unflip coctail!
 	
 	GalRenderBackgroundFunction = TurtlesDrawBackground;
@@ -16462,7 +16491,10 @@ static INT32 TurpinsInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
-	
+
+	GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+	GalSet4WAY( 1, GalInputPort0 + 0, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+
 	GalRenderBackgroundFunction = TurtlesDrawBackground;
 	GalDrawBulletsFunction = NULL;
 	
@@ -18335,7 +18367,10 @@ static INT32 CkongsInit()
 	KonamiSoundInit();
 	
 	KonamiPPIInit();
-	
+
+	GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+	GalSet4WAY( 1, GalInputPort0 + 1, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+
 	GalExtendSpriteInfoFunction = MshuttleExtendSpriteInfo;
 	
 	GalSpriteClipStart = 7;
@@ -18407,7 +18442,10 @@ static INT32 DevilfshInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
-	
+
+	GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+	GalSet4WAY( 1, GalInputPort0 + 0, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+
 	GalNumChars = 0x100;
 	GalNumSprites = 0x40;
 	CharPlaneOffsets[1] = 0x8000;
@@ -18481,6 +18519,9 @@ static INT32 DevilfshgbInit()
 	GalPostLoadCallbackFunction = DevilfshgbRearrangeRom;
 
 	nRet = GalInit();
+
+	GalSet4WAY( 0, GalInputPort0 + 7, GalInputPort0 + 5, GalInputPort0 + 2, GalInputPort0 + 3 );
+	GalSet4WAY( 1, GalInputPort0 + 6, GalInputPort1 + 5, GalInputPort1 + 2, GalInputPort1 + 3 );
 
 	GalNumChars = 0x100;
 	GalNumSprites = 0x40;
@@ -19357,7 +19398,11 @@ static INT32 TriplepInit()
 	GalSoundSubType = 1; // diff. AY8910 clock
 
 	nRet = GalInit();
-	
+
+	// 4-way same as turtles / amidar
+	GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+	GalSet4WAY( 1, GalInputPort0 + 0, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
@@ -22150,6 +22195,18 @@ static INT32 ScobraInit()
 	return nRet;
 }
 
+static INT32 ArmorcarInit()
+{
+	INT32 rc = ScobraInit();
+
+	if (!rc) {
+		GalSet4WAY( 0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4 );
+		GalSet4WAY( 1, GalInputPort0 + 0, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4 );
+	}
+
+	return rc;
+}
+
 static INT32 ScobraeInit()
 {
 	INT32 nRet;
@@ -22274,7 +22331,10 @@ static INT32 AnteaterInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
-	
+
+	GalSet4WAY(0, GalInputPort0 + 2, GalInputPort0 + 3, GalInputPort0 + 5, GalInputPort0 + 4);
+	GalSet4WAY(1, GalInputPort1 + 2, GalInputPort1 + 3, GalInputPort1 + 5, GalInputPort1 + 4);
+
 	GalTempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	UINT8 *TempRom = (UINT8*)BurnMalloc(GalTilesSharedRomSize);
 	BurnLoadRom(TempRom + 0x0000, GAL_ROM_OFFSET_TILES_SHARED + 0, 1);
@@ -22347,7 +22407,10 @@ static INT32 AnteatergInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
-	
+
+	GalSet4WAY(0, GalInputPort0 + 4, GalInputPort0 + 6, GalInputPort2 + 5, GalInputPort2 + 4);
+	GalSet4WAY(1, GalInputPort2 + 0, GalInputPort0 + 0, GalInputPort1 + 5, GalInputPort1 + 4);
+
 	GalRenderBackgroundFunction = AnteaterDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
@@ -22401,7 +22464,10 @@ static INT32 AnteaterukInit()
 	
 	nRet = GalInit(); if (nRet) return 1;
 	KonamiSoundInit();
-	
+
+	GalSet4WAY(0, GalInputPort2 + 4, GalInputPort2 + 6, GalInputPort0 + 5, GalInputPort0 + 4);
+	GalSet4WAY(1, GalInputPort0 + 0, GalInputPort2 + 0, GalInputPort1 + 5, GalInputPort1 + 4);
+
 	GalRenderBackgroundFunction = ScrambleDrawBackground;
 	GalDrawBulletsFunction = ScrambleDrawBullets;
 	
@@ -23073,7 +23139,7 @@ struct BurnDriver BurnDrvArmorcar = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, ArmorcarRomInfo, ArmorcarRomName, NULL, NULL, NULL, NULL, AtlantisInputInfo, ArmorcarDIPInfo,
-	ScobraInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	ArmorcarInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
@@ -23083,7 +23149,7 @@ struct BurnDriver BurnDrvArmorcar2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_GALAXIAN, GBF_MAZE, 0,
 	NULL, Armorcar2RomInfo, Armorcar2RomName, NULL, NULL, NULL, NULL, AtlantisInputInfo, ArmorcarDIPInfo,
-	ScobraInit, KonamiExit, GalFrame, GalDraw, GalScan,
+	ArmorcarInit, KonamiExit, GalFrame, GalDraw, GalScan,
 	NULL, 392, 224, 256, 3, 4
 };
 
