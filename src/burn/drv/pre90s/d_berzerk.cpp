@@ -1496,11 +1496,11 @@ struct BurnDriver BurnDrvBerzerks = {
 // Frenzy (revision RA1)
 
 static struct BurnRomInfo frenzyRomDesc[] = {
-	{ "frenzy_ral_rom1.1d",		0x1000, 0xabdd25b8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
-	{ "frenzy_ral_rom2.3d",		0x1000, 0x536e4ae8, 1 | BRF_PRG | BRF_ESS }, //  1
-	{ "frenzy_ral_rom3.5d",		0x1000, 0x3eb9bc9b, 1 | BRF_PRG | BRF_ESS }, //  2
-	{ "frenzy_ral_rom4.6d",		0x1000, 0xe1d3133c, 1 | BRF_PRG | BRF_ESS }, //  3
-	{ "frenzy_ral_rom5.5c",		0x1000, 0x5581a7b1, 1 | BRF_PRG | BRF_ESS }, //  4
+	{ "frenzy_ra1_rom1.1d",		0x1000, 0xabdd25b8, 1 | BRF_PRG | BRF_ESS }, //  0 Z80 Code
+	{ "frenzy_ra1_rom2.3d",		0x1000, 0x536e4ae8, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "frenzy_ra1_rom3.5d",		0x1000, 0x3eb9bc9b, 1 | BRF_PRG | BRF_ESS }, //  2
+	{ "frenzy_ra1_rom4.6d",		0x1000, 0xe1d3133c, 1 | BRF_PRG | BRF_ESS }, //  3
+	{ "frenzy_ra1_rom5.5c",		0x1000, 0x5581a7b1, 1 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "e169-1cvo.1c",			0x0800, 0x2cfe825d, 2 | BRF_SND },           //  5 Speech Data
 	{ "e169-2cvo.2c",			0x0800, 0xd2b6324e, 2 | BRF_SND },           //  6
@@ -1517,7 +1517,7 @@ static INT32 FrenzyInit()
 }
 
 struct BurnDriver BurnDrvFrenzy = {
-	"frenzy", NULL, NULL, NULL, "1981",
+	"frenzy", NULL, NULL, NULL, "1982",
 	"Frenzy (revision RA1)\0", NULL, "Stern Electronics", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_MISC, 0,

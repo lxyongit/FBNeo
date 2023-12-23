@@ -112,7 +112,7 @@ extern "C" INT32 BurnLibInit()
 				pszFullName[i] = (wchar_t*)malloc(MAX_PATH * sizeof(wchar_t));
 
 				memset(pszShortName[i], '\0', 100 * sizeof(char));
-				memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
+				memset(pszFullName[i], '\0', MAX_PATH * sizeof(wchar_t));
 
 				if (NULL != pszShortName[i]) {
 					strcpy(pszShortName[i], pDriver[i]->szShortName);
@@ -120,7 +120,7 @@ extern "C" INT32 BurnLibInit()
 				}
 #if defined (_UNICODE)
 				if (NULL != pDriver[i]->szFullNameW) {
-					wcscpy(pszFullName[i], pDriver[i]->szFullNameW);
+					wmemcpy(pszFullName[i], pDriver[i]->szFullNameW, MAX_PATH);	// Include '\0'
 				}
 				pDriver[i]->szFullNameW = pszFullName[i];
 #endif
@@ -491,7 +491,7 @@ void BurnLocalisationSetName(char *szName, TCHAR *szLongName)
 		nBurnDrvActive = i;
 		if (!strcmp(szName, pDriver[i]->szShortName)) {
 //			pDriver[i]->szFullNameW = szLongName;
-			memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
+			memset(pszFullName[i], '\0', MAX_PATH * sizeof(wchar_t));
 			_tcscpy(pszFullName[i], szLongName);
 		}
 	}
@@ -506,10 +506,10 @@ void BurnLocalisationSetNameEx(char* szName, TCHAR* szLongName, INT32 nNumGames)
 	char szShortNames[100] = { 0 };
 	sprintf(szShortNames, "%s[0x%02x]", pDriver[nBurnDrvActive]->szShortName, nBurnDrvSubActive);
 
-	for (UINT32 i = 0; i < nNumGames; i++) {
+	for (INT32 i = 0; i < nNumGames; i++) {
 		if (0 == strcmp(szName, szShortNames)) {
 //			pDriver[nBurnDrvActive]->szFullNameW = szLongName;
-			memset(pszFullName[nBurnDrvActive], L'\0', MAX_PATH * sizeof(wchar_t));
+			memset(pszFullName[nBurnDrvActive], '\0', MAX_PATH * sizeof(wchar_t));
 			_tcscpy(pszFullName[nBurnDrvActive], szLongName);
 			return;
 		}
@@ -521,9 +521,9 @@ extern "C" INT32 BurnDrvGetIndex(char* szName)
 {
 	if (NULL == szName) return -1;
 
-	for (INT32 i = 0; i < nBurnDrvCount; i++) {
+	for (UINT32 i = 0; i < nBurnDrvCount; i++) {
 		if (0 == strcmp(szName, pDriver[i]->szShortName)) {
-			nBurnDrvActive = i;
+//			nBurnDrvActive = i;
 			return i;
 		}
 	}
@@ -549,7 +549,7 @@ extern "C" INT32 BurnDrvSetFullNameW(wchar_t* szName, INT32 i)
 	if ((-1 == i) || (NULL == szName)) return -1;
 
 #if defined (_UNICODE)
-	memset(pszFullName[i], L'\0', MAX_PATH * sizeof(wchar_t));
+	memset(pszFullName[i], '\0', MAX_PATH * sizeof(wchar_t));
 	wcscpy(pszFullName[i], szName);
 #endif
 
@@ -721,6 +721,18 @@ extern "C" INT32 BurnDrvGetGenreFlags()
 extern "C" INT32 BurnDrvGetFamilyFlags()
 {
 	return pDriver[nBurnDrvActive]->Family;
+}
+
+// Return sourcefile
+extern "C" char* BurnDrvGetSourcefile()
+{
+	char* szShortName = pDriver[nBurnDrvActive]->szShortName;
+	for (INT32 i = 0; sourcefile_table[i].game_name[0] != '\0'; i++) {
+		if (!strcmp(sourcefile_table[i].game_name, szShortName)) {
+			return sourcefile_table[i].sourcefile;
+		}
+	}
+	return "";
 }
 
 // Save Aspect & Screensize in BurnDrvInit(), restore in BurnDrvExit()

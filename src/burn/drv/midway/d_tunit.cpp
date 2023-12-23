@@ -581,7 +581,7 @@ static INT32 MkTturboInit()
 
 struct BurnDriver BurnDrvMktturbo = {
 	"mktturbo", "mk", NULL, NULL, "1992",
-	"Mortal Kombat (Turbo Ninja T-Unit 03/19/93, hack)\0", NULL, "Hack", "Midway T-Unit",
+	"Mortal Kombat (Turbo Ninja T-Unit 03/19/93, hack)\0", NULL, "hack", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, mktturboRomInfo, mktturboRomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
@@ -668,7 +668,7 @@ STD_ROM_FN(mk2r32e)
 
 struct BurnDriver BurnDrvMk2r32e = {
 	"mk2r32e", "mk2", NULL, NULL, "1993",
-	"Mortal Kombat II (rev L3.2 (European))\0", NULL, "Midway", "Midway T-Unit",
+	"Mortal Kombat II (rev L3.2, European)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, mk2r32eRomInfo, mk2r32eRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
@@ -708,7 +708,7 @@ STD_ROM_FN(mk2r31e)
 
 struct BurnDriver BurnDrvMk2r31e = {
 	"mk2r31e", "mk2", NULL, NULL, "1993",
-	"Mortal Kombat II (rev L3.1 (European))\0", NULL, "Midway", "Midway T-Unit",
+	"Mortal Kombat II (rev L3.1, European)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, mk2r31eRomInfo, mk2r31eRomName, NULL, NULL, NULL, NULL, Mk2InputInfo, Mk2DIPInfo,
@@ -1122,8 +1122,8 @@ static struct BurnRomInfo nbajamRomDesc[] = {
 	
 	{ "l2_nba_jam_u3_sound_rom.u3",				0x020000, 0x3a3ea480, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
 	
-	{ "nbau12.u12",								0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
-	{ "nbau13.u13",								0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1_nba_jam_u12_sound_rom.u12",			0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "l1_nba_jam_u13_sound_rom.u13",			0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "l1_nba_jam_game_rom_ug14.ug14",			0x080000, 0x04bb9f64, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
 	{ "l1_nba_jam_game_rom_uj14.uj14",			0x080000, 0xb34b7af3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
@@ -1172,8 +1172,8 @@ static struct BurnRomInfo nbajamr2RomDesc[] = {
 	
 	{ "l2_nba_jam_u3_sound_rom.u3",				0x020000, 0x3a3ea480, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
 	
-	{ "nbau12.u12",								0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
-	{ "nbau13.u13",								0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1_nba_jam_u12_sound_rom.u12",			0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "l1_nba_jam_u13_sound_rom.u13",			0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "l1_nba_jam_game_rom_ug14.ug14",			0x080000, 0x04bb9f64, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
 	{ "l1_nba_jam_game_rom_uj14.uj14",			0x080000, 0xb34b7af3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
@@ -1215,8 +1215,8 @@ static struct BurnRomInfo nbajamr1RomDesc[] = {
 	
 	{ "l2_nba_jam_u3_sound_rom.u3",				0x020000, 0x3a3ea480, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
 	
-	{ "nbau12.u12",								0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
-	{ "nbau13.u13",								0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
+	{ "l1_nba_jam_u12_sound_rom.u12",			0x080000, 0xb94847f1, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "l1_nba_jam_u13_sound_rom.u13",			0x080000, 0xb6fe24bd, 2 | BRF_PRG | BRF_ESS }, //  4
 
 	{ "l1_nba_jam_game_rom_ug14.ug14",			0x080000, 0x04bb9f64, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
 	{ "l1_nba_jam_game_rom_uj14.uj14",			0x080000, 0xb34b7af3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
@@ -1294,7 +1294,7 @@ static INT32 NbajamteInit()
 
 struct BurnDriver BurnDrvNbajamte = {
 	"nbajamte", NULL, NULL, NULL, "1994",
-	"NBA Jam TE (rev 4.0 3/23/94)\0", NULL, "Midway", "Midway T-Unit",
+	"NBA Jam Tournament Edition (rev 4.0 3/23/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING, 4, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamteRomInfo, nbajamteRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
@@ -1337,7 +1337,7 @@ STD_ROM_FN(nbajamte4)
 
 struct BurnDriver BurnDrvNbajamte4 = {
 	"nbajamte4", "nbajamte", NULL, NULL, "1994",
-	"NBA Jam TE (rev 4.0 3/03/94)\0", NULL, "Midway", "Midway T-Unit",
+	"NBA Jam Tournament Edition (rev 4.0 3/03/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamte4RomInfo, nbajamte4RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
@@ -1380,7 +1380,7 @@ STD_ROM_FN(nbajamte3)
 
 struct BurnDriver BurnDrvNbajamte3 = {
 	"nbajamte3", "nbajamte", NULL, NULL, "1994",
-	"NBA Jam TE (rev 3.0 3/04/94)\0", NULL, "Midway", "Midway T-Unit",
+	"NBA Jam Tournament Edition (rev 3.0 3/04/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamte3RomInfo, nbajamte3RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
@@ -1423,7 +1423,7 @@ STD_ROM_FN(nbajamte3a)
 
 struct BurnDriver BurnDrvNbajamte3a = {
 	"nbajamte3a", "nbajamte", NULL, NULL, "1994",
-	"NBA Jam TE (rev 3.0 2/26/94)\0", NULL, "Midway", "Midway T-Unit",
+	"NBA Jam Tournament Edition (rev 3.0 2/26/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamte3aRomInfo, nbajamte3aRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
@@ -1466,7 +1466,7 @@ STD_ROM_FN(nbajamte2)
 
 struct BurnDriver BurnDrvNbajamte2 = {
 	"nbajamte2", "nbajamte", NULL, NULL, "1994",
-	"NBA Jam TE (rev 2.1 2/06/94)\0", NULL, "Midway", "Midway T-Unit",
+	"NBA Jam Tournament Edition (rev 2.1 2/06/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamte2RomInfo, nbajamte2RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
@@ -1509,7 +1509,7 @@ STD_ROM_FN(nbajamte2a)
 
 struct BurnDriver BurnDrvNbajamte2a = {
 	"nbajamte2a", "nbajamte", NULL, NULL, "1994",
-	"NBA Jam TE (rev 2.0 1/28/94)\0", NULL, "Midway", "Midway T-Unit",
+	"NBA Jam Tournament Edition (rev 2.0 1/28/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamte2aRomInfo, nbajamte2aRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
@@ -1552,7 +1552,7 @@ STD_ROM_FN(nbajamte1)
 
 struct BurnDriver BurnDrvNbajamte1 = {
 	"nbajamte1", "nbajamte", NULL, NULL, "1994",
-	"NBA Jam TE (rev 1.0 1/17/94)\0", NULL, "Midway", "Midway T-Unit",
+	"NBA Jam Tournament Edition (rev 1.00 1/17/94)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamte1RomInfo, nbajamte1RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
@@ -1595,7 +1595,7 @@ STD_ROM_FN(nbajamten)
 
 struct BurnDriver BurnDrvNbajamten = {
 	"nbajamten", "nbajamte", NULL, NULL, "1995",
-	"NBA Jam T.E. Nani Edition (rev 5.2 8/11/95, prototype)\0", NULL, "Midway", "Midway T-Unit",
+	"NBA Jam Tournament Edition (Nani Edition, rev 5.2 8/11/95, prototype)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_PROTOTYPE, 4, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,
 	NULL, nbajamtenRomInfo, nbajamtenRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
@@ -1689,7 +1689,7 @@ static INT32 JdreddpInit()
 }
 
 struct BurnDriver BurnDrvJdreddp = {
-	"jdreddp", NULL, NULL, NULL, "1995",
+	"jdreddp", NULL, NULL, NULL, "1993",
 	"Judge Dredd (rev TA1 7/12/92, location test)\0", NULL, "Midway", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_PROTOTYPE, 3, HARDWARE_MIDWAY_TUNIT, GBF_MISC, 0,

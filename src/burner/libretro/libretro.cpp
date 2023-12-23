@@ -262,9 +262,110 @@ void retro_set_video_refresh(retro_video_refresh_t cb) { video_cb = cb; }
 void retro_set_audio_sample(retro_audio_sample_t) {}
 void retro_set_audio_sample_batch(retro_audio_sample_batch_t cb) { audio_batch_cb = cb; }
 
+static bool is_dipswitch_active(dipswitch_core_option *dip_option)
+{
+	bool active = true;
+
+	for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
+	{
+		dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
+
+		if (dip_value->cond_pgi != NULL)
+		{
+			if (dip_value->bdi.nFlags & 0x80)
+			{
+				active = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) != dip_value->nCondSetting;
+			}
+			else
+			{
+				active = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) == dip_value->nCondSetting;
+			}
+		}
+		return active;
+	}
+
+	return active;
+}
+
+static void set_dipswitches_visibility(void)
+{
+	struct retro_core_option_display option_display;
+
+	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
+	{
+		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
+
+		option_display.key = dip_option->option_name.c_str();
+		option_display.visible = is_dipswitch_active(dip_option);
+
+		environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY, &option_display);
+	}
+}
+
+// Update DIP switches value  depending of the choice the user made in core options
+static bool apply_dipswitches_from_variables()
+{
+	bool dip_changed = false;
+#if 0
+	HandleMessage(RETRO_LOG_INFO, "Apply DIP switches value from core options.\n");
+#endif
+	struct retro_variable var = {0};
+
+	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
+	{
+		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
+		if (!is_dipswitch_active(dip_option))
+			continue;
+
+		var.key = dip_option->option_name.c_str();
+		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false || !var.value)
+			continue;
+
+		for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
+		{
+			dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
+
+			if (dip_value->friendly_name.compare(var.value) != 0)
+				continue;
+
+			int old_nConst = dip_value->pgi->Input.Constant.nConst;
+
+			dip_value->pgi->Input.Constant.nConst = (dip_value->pgi->Input.Constant.nConst & ~dip_value->bdi.nMask) | (dip_value->bdi.nSetting & dip_value->bdi.nMask);
+			dip_value->pgi->Input.nVal = dip_value->pgi->Input.Constant.nConst;
+			if (dip_value->pgi->Input.pVal)
+				*(dip_value->pgi->Input.pVal) = dip_value->pgi->Input.nVal;
+
+			if (dip_value->pgi->Input.Constant.nConst == old_nConst)
+			{
+#if 0
+				HandleMessage(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - No change - '%s' '%s' [0x%02x]\n",
+				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
+#endif
+			}
+			else
+			{
+				dip_changed = true;
+#if 0
+				HandleMessage(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - Changed   - '%s' '%s' [0x%02x]\n",
+				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
+#endif
+			}
+		}
+	}
+
+	if (dip_changed)
+		set_dipswitches_visibility();
+
+	return dip_changed;
+}
+
 void retro_set_environment(retro_environment_t cb)
 {
 	environ_cb = cb;
+
+	struct retro_core_options_update_display_callback update_display_cb;
+	update_display_cb.callback = apply_dipswitches_from_variables;
+	environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_UPDATE_DISPLAY_CALLBACK, &update_display_cb);
 
 	// Subsystem (needs to be called now, or it won't work on command line)
 	static const struct retro_subsystem_rom_info subsystem_rom[] = {
@@ -394,6 +495,7 @@ static int create_variables_from_dipswitches()
 			std::replace( option_name.begin(), option_name.end(), ' ', '_');
 			std::replace( option_name.begin(), option_name.end(), '=', '_');
 			std::replace( option_name.begin(), option_name.end(), ':', '_');
+			std::replace( option_name.begin(), option_name.end(), '#', '_');
 
 			dip_option->option_name = SSTR( "fbneo-dipswitch-" << drvname << "-" << option_name.c_str() );
 
@@ -485,102 +587,6 @@ static int create_variables_from_dipswitches()
 	return 0;
 }
 
-static bool is_dipswitch_active(dipswitch_core_option *dip_option)
-{
-	bool active = true;
-
-	for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
-	{
-		dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
-
-		if (dip_value->cond_pgi != NULL)
-		{
-			if (dip_value->bdi.nFlags & 0x80)
-			{
-				active = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) != dip_value->nCondSetting;
-			}
-			else
-			{
-				active = (dip_value->cond_pgi->Input.Constant.nConst & dip_value->nCondMask) == dip_value->nCondSetting;
-			}
-		}
-		return active;
-	}
-
-	return active;
-}
-
-static void set_dipswitches_visibility(void)
-{
-	struct retro_core_option_display option_display;
-
-	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
-	{
-		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
-
-		option_display.key = dip_option->option_name.c_str();
-		option_display.visible = is_dipswitch_active(dip_option);
-
-		environ_cb(RETRO_ENVIRONMENT_SET_CORE_OPTIONS_DISPLAY, &option_display);
-	}
-}
-
-// Update DIP switches value  depending of the choice the user made in core options
-static bool apply_dipswitches_from_variables()
-{
-	bool dip_changed = false;
-#if 0
-	HandleMessage(RETRO_LOG_INFO, "Apply DIP switches value from core options.\n");
-#endif
-	struct retro_variable var = {0};
-
-	for (int dip_idx = 0; dip_idx < dipswitch_core_options.size(); dip_idx++)
-	{
-		dipswitch_core_option *dip_option = &dipswitch_core_options[dip_idx];
-		if (!is_dipswitch_active(dip_option))
-			continue;
-
-		var.key = dip_option->option_name.c_str();
-		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false || !var.value)
-			continue;
-
-		for (int dip_value_idx = 0; dip_value_idx < dip_option->values.size(); dip_value_idx++)
-		{
-			dipswitch_core_option_value *dip_value = &(dip_option->values[dip_value_idx]);
-
-			if (dip_value->friendly_name.compare(var.value) != 0)
-				continue;
-
-			int old_nConst = dip_value->pgi->Input.Constant.nConst;
-
-			dip_value->pgi->Input.Constant.nConst = (dip_value->pgi->Input.Constant.nConst & ~dip_value->bdi.nMask) | (dip_value->bdi.nSetting & dip_value->bdi.nMask);
-			dip_value->pgi->Input.nVal = dip_value->pgi->Input.Constant.nConst;
-			if (dip_value->pgi->Input.pVal)
-				*(dip_value->pgi->Input.pVal) = dip_value->pgi->Input.nVal;
-
-			if (dip_value->pgi->Input.Constant.nConst == old_nConst)
-			{
-#if 0
-				HandleMessage(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - No change - '%s' '%s' [0x%02x]\n",
-				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
-#endif
-			}
-			else
-			{
-				dip_changed = true;
-#if 0
-				HandleMessage(RETRO_LOG_INFO, "DIP switch at PTR: [%-10d] [0x%02x] -> [0x%02x] - Changed   - '%s' '%s' [0x%02x]\n",
-				dip_value->pgi->Input.pVal, old_nConst, dip_value->pgi->Input.Constant.nConst, dip_option->friendly_name.c_str(), dip_value->friendly_name, dip_value->bdi.nSetting);
-#endif
-			}
-		}
-	}
-
-	set_dipswitches_visibility();
-
-	return dip_changed;
-}
-
 static TCHAR* nl_remover(TCHAR* str)
 {
 	TCHAR* tmp = strdup(str);
@@ -619,6 +625,7 @@ static int create_variables_from_cheats()
 			std::replace( option_name.begin(), option_name.end(), ' ', '_');
 			std::replace( option_name.begin(), option_name.end(), '=', '_');
 			std::replace( option_name.begin(), option_name.end(), ':', '_');
+			std::replace( option_name.begin(), option_name.end(), '#', '_');
 			cheat_option->option_name = SSTR( "fbneo-cheat-" << num << "-" << drvname << "-" << option_name.c_str() );
 			cheat_option->num = num;
 			cheat_option->values.reserve(count);
@@ -639,9 +646,25 @@ static int create_variables_from_cheats()
 	return 0;
 }
 
+static int reset_cheats_from_variables()
+{
+	struct retro_variable var = {0};
+
+	for (int cheat_idx = 0; cheat_idx < cheat_core_options.size(); cheat_idx++)
+	{
+		cheat_core_option *cheat_option = &cheat_core_options[cheat_idx];
+
+		var.key = cheat_option->option_name.c_str();
+		var.value = cheat_option->default_value.c_str();
+		if (environ_cb(RETRO_ENVIRONMENT_SET_VARIABLE, &var) == false)
+			return 1;
+	}
+	return 0;
+}
+
 static int apply_cheats_from_variables()
 {
-	// It is also required to load cheats this after BurnDrvInit is called,
+	// It is also required to load cheats after BurnDrvInit is called,
 	// so there might be no way to avoid having 2 calls to this function...
 	ConfigCheatLoad();
 	bCheatsAllowed = true;
@@ -671,7 +694,7 @@ int InputSetCooperativeLevel(const bool bExclusive, const bool bForeGround) { re
 
 void Reinitialise(void)
 {
-	// Update the geometry, some games (sfiii2) and systems (megadrive) need it.
+	// Some drivers (megadrive, cps3, ...) call this function to update the geometry
 	BurnDrvGetFullSize(&nGameWidth, &nGameHeight);
 	nBurnPitch = nGameWidth * nBurnBpp;
 	struct retro_system_av_info av_info;
@@ -1140,6 +1163,9 @@ void retro_reset()
 	//        it can actually be "harmful" in other games (trackfld)
 	if (bIsNeogeoCartGame && BurnNvramSave(g_autofs_path) == 0 && path_is_valid(g_autofs_path))
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] EEPROM succesfully saved to %s\n", g_autofs_path);
+
+	// Cheats should be avoided while machine is initializing, reset them to default state before machine reset
+	reset_cheats_from_variables();
 
 	if (pgi_reset)
 	{
@@ -1793,7 +1819,13 @@ static bool retro_load_game_common()
 		// Create cheats core options
 		create_variables_from_cheats();
 
+		// Send core options to frontend
 		set_environment();
+
+		// Cheats should be avoided while machine is initializing, reset them to default state before boot
+		reset_cheats_from_variables();
+
+		// Apply core options
 		check_variables();
 
 		if (nFrameskipType > 1)
@@ -1923,8 +1955,6 @@ static bool retro_load_game_common()
 			goto end;
 		}
 
-		apply_cheats_from_variables();
-
 		// Initialization done
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] Driver %s was successfully started : game's full name is %s\n", g_driver_name, BurnDrvGetTextA(DRV_FULLNAME));
 	}
@@ -2018,7 +2048,7 @@ bool retro_load_game(const struct retro_game_info *info)
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem chf identified from parent folder\n");
 		if (strncmp(g_driver_name, "chf_", 4) != 0) prefix = "chf_";
 	}
-	if(strcmp(g_rom_parent_dir, "neocd")==0) {
+	if(strcmp(g_rom_parent_dir, "neocd")==0 || strncmp(g_driver_name, "neocd_", 6)==0) {
 		HandleMessage(RETRO_LOG_INFO, "[FBNeo] subsystem neocd identified from parent folder\n");
 		prefix = "";
 		nGameType = RETRO_GAME_TYPE_NEOCD;

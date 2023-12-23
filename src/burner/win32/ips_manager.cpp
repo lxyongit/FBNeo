@@ -339,7 +339,7 @@ void LoadIpsActivePatches()
 	INT32 nActivePatches = 0;
 
     if (fp) {
-		while (_fgetts(szLine, sizeof(szLine), fp)) {
+		while (_fgetts(szLine, MAX_PATH, fp)) {
 			INT32 nLen = _tcslen(szLine);
 
 			// Get rid of the linefeed at the end
@@ -1012,11 +1012,11 @@ static void DoPatchGame(const char* patch_name, char* game_name, UINT32 crc, UIN
 static UINT32 GetIpsDefineExpValue(char* szTmp)
 {
 	if (NULL == (szTmp = strtok(NULL, " \t\r\n")))
-		return 0;
+		return 0U;
 
 	INT32 nRet = 0;
 
-	if (     0 == strcmp(szTmp, "EXP_VALUE_001")) nRet = 0x0010000;
+	if      (0 == strcmp(szTmp, "EXP_VALUE_001")) nRet = 0x0010000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_002")) nRet = 0x0020000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_003")) nRet = 0x0030000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_004")) nRet = 0x0040000;
@@ -1040,6 +1040,7 @@ static UINT32 GetIpsDefineExpValue(char* szTmp)
 	else if (0 == strcmp(szTmp, "EXP_VALUE_600")) nRet = 0x6000000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_700")) nRet = 0x7000000;
 	else if (0 == strcmp(szTmp, "EXP_VALUE_800")) nRet = 0x8000000;
+	else if (EOF != (sscanf(szTmp, "%x", &nRet))) return nRet;
 
 	return nRet;
 }

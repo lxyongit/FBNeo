@@ -3007,7 +3007,7 @@ struct BurnDriver BurnDrvMysticrib = {
 	"mysticrib", "mysticri", NULL, NULL, "1992",
 	"Mystic Riders (bootleg?)\0", NULL, "Irem", "Irem M92",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M92, GBF_HORSHOOT, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M92, GBF_HORSHOOT, 0,
 	NULL, mysticribRomInfo, mysticribRomName, NULL, NULL, NULL, NULL, p2CommonInputInfo, MysticriDIPInfo,
 	mysticriInit, DrvExit, DrvFrame, DrvReDraw, DrvScan, &bRecalcPalette, 0x800,
 	320, 240, 4, 3
@@ -3038,7 +3038,7 @@ static struct BurnRomInfo gunforceRomDesc[] = {
 	{ "gf-da.ic8",			0x020000, 0x933ba935, 5 | BRF_SND },           // 14 Irem GA20 Samples
 
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 15 PLDs
-	{ "m92_-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 16
+	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 16
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 17
 	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 18
 	{ "m92_b-7h-.ic43",		0x000117, 0x5de0795b, 0 | BRF_OPT },           // 19
@@ -3164,8 +3164,8 @@ static struct BurnRomInfo uccopsRomDesc[] = {
 	{ "ucc_h1.ic27",		0x020000, 0x8d29bcd6, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "ucc_l1.ic38",		0x020000, 0xa8a402d8, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ucc_e-sh0.ic30",		0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "ucc_e-sl0.ic31",		0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ucc_e-sh0-.ic30",	0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "ucc_e-sl0-.ic31",	0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "uc_w38m.ic26",		0x080000, 0x130a40e5, 3 | BRF_GRA },           //  6 Background Tiles
 	{ "uc_w39m.ic25",		0x080000, 0xe42ca144, 3 | BRF_GRA },           //  7
@@ -3218,8 +3218,8 @@ static struct BurnRomInfo uccopsuRomDesc[] = {
 	{ "ucc_h1-g.ic27",		0x020000, 0x6b8ca2de, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "ucc_l1-g.ic38",		0x020000, 0x2bdec7dd, 1 | BRF_PRG | BRF_ESS }, //  3
 
-	{ "ucc_e-sh0.ic30",		0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
-	{ "ucc_e-sl0.ic31",		0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
+	{ "ucc_e-sh0-.ic30",	0x010000, 0xdf90b198, 2 | BRF_PRG | BRF_ESS }, //  4 V30 Code
+	{ "ucc_e-sl0-.ic31",	0x010000, 0x96c11aac, 2 | BRF_PRG | BRF_ESS }, //  5
 
 	{ "uc_w38m.ic26",		0x080000, 0x130a40e5, 3 | BRF_GRA },           //  6 Background Tiles
 	{ "uc_w39m.ic25",		0x080000, 0xe42ca144, 3 | BRF_GRA },           //  7
@@ -3451,7 +3451,7 @@ struct BurnDriver BurnDrvGunforc2 = {
 };
 
 
-// Geo Storm (Japan)
+// Geo Storm (Japan, 014 custom sound CPU)
 
 static struct BurnRomInfo geostormRomDesc[] = {
 	{ "a2_-h0-.ic37",		0x040000, 0x9be58d09, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
@@ -3487,7 +3487,7 @@ STD_ROM_FN(geostorm)
 
 struct BurnDriver BurnDrvGeostorm = {
 	"geostorm", "gunforc2", NULL, NULL, "1994",
-	"Geo Storm (Japan)\0", NULL, "Irem", "Irem M92",
+	"Geo Storm (Japan, 014 custom sound CPU)\0", NULL, "Irem", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M92, GBF_RUNGUN, 0,
 	NULL, geostormRomInfo, geostormRomName, NULL, NULL, NULL, NULL, p2CommonInputInfo, Gunforc2DIPInfo,
@@ -3496,7 +3496,7 @@ struct BurnDriver BurnDrvGeostorm = {
 };
 
 
-// Ninja Baseball Batman (World)
+// Ninja Baseball Bat Man (World)
 
 static struct BurnRomInfo nbbatmanRomDesc[] = {
 	{ "a1_-h0-c.ic34",		0x040000, 0x5c4a1e3f, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
@@ -3552,7 +3552,7 @@ static INT32 nbbatmanInit()
 
 struct BurnDriver BurnDrvNbbatman = {
 	"nbbatman", NULL, NULL, NULL, "1993",
-	"Ninja Baseball Batman (World)\0", NULL, "Irem", "Irem M92",
+	"Ninja Baseball Bat Man (World)\0", NULL, "Irem", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, nbbatmanRomInfo, nbbatmanRomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
@@ -3561,7 +3561,7 @@ struct BurnDriver BurnDrvNbbatman = {
 };
 
 
-// Ninja Baseball Batman (US)
+// Ninja Baseball Bat Man (US)
 
 static struct BurnRomInfo nbbatmanuRomDesc[] = {
 	{ "a1_-h0-a.ic34",		0x040000, 0x24a9b794, 1 | BRF_PRG | BRF_ESS }, //  0 V33 Code
@@ -3596,7 +3596,7 @@ STD_ROM_FN(nbbatmanu)
 
 struct BurnDriver BurnDrvNbbatmanu = {
 	"nbbatmanu", "nbbatman", NULL, NULL, "1993",
-	"Ninja Baseball Batman (US)\0", NULL, "Irem America", "Irem M92",
+	"Ninja Baseball Bat Man (US)\0", NULL, "Irem America", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 4, HARDWARE_IREM_M92, GBF_SCRFIGHT, 0,
 	NULL, nbbatmanuRomInfo, nbbatmanuRomName, NULL, NULL, NULL, NULL, nbbatmanInputInfo, NbbatmanDIPInfo,
@@ -3994,7 +3994,7 @@ static struct BurnRomInfo majtitl2RomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
-	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 
@@ -4015,7 +4015,7 @@ static INT32 majtitl2Init()
 
 struct BurnDriver BurnDrvMajtitl2 = {
 	"majtitl2", NULL, NULL, NULL, "1992",
-	"Major Title 2 (World)\0", NULL, "Irem", "Irem M92",
+	"Major Title 2 (World, set 1)\0", NULL, "Irem", "Irem M92",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_IREM_M92, GBF_SPORTSMISC, 0,
 	NULL, majtitl2RomInfo, majtitl2RomName, NULL, NULL, NULL, NULL, p4CommonInputInfo, Majtitl2DIPInfo,
@@ -4052,7 +4052,7 @@ static struct BurnRomInfo majtitl2bRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
-	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 
@@ -4151,7 +4151,7 @@ static struct BurnRomInfo majtitl2jRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
-	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 
@@ -4197,7 +4197,7 @@ static struct BurnRomInfo skingameRomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
-	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 
@@ -4243,7 +4243,7 @@ static struct BurnRomInfo skingame2RomDesc[] = {
 	{ "m92_a-3m-.ic11",		0x000117, 0xfc718efe, 0 | BRF_OPT },           // 16 PLDs
 	{ "m92_a-7j-.ic41",		0x000117, 0x5730b25a, 0 | BRF_OPT },           // 17
 	{ "m92_a-9j-.ic51",		0x000117, 0x92d477cf, 0 | BRF_OPT },           // 18
-	{ "m92_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
+	{ "mt2_b-2l-.ic7",		0x000117, 0x3bab14ee, 0 | BRF_OPT },           // 19
 	{ "m92_b-7h-d.ic47",	0x000117, 0x59d86225, 0 | BRF_OPT },           // 20
 };
 

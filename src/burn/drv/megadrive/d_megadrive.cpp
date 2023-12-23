@@ -1096,6 +1096,25 @@ struct BurnDriver BurnDrvmd_pstar2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Phantasy Star II Sound Engine Replacement (Hack)
+// https://www.romhacking.net/hacks/8043/
+static struct BurnRomInfo md_pstar2serRomDesc[] = {
+	{ "Phantasy Star II Sound Engine Replacement (2022)(wyatt8740).bin", 786432, 0x53018f1e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_pstar2ser)
+STD_ROM_FN(md_pstar2ser)
+
+struct BurnDriver BurnDrvmd_pstar2ser = {
+	"md_pstar2ser", "md_pstar2", NULL, NULL, "2022",
+	"Phantasy Star II Sound Engine Replacement (Hack)\0", NULL, "wyatt8740", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_pstar2serRomInfo, md_pstar2serRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Shining Force II (Euro)
 static struct BurnRomInfo md_shinfrc2RomDesc[] = {
 	{ "mpr-16933.ic1", 0x200000, 0x83cb46d1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -1204,6 +1223,24 @@ struct BurnDriver BurnDrvmd_sonic3 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Sonic the Hedgehog 3 (USA)
+static struct BurnRomInfo md_sonic3uRomDesc[] = {
+	{ "sonic the hedgehog 3 (usa).bin", 0x200000, 0x9bc192ce, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonic3u)
+STD_ROM_FN(md_sonic3u)
+
+struct BurnDriver BurnDrvmd_sonic3u = {
+	"md_sonic3u", "md_sonic3", NULL, NULL, "1994",
+	"Sonic the Hedgehog 3 (USA)\0", NULL, "Sega", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_FRAM, GBF_PLATFORM, FBF_SONIC,
+	MegadriveGetZipName, md_sonic3uRomInfo, md_sonic3uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Sonic the Hedgehog 3 (Japan, Korea)
 static struct BurnRomInfo md_sonic3jRomDesc[] = {
 	{ "mpr-16343.ic1", 0x200000, 0xf4951d1f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -1254,6 +1291,24 @@ struct BurnDriver BurnDrvmd_sonic3p2 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_FRAM, GBF_PLATFORM, FBF_SONIC,
 	MegadriveGetZipName, md_sonic3p2RomInfo, md_sonic3p2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic the Hedgehog 3 (Pirate)
+static struct BurnRomInfo md_sonic3pirRomDesc[] = {
+	{ "sonic the hedgehog 3 (pirate).bin", 0x200000, 0xc818f6fd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sonic3pir)
+STD_ROM_FN(md_sonic3pir)
+
+struct BurnDriver BurnDrvmd_sonic3pir = {
+	"md_sonic3pir", "md_sonic3", NULL, NULL, "199?",
+	"Sonic the Hedgehog 3 (Pirate)\0", NULL, "<unknown>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_FRAM, GBF_PLATFORM, FBF_SONIC,
+	MegadriveGetZipName, md_sonic3pirRomInfo, md_sonic3pirRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -2053,7 +2108,7 @@ struct BurnDriver BurnDrvmd_13mahjan = {
 	"md_13mahjan", NULL, NULL, NULL, "1998",
 	"13 Ma Jiang - 98 Mei Shao Nu Pian (China) (Unl)\0", NULL, "BBD", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MAHJONG, 0,
 	MegadriveGetZipName, md_13mahjanRomInfo, md_13mahjanRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -2071,7 +2126,7 @@ struct BurnDriver BurnDrvmd_16ton = {
 	"md_16ton", NULL, NULL, NULL, "1991",
 	"16 Ton (Japan, SegaNet)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_16tonRomInfo, md_16tonRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -2089,7 +2144,7 @@ struct BurnDriver BurnDrvmd_16tongnk = {
 	"md_16tongnk", "md_16ton", NULL, NULL, "1991",
 	"16 Ton (Japan, Game no Kandume MegaCD Rip)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_16tongnkRomInfo, md_16tongnkRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -2109,6 +2164,24 @@ struct BurnDriver BurnDrvmd_16zhan = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MAHJONG, 0,
 	MegadriveGetZipName, md_16zhanRomInfo, md_16zhanRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// 16 Zhang Mahjong II (Taiwan) (Unl)
+static struct BurnRomInfo md_16zhangmahRomDesc[] = {
+	{ "16 Zhang Mahjong II (Taiwan) (Unl).md", 1048576, 0xb4f4249f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_16zhangmah)
+STD_ROM_FN(md_16zhangmah)
+
+struct BurnDriver BurnDrvmd_16zhangmah = {
+	"md_16zhangmah", NULL, NULL, NULL, "199?",
+	"16 Zhang Mahjong II (Taiwan) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_16ZHANG, GBF_MAHJONG, 0,
+	MegadriveGetZipName, md_16zhangmahRomInfo, md_16zhangmahRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -2342,13 +2415,13 @@ struct BurnDriver BurnDrvmd_addfamv = {
 	"md_addfamv", NULL, NULL, NULL, "1994",
 	"Addams Family Values (Euro)\0", NULL, "Ocean", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_ADV, 0,
 	MegadriveGetZipName, md_addfamvRomInfo, md_addfamvRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// The Addams Family (USA, Prototype)
+// Addams Family, The (USA, Prototype)
 static struct BurnRomInfo md_addfamp1RomDesc[] = {
 	{ "addams family, the (usa) (beta).bin", 0x100000, 0x2803a5ca, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -4522,7 +4595,7 @@ struct BurnDriver BurnDrvmd_barney = {
 	"md_barney", NULL, NULL, NULL, "1993",
 	"Barney's Hide & Seek Game (USA)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
 	MegadriveGetZipName, md_barneyRomInfo, md_barneyRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -7243,7 +7316,7 @@ struct BurnDriver BurnDrvmd_chibim = {
 	"md_chibim", NULL, NULL, NULL, "1992",
 	"Chibi Maruko-chan - Wakuwaku Shopping (Japan)\0", NULL, "Namcot", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD, 0,
 	MegadriveGetZipName, md_chibimRomInfo, md_chibimRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -7297,7 +7370,7 @@ struct BurnDriver BurnDrvmd_chinesec = {
 	"md_chinesec", NULL, NULL, NULL, "199?",
 	"Chinese Chess (Taiwan) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY | GBF_BOARD, 0,
 	MegadriveGetZipName, md_chinesecRomInfo, md_chinesecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -7549,7 +7622,7 @@ struct BurnDriver BurnDrvmd_clue = {
 	"md_clue", NULL, NULL, NULL, "1992",
 	"Clue (USA)\0", NULL, "Parker Brothers", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 6, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY | GBF_QUIZ, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 6, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD | GBF_QUIZ, 0,
 	MegadriveGetZipName, md_clueRomInfo, md_clueRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -12880,7 +12953,7 @@ struct BurnDriver BurnDrvmd_fengkuan = {
 	"md_fengkuan", NULL, NULL, NULL, "1998",
 	"Feng Kuang Tao Hua Yuan (Taiwan) (Unl)\0", NULL, "Creaton Softech", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD, 0,
 	MegadriveGetZipName, md_fengkuanRomInfo, md_fengkuanRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -14382,6 +14455,25 @@ struct BurnDriver BurnDrvmd_goldnaxep2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Golden Axe Plus (Hack, v2.0)
+// https://www.romhacking.net/hacks/6949/
+static struct BurnRomInfo md_goldnaxeplusRomDesc[] = {
+	{ "Golden Axe Plus v2.0 (2022)(YoSoyNacho).bin", 2097152, 0x18f13b66, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_goldnaxeplus)
+STD_ROM_FN(md_goldnaxeplus)
+
+struct BurnDriver BurnDrvmd_goldnaxeplus = {
+	"md_goldnaxeplus", "md_goldnaxe", NULL, NULL, "2022",
+	"Golden Axe Plus (Hack, v2.0)\0", NULL, "YoSoyNacho", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_goldnaxeplusRomInfo, md_goldnaxeplusRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInitNoDebug, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Golden Axe II (World)
 static struct BurnRomInfo md_goldnax2RomDesc[] = {
 	{ "mpr-14272.bin", 0x080000, 0x725e0a18, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -15114,7 +15206,7 @@ struct BurnDriver BurnDrvmd_heitao = {
 	"md_heitao", NULL, NULL, NULL, "1996",
 	"Hei Tao 2 - Super Big 2 (China) (Unl)\0", NULL, "King Tec", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CARD, 0,
 	MegadriveGetZipName, md_heitaoRomInfo, md_heitaoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -15384,7 +15476,7 @@ struct BurnDriver BurnDrvmd_hyokkohj = {
 	"md_hyokkohj", NULL, NULL, NULL, "1992",
 	"Hyokkori Hyoutan Jima - Daitouryou o Mezase! (Japan)\0", NULL, "Sega", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD, 0,
 	MegadriveGetZipName, md_hyokkohjRomInfo, md_hyokkohjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -19022,7 +19114,7 @@ struct BurnDriver BurnDrvmd_mathblst = {
 	"md_mathblst", NULL, NULL, NULL, "1994",
 	"Math Blaster - Episode 1 (USA)\0", NULL, "Davidson & Associates", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SHOOT | GBF_QUIZ, 0,
 	MegadriveGetZipName, md_mathblstRomInfo, md_mathblstRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -20552,7 +20644,7 @@ struct BurnDriver BurnDrvmd_monopoly = {
 	"md_monopoly", NULL, NULL, NULL, "1992",
 	"Monopoly (USA)\0", NULL, "Parker Brothers", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 8, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 8, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD, 0,
 	MegadriveGetZipName, md_monopolyRomInfo, md_monopolyRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -20570,7 +20662,7 @@ struct BurnDriver BurnDrvmd_monopolyp = {
 	"md_monopolyp", "md_monopoly", NULL, NULL, "1992",
 	"Monopoly (USA, Prototype)\0", NULL, "Parker Brothers", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 8, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 8, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD, 0,
 	MegadriveGetZipName, md_monopolypRomInfo, md_monopolypRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -26366,7 +26458,7 @@ struct BurnDriver BurnDrvmd_qpoker = {
 	"md_qpoker", NULL, NULL, NULL, "199?",
 	"Queen of Poker Club (Taiwan)\0", NULL, "Sachen", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CARD, 0,
 	MegadriveGetZipName, md_qpokerRomInfo, md_qpokerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -29213,7 +29305,7 @@ struct BurnDriver BurnDrvmd_shougi = {
 	"md_shougi", NULL, NULL, NULL, "1991",
 	"Shougi no Hoshi (Japan)\0", NULL, "Home Data", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MAHJONG, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD | GBF_STRATEGY, 0,
 	MegadriveGetZipName, md_shougiRomInfo, md_shougiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -30675,42 +30767,6 @@ struct BurnDriver BurnDrvmd_sonic2p1 = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_PROTOTYPE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, FBF_SONIC,
 	MegadriveGetZipName, md_sonic2p1RomInfo, md_sonic2p1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Sonic the Hedgehog 3 (Pirate)
-static struct BurnRomInfo md_sonic3pirRomDesc[] = {
-	{ "sonic the hedgehog 3 (pirate).bin", 0x200000, 0xc818f6fd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sonic3pir)
-STD_ROM_FN(md_sonic3pir)
-
-struct BurnDriver BurnDrvmd_sonic3pir = {
-	"md_sonic3pir", "md_sonic3", NULL, NULL, "199?",
-	"Sonic the Hedgehog 3 (Pirate)\0", NULL, "<unknown>", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_FRAM, GBF_PLATFORM, FBF_SONIC,
-	MegadriveGetZipName, md_sonic3pirRomInfo, md_sonic3pirRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Sonic the Hedgehog 3 (USA)
-static struct BurnRomInfo md_sonic3uRomDesc[] = {
-	{ "sonic the hedgehog 3 (usa).bin", 0x200000, 0x9bc192ce, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sonic3u)
-STD_ROM_FN(md_sonic3u)
-
-struct BurnDriver BurnDrvmd_sonic3u = {
-	"md_sonic3u", "md_sonic3", NULL, NULL, "1994",
-	"Sonic the Hedgehog 3 (USA)\0", NULL, "Sega", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_FRAM, GBF_PLATFORM, FBF_SONIC,
-	MegadriveGetZipName, md_sonic3uRomInfo, md_sonic3uRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -33920,7 +33976,7 @@ struct BurnDriver BurnDrvmd_taiwan = {
 	"md_taiwan", NULL, NULL, NULL, "1994",
 	"Taiwan Daheng (Taiwan) (Unl)\0", NULL, "C&E", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE, GBF_MISC | GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 4, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD, 0,
 	MegadriveGetZipName, md_taiwanRomInfo, md_taiwanRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -41027,24 +41083,6 @@ struct BurnDriver BurnDrvmd_majiana = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// 16 Zhang Mahjong II (Taiwan) (Unl)
-static struct BurnRomInfo md_16zhangmahRomDesc[] = {
-	{ "16 Zhang Mahjong II (Taiwan) (Unl).md", 1048576, 0xb4f4249f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_16zhangmah)
-STD_ROM_FN(md_16zhangmah)
-
-struct BurnDriver BurnDrvmd_16zhangmah = {
-	"md_16zhangmah", NULL, NULL, NULL, "199?",
-	"16 Zhang Mahjong II (Taiwan) (Unl)\0", NULL, "<unlicensed>", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_16ZHANG, GBF_MAHJONG, 0,
-	MegadriveGetZipName, md_16zhangmahRomInfo, md_16zhangmahRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
 // Pokemon Stadium (China) (Unl)
 static struct BurnRomInfo md_pokestadRomDesc[] = {
 	{ "pokemon stadium (unl).bin", 0x200000, 0xfe187c5d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -41489,7 +41527,7 @@ struct BurnDriver BurnDrvmd_truco96 = {
 	"md_truco96", NULL, NULL, NULL, "1996",
 	"Truco '96 (Argentina) (Unl)\0", NULL, "Miky", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CARD, 0,
 	MegadriveGetZipName, md_truco96RomInfo, md_truco96RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -41657,7 +41695,7 @@ struct BurnDriver BurnDrvmd_sonicjam2 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Soul Edge vs Samurai Spirits (Pirate)
+// Soul Edge vs Samurai Spirits (Unl)
 static struct BurnRomInfo md_souledgeRomDesc[] = {
 	{ "soul edge vs samurai spirits (unl).bin", 0x200000, 0xb11bd611, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -41666,16 +41704,16 @@ STD_ROM_PICK(md_souledge)
 STD_ROM_FN(md_souledge)
 
 struct BurnDriver BurnDrvmd_souledge = {
-	"md_souledge", NULL, NULL, NULL, "199?",
-	"Soul Edge vs Samurai Spirits (Pirate)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	"md_souledge", NULL, NULL, NULL, "1998",
+	"Soul Edge vs Samurai Spirits (Unl)\0", NULL, "X Boy", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_souledgeRomInfo, md_souledgeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Soul Edge vs Samurai Spirits (Pirate, Cracked)
+// Soul Edge vs Samurai Spirits (Unl, Cracked)
 static struct BurnRomInfo md_souledgeaRomDesc[] = {
 	{ "soul edge vs samurai spirits (unl)[f1].bin", 0x200000, 0x74a6d7a7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -41684,10 +41722,10 @@ STD_ROM_PICK(md_souledgea)
 STD_ROM_FN(md_souledgea)
 
 struct BurnDriver BurnDrvmd_souledgea = {
-	"md_souledgea", "md_souledge", NULL, NULL, "199?",
-	"Soul Edge vs Samurai Spirits (Pirate, Cracked)\0", NULL, "<unlicensed>", "Sega Megadrive",
+	"md_souledgea", "md_souledge", NULL, NULL, "1998",
+	"Soul Edge vs Samurai Spirits (Unl, Cracked)\0", NULL, "X Boy", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_souledgeaRomInfo, md_souledgeaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -41711,7 +41749,7 @@ struct BurnDriver BurnDrvmd_smario2a = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Tetris (Pirate?)
+// Tetris (Unl)
 static struct BurnRomInfo md_tetris1RomDesc[] = {
 	{ "tetris.bin", 0x080000, 0xeb024ab2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -41721,7 +41759,7 @@ STD_ROM_FN(md_tetris1)
 
 struct BurnDriver BurnDrvmd_tetris1 = {
 	"md_tetris1", NULL, NULL, NULL, "199?",
-	"Tetris (Pirate?)\0", NULL, "<unknown>", "Sega Megadrive",
+	"Tetris (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_tetris1RomInfo, md_tetris1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -41729,7 +41767,7 @@ struct BurnDriver BurnDrvmd_tetris1 = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Voina Irak (Pirate)
+// Voina Irak (Unl)
 static struct BurnRomInfo md_virakRomDesc[] = {
 	{ "voina_irak.bin", 0x200000, 0xc7177e93, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -41739,7 +41777,7 @@ STD_ROM_FN(md_virak)
 
 struct BurnDriver BurnDrvmd_virak = {
 	"md_virak", NULL, NULL, NULL, "199?",
-	"Voina Irak (Pirate)\0", NULL, "<unknown>", "Sega Megadrive",
+	"Voina Irak (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_virakRomInfo, md_virakRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -41849,7 +41887,7 @@ struct BurnDriver BurnDrvmd_chess = {
 	"md_chess", NULL, NULL, NULL, "1998",
 	"Chess (Russia) (Unl)\0", NULL, "BSComp", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY, 0,
+	BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY | GBF_BOARD, 0,
 	MegadriveGetZipName, md_chessRomInfo, md_chessRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -41867,7 +41905,7 @@ struct BurnDriver BurnDrvmd_chessa = {
 	"md_chessa", "md_chess", NULL, NULL, "1998",
 	"Chess (Russia, Alt) (Unl)\0", NULL, "BSComp", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY | GBF_BOARD, 0,
 	MegadriveGetZipName, md_chessaRomInfo, md_chessaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -41885,7 +41923,7 @@ struct BurnDriver BurnDrvmd_chessb = {
 	"md_chessb", "md_chess", NULL, NULL, "1999",
 	"Chess (Russia, v1.05) (Unl)\0", NULL, "BSComp", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY, 0,
+	BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_STRATEGY | GBF_BOARD, 0,
 	MegadriveGetZipName, md_chessbRomInfo, md_chessbRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -42029,7 +42067,7 @@ struct BurnDriver BurnDrvmd_domino = {
 	"md_domino", NULL, NULL, NULL, "199?",
 	"Domino (Russia) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_BOARD | GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_dominoRomInfo, md_dominoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -43551,7 +43589,9 @@ struct BurnDriver BurnDrvmd_suploco = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// ------------------------------------------
 // -- Homebrew/Aftermarket additions below --
+// ------------------------------------------
 
 // 16-Bit Rhythm Land (HB)
 static struct BurnRomInfo md_16bitrhythmldRomDesc[] = {
@@ -43567,6 +43607,25 @@ struct BurnDriver BurnDrvmd_16bitrhythmld = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_16bitrhythmldRomInfo, md_16bitrhythmldRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// 240p Test Suite (HB, v1.23)
+// https://artemiourbina.itch.io/240p-test-suite
+static struct BurnRomInfo md_testsuite240pRomDesc[] = {
+	{ "240pSuite-1.23.bin", 262144, 0x439fe2f4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_testsuite240p)
+STD_ROM_FN(md_testsuite240p)
+
+struct BurnDriver BurnDrvmd_testsuite240p = {
+	"md_testsuite240p", NULL, NULL, NULL, "2022",
+	"240p Test Suite (HB, v1.23)\0", NULL, "Artemio", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_testsuite240pRomInfo, md_testsuite240pRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -43920,6 +43979,24 @@ struct BurnDriver BurnDrvmd_barbarianrk = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// BCD Verifier by Flamewing (HB, Test)
+static struct BurnRomInfo md_bcdverifierRomDesc[] = {
+	{ "bcd-verifier-u1.bin", 0x101bca, 0x0f9bbe9d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bcdverifier)
+STD_ROM_FN(md_bcdverifier)
+
+struct BurnDriver BurnDrvmd_bcdverifier = {
+	"md_bcdverifier", NULL, NULL, NULL, "2016",
+	"BCD Verifier (HB, Test)\0", NULL, "Flamewing", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	MegadriveGetZipName, md_bcdverifierRomInfo, md_bcdverifierRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Big's Fishing Derby (HB)
 static struct BurnRomInfo md_bigfdRomDesc[] = {
 	{ "bigfd.bin", 0x100000, 0xe1448457, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -44100,6 +44177,24 @@ struct BurnDriver BurnDrvmd_capoeira = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Cascade (HB) (Unl)
+static struct BurnRomInfo md_cascadeRomDesc[] = {
+	{ "cascade (world) (unl).md", 524288, 0xe7b287fe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_cascade)
+STD_ROM_FN(md_cascade)
+
+struct BurnDriver BurnDrvmd_cascade = {
+	"md_cascade", NULL, NULL, NULL, "2015",
+	"Cascade (HB) (Unl)\0", NULL, "Super Fighter Team", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_cascadeRomInfo, md_cascadeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Cave Story Doukutsu (HB, en, v0.8.0)
 // https://github.com/andwn/cave-story-md/releases/tag/v0.8.0
 static struct BurnRomInfo md_cavestoryRomDesc[] = {
@@ -44113,7 +44208,7 @@ struct BurnDriver BurnDrvmd_cavestory = {
 	"md_cavestory", NULL, NULL, NULL, "2022-02",
 	"Cave Story Doukutsu (HB, English, v0.8.0)\0", NULL, "Studio Pixel", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ADV, 0,
 	MegadriveGetZipName, md_cavestoryRomInfo, md_cavestoryRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -44131,7 +44226,7 @@ struct BurnDriver BurnDrvmd_cavestorys = {
 	"md_cavestorys", "md_cavestory", NULL, NULL, "2022-02",
 	"Cave Story Doukutsu (HB, Spanish, v0.8.0)\0", NULL, "Studio Pixel", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ADV, 0,
 	MegadriveGetZipName, md_cavestorysRomInfo, md_cavestorysRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -44149,7 +44244,7 @@ struct BurnDriver BurnDrvmd_cavestoryi = {
 	"md_cavestoryi", "md_cavestory", NULL, NULL, "2022-02",
 	"Cave Story Doukutsu (HB, Italian, v0.8.0)\0", NULL, "Studio Pixel", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ADV, 0,
 	MegadriveGetZipName, md_cavestoryiRomInfo, md_cavestoryiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -44167,7 +44262,7 @@ struct BurnDriver BurnDrvmd_cavestoryj = {
 	"md_cavestoryj", "md_cavestory", NULL, NULL, "2022-02",
 	"Cave Story Doukutsu (HB, Japanese, v0.8.0)\0", NULL, "Studio Pixel", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ADV, 0,
 	MegadriveGetZipName, md_cavestoryjRomInfo, md_cavestoryjRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -44185,7 +44280,7 @@ struct BurnDriver BurnDrvmd_doukutsuc = {
 	"md_cavestoryc", "md_cavestory", NULL, NULL, "2022-02",
 	"Cave Story Doukutsu (HB, Chinese, v0.8.0)\0", NULL, "Studio Pixel", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_ADV, 0,
 	MegadriveGetZipName, md_doukutsucRomInfo, md_doukutsucRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -44241,6 +44336,24 @@ struct BurnDriver BurnDrvmd_citadel = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
 	MegadriveGetZipName, md_citadelRomInfo, md_citadelRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// City Connection (HB)
+static struct BurnRomInfo md_cityconnectionRomDesc[] = {
+	{ "City Connection (J)(2023)(Habit Soft).bin", 524288, 0x5d21d023, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_cityconnection)
+STD_ROM_FN(md_cityconnection)
+
+struct BurnDriver BurnDrvmd_cityconnection = {
+	"md_cityconnection", NULL, NULL, NULL, "2023",
+	"City Connection (HB)\0", NULL, "Habit Soft", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_cityconnectionRomInfo, md_cityconnectionRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -44904,7 +45017,7 @@ STD_ROM_FN(md_jimpowerpiko)
 
 struct BurnDriver BurnDrvmd_jimpowerpiko = {
 	"md_jimpowerpiko", NULL, NULL, NULL, "2014",
-	"Jim Power - The Lost Dimension in 3D (HB)\0", "Original title by Loricel", "Piko Interactive", "Sega Megadrive",
+	"Jim Power - The Lost Dimension in 3D (HB)\0", "Originally developed by Loricel", "Piko Interactive", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
 	MegadriveGetZipName, md_jimpowerpikoRomInfo, md_jimpowerpikoRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -45017,6 +45130,24 @@ struct BurnDriver BurnDrvmd_littlemedusa = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
 	MegadriveGetZipName, md_littlemedusaRomInfo, md_littlemedusaRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mad Stalker - Full Metal Forth
+static struct BurnRomInfo md_madstalkerRomDesc[] = {
+	{ "Mad Stalker - Full Metal Forth.bin", 2097152, 0x64e7f1cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_madstalker)
+STD_ROM_FN(md_madstalker)
+
+struct BurnDriver BurnDrvmd_madstalker = {
+	"md_madstalker", NULL, NULL, NULL, "2020",
+	"Mad Stalker - Full Metal Forth\0", NULL, "Columbus Circle", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_madstalkerRomInfo, md_madstalkerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -45249,7 +45380,7 @@ struct BurnDriver BurnDrvmd_queenjour = {
 	"md_queenjour", NULL, NULL, NULL, "2019",
 	"Mega Queen Journey, The (HB)\0", NULL, "DnWn", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW | BDF_DEMO, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
 	MegadriveGetZipName, md_queenjourRomInfo, md_queenjourRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -45805,6 +45936,24 @@ struct BurnDriver BurnDrvmd_smsbrawl = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// Shylax (HB, v0.1)
+static struct BurnRomInfo md_shylaxRomDesc[] = {
+	{ "Shylax v0.1 (2023)(manu2097).bin", 1310720, 0xb29cf25d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shylax)
+STD_ROM_FN(md_shylax)
+
+struct BurnDriver BurnDrvmd_shylax = {
+	"md_shylax", NULL, NULL, NULL, "2023",
+	"Shylax (HB, v0.1)\0", NULL, "manu2097", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_shylaxRomInfo, md_shylaxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Smart Mouse (HB)
 static struct BurnRomInfo md_smartmouseRomDesc[] = {
 	{ "Smart Mouse (HB).bin", 524288, 0xfb01c832, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -46069,7 +46218,7 @@ struct BurnDriver BurnDrvmd_teenqueen = {
 	"md_teenqueen", NULL, NULL, NULL, "2006",
 	"Teenage Queen The Demo (HB)\0", NULL, "Spoutnick Team", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CARD, 0,
 	MegadriveGetZipName, md_teenqueenRomInfo, md_teenqueenRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -46159,7 +46308,7 @@ struct BurnDriver BurnDrvmd_tronow = {
 	"md_tronow", NULL, NULL, NULL, "2015",
 	"Tro-Now (HB)\0", NULL, "1985 - bitbitJAM", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 4, HARDWARE_SEGA_MEGADRIVE, GBF_MAZE | GBF_ACTION, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 4, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_tronowRomInfo, md_tronowRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -46381,135 +46530,9 @@ struct BurnDriver BurnDrvmd_zoomsecr = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// -- Prototype/Hack/Bootleg additions below --
-
-// Super Street Fighter II - The New Challengers (Hack, Color and Graphic)
-static struct BurnRomInfo md_ssf2cgRomDesc[] = {
-	{ "Super Street Fighter II (hack-2021).md", 5242880, 0xf390add2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_ssf2cg)
-STD_ROM_FN(md_ssf2cg)
-
-struct BurnDriver BurnDrvmd_ssf2cg = {
-	"md_ssf2cg", "md_ssf2", NULL, NULL, "2021",
-	"Super Street Fighter II - The New Challengers (Hack, Color and Graphic)\0", NULL, "Lord Hiryu", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_ssf2cgRomInfo, md_ssf2cgRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Street Fighter II' - Hyper Champion Edition (Hack, v2)
-static struct BurnRomInfo md_sf2hce2RomDesc[] = {
-	{ "Street Fighter II' - Hyper Champion Edition (hack-2021).md", 3145728, 0xe5c620a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sf2hce2)
-STD_ROM_FN(md_sf2hce2)
-
-struct BurnDriver BurnDrvmd_sf2hce2 = {
-	"md_sf2hce2", "md_sf2", NULL, NULL, "2020-21",
-	"Street Fighter II' - Hyper Champion Edition (Hack, v2)\0", NULL, "Lord Hiryu", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2hce2RomInfo, md_sf2hce2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Street Fighter II' - The World Warrior Plus (Hack)
-static struct BurnRomInfo md_sf2wwpRomDesc[] = {
-	{ "Street Fighter II' - World Warrior Plus (hack-2021).md", 3145728, 0x8fad3a36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sf2wwp)
-STD_ROM_FN(md_sf2wwp)
-
-struct BurnDriver BurnDrvmd_sf2wwp = {
-	"md_sf2wwp", "md_sf2", NULL, NULL, "2021",
-	"Street Fighter II' - The World Warrior Plus (Hack)\0", NULL, "Lord Hiryu", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2wwpRomInfo, md_sf2wwpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Thunderbolt II (Prototype) (Unl)
-static struct BurnRomInfo md_tbolt2RomDesc[] = {
-	{ "thunderbolt ii.bin", 0x80000, 0xd5fcc49f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tbolt2)
-STD_ROM_FN(md_tbolt2)
-
-struct BurnDriver BurnDrvmd_tbolt2 = {
-	"md_tbolt2", NULL, NULL, NULL, "1995",
-	"Thunderbolt II (Prototype) (Unl)\0", NULL, "SUN GREEN", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SMOUSE, GBF_VERSHOOT, 0,
-	MegadriveGetZipName, md_tbolt2RomInfo, md_tbolt2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Thunderbolt II (Prototype, Alt) (Unl)
-static struct BurnRomInfo md_tbolt2aRomDesc[] = {
-	{ "Thunderbolt II (Unl) [f1].bin", 0x80000, 0xa2ef16de, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tbolt2a)
-STD_ROM_FN(md_tbolt2a)
-
-struct BurnDriver BurnDrvmd_tbolt2a = {
-	"md_tbolt2a", NULL, NULL, NULL, "1995",
-	"Thunderbolt II (Prototype, Alt) (Unl)\0", NULL, "SUN GREEN", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
-	MegadriveGetZipName, md_tbolt2aRomInfo, md_tbolt2aRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Ultimate Mortal Kombat Trilogy (Hack, rev.5149)
-static struct BurnRomInfo md_umk3tRomDesc[] = {
-	{ "UMKT_5149.bin", 0xA00000, 0x1d9d2eba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_umk3t)
-STD_ROM_FN(md_umk3t)
-
-struct BurnDriver BurnDrvmd_umk3t = {
-	"md_umk3t", NULL, NULL, NULL, "2017",
-	"Ultimate Mortal Kombat Trilogy (Hack, rev.5149)\0", NULL, "KABAL_MK", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_umk3tRomInfo, md_umk3tRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Rock n' Roll Racing (Hack v16 By Ti)
-static struct BurnRomInfo md_rnrracinhRomDesc[] = {
-	{ "Rock n Roll Racing Hack v16.bin", 0x200000, 0x676e3039, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_rnrracinh)
-STD_ROM_FN(md_rnrracinh)
-
-struct BurnDriver BurnDrvmd_rnrracinh = {
-	"md_rnrracinh", "md_rnrracin", NULL, NULL, "2020",
-	"Rock n' Roll Racing (Hack, v16)\0", NULL, "Ti", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
-	MegadriveGetZipName, md_rnrracinhRomInfo, md_rnrracinhRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
+// ------------------------------
 // -- Sonic Hacks from Combone --
+// ------------------------------
 
 // Sonic the Hedgehog 3 in 1 (Compilation By vladikcomper)
 static struct BurnRomInfo md_sonic31RomDesc[] = {
@@ -46889,7 +46912,8 @@ struct BurnDriver BurnDrvmd_s3ktc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Sonic the Hedgehog 3 Complete (Hack by Tiddles)
+// Sonic the Hedgehog 3 Complete (Hack)
+// https://www.romhacking.net/hacks/1056/
 static struct BurnRomInfo md_s3compRomDesc[] = {
 	{ "S3Complete.bin", 0x3C0000, 0x2BD564B1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
@@ -46903,6 +46927,519 @@ struct BurnDriver BurnDrvmd_s3comp = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, FBF_SONIC,
 	MegadriveGetZipName, md_s3compRomInfo, md_s3compRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sonic the Hedgehog 3 Complete - Emerald Safari (Hack)
+// https://www.romhacking.net/hacks/8242/
+static struct BurnRomInfo md_s3compesRomDesc[] = {
+	{ "Sonic 3 Complete - Emerald Safari (2023)(BillyTime! Games).bin", 3932160, 0xaf6088b1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_s3compes)
+STD_ROM_FN(md_s3compes)
+
+struct BurnDriver BurnDrvmd_s3compes = {
+	"md_s3compes", "md_sks3", NULL, NULL, "2023",
+	"Sonic the Hedgehog 3 Complete - Emerald Safari (Hack)\0", NULL, "BillyTime! Games", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_FRAM, GBF_PLATFORM, FBF_SONIC,
+	MegadriveGetZipName, md_s3compesRomInfo, md_s3compesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+
+// --------------------------------------------
+// -- Prototype/Hack/Bootleg additions below --
+// --------------------------------------------
+
+
+// Art of Fighting (Hack, Enhanced Colors)
+// http://www.romhacking.net/hacks/2394/
+static struct BurnRomInfo md_aofecRomDesc[] = {
+	{ "art of fighting (enhanced colors).md", 2097152, 0xf28b2502, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aofec)
+STD_ROM_FN(md_aofec)
+
+struct BurnDriver BurnDrvmd_aofec = {
+	"md_aofec", "md_aof", NULL, NULL, "2015",
+	"Art of Fighting (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_aofecRomInfo, md_aofecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Art of Fighting Upgrade (Hack)
+// https://www.romhacking.net/hacks/8085/
+static struct BurnRomInfo md_aofupgRomDesc[] = {
+	{ "Art of Fighting Upgrade (2023)(BillyTime! Games).bin", 2097152, 0x912d59ee, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aofupg)
+STD_ROM_FN(md_aofupg)
+
+struct BurnDriver BurnDrvmd_aofupg = {
+	"md_aofupg", "md_aof", NULL, NULL, "2023",
+	"Art of Fighting Upgrade (Hack)\0", NULL, "BillyTime! Games", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_aofupgRomInfo, md_aofupgRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Back to the Future Part III (Hack, Color Fix)
+// https://www.romhacking.net/hacks/4792/
+static struct BurnRomInfo md_backtof3cfRomDesc[] = {
+	{ "back to the future part iii (color fix).md", 524288, 0x51f67e2f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_backtof3cf)
+STD_ROM_FN(md_backtof3cf)
+
+struct BurnDriver BurnDrvmd_backtof3cf = {
+	"md_backtof3cf", "md_backtof3", NULL, NULL, "2019",
+	"Back to the Future Part III (Hack, Color Fix)\0", NULL, "Greg Kennedy", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_backtof3cfRomInfo, md_backtof3cfRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Bahamut Senki (Hack, English)
+// https://www.romhacking.net/translations/5574/
+static struct BurnRomInfo md_bahamutseRomDesc[] = {
+	{ "bahamut senki (j)(t-eng).bin", 1048576, 0x89383a55, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bahamutse)
+STD_ROM_FN(md_bahamutse)
+
+struct BurnDriver BurnDrvmd_bahamutse = {
+	"md_bahamutse", "md_bahamuts", NULL, NULL, "2020",
+	"Bahamut Senki (Hack, English)\0", NULL, "Supper", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
+	MegadriveGetZipName, md_bahamutseRomInfo, md_bahamutseRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Bare Knuckle III (Hack By Twilight Translations)
+// Source: https://www.romhacking.net/translations/1375/
+static struct BurnRomInfo md_bk3eRomDesc[] = {
+	{ "bare knuckle iii (english translation).bin", 0x300000, 0x68917751, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bk3e)
+STD_ROM_FN(md_bk3e)
+
+struct BurnDriver BurnDrvmd_bk3e = {
+	"md_bk3e", "md_sor3", NULL, NULL, "2009",
+	"Bare Knuckle III (Hack, English)\0", NULL, "Twilight Transaltions", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_bk3eRomInfo, md_bk3eRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Beggar Prince - English Version (World, rev1) (Unl)
+static struct BurnRomInfo md_begprinceRomDesc[] = {
+	{ "beggar prince (world) (rev 1) (unl).md", 4194304, 0x6332edcc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_begprince)
+STD_ROM_FN(md_begprince)
+
+struct BurnDriver BurnDrvmd_begprince = {
+	"md_begprince", NULL, NULL, NULL, "2005",
+	"Beggar Prince - English Version (World, rev1) (Unl)\0", NULL, "Super Fighter Team", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
+	MegadriveGetZipName, md_begprinceRomInfo, md_begprinceRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Bill's Tomato Game (Prototype) (Unl)
+static struct BurnRomInfo md_btomatogRomDesc[] = {
+	{ "bill's tomato game (unl)(2017)(psygnosis).bin", 1048576, 0x0e1f263f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_btomatog)
+STD_ROM_FN(md_btomatog)
+
+struct BurnDriver BurnDrvmd_btomatog = {
+	"md_btomatog", NULL, NULL, NULL, "1994-2017",
+	"Bill's Tomato Game (Prototype) (Unl)\0", "originally planned for 1994", "Psygnosis", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_btomatogRomInfo, md_btomatogRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Brave Battle Saga - Legend of the Magic Warrior (China) (Unl)
+static struct BurnRomInfo md_bravebtlRomDesc[] = {
+	{ "brave battle saga - legend of the magic warrior.md", 2097152, 0xf4554624, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_bravebtl)
+STD_ROM_FN(md_bravebtl)
+
+struct BurnDriver BurnDrvmd_bravebtl = {
+	"md_bravebtl", NULL, NULL, NULL, "1996",
+	"Brave Battle Saga - Legend of the Magic Warrior (China) (Unl)\0", "Piko Int. English Translation 2017", "Chuanpu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
+	MegadriveGetZipName, md_bravebtlRomInfo, md_bravebtlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Cadash (Hack, Arcade Colors)
+// http://www.romhacking.net/hacks/3905/
+static struct BurnRomInfo md_cadashacRomDesc[] = {
+	{ "cadash (arcade colors).md", 524288, 0x84480043, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_cadashac)
+STD_ROM_FN(md_cadashac)
+
+struct BurnDriver BurnDrvmd_cadashac = {
+	"md_cadashac", "md_cadash", NULL, NULL, "2018",
+	"Cadash (Hack, Arcade Colors)\0", NULL, "Taito - Tor Landeel", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT | GBF_RPG, 0,
+	MegadriveGetZipName, md_cadashacRomInfo, md_cadashacRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Captain America and the Avengers (Hack, Enhanced Colors)
+// http://www.romhacking.net/hacks/2283/
+static struct BurnRomInfo md_captavenecRomDesc[] = {
+	{ "captain america and the avengers (enhanced colors).md", 1048576, 0x23109899, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_captavenec)
+STD_ROM_FN(md_captavenec)
+
+struct BurnDriver BurnDrvmd_captavenec = {
+	"md_captavenec", "md_captaven", NULL, NULL, "2015",
+	"Captain America and the Avengers (Hack, Enhanced Colors)\0", NULL, "Data East - Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_captavenecRomInfo, md_captavenecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Castlevania - Bloodlines (Hack, Enhanced Colors)
+// https://www.romhacking.net/hacks/2121/
+static struct BurnRomInfo md_cvaniaecRomDesc[] = {
+	{ "castlevania - bloodlines (hack - enhanced colors).md", 1048576, 0x5ffdffa7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_cvaniaec)
+STD_ROM_FN(md_cvaniaec)
+
+struct BurnDriver BurnDrvmd_cvaniaec = {
+	"md_cvaniaec", "md_cvania", NULL, NULL, "2014",
+	"Castlevania - Bloodlines (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_cvaniaecRomInfo, md_cvaniaecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Chaos Engine, The - Amiga Colors and Sound Fix (Hack, v1.01)
+// http://www.romhacking.net/hacks/2754/
+static struct BurnRomInfo md_chaosengcsRomDesc[] = {
+	{ "chaos engine, the (amiga colors - music speed fix v1.01).md", 1572864, 0x65887f32, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_chaosengcs)
+STD_ROM_FN(md_chaosengcs)
+
+struct BurnDriver BurnDrvmd_chaosengcs = {
+	"md_chaosengcs", "md_chaoseng", NULL, NULL, "2016",
+	"Chaos Engine, The - Amiga Colors and Sound Fix (Hack, v1.01)\0", NULL, "fusaru", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
+	MegadriveGetZipName, md_chaosengcsRomInfo, md_chaosengcsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Chiki Chiki Boys (Hack, Enhanced Colors)
+// https://www.romhacking.net/hacks/2888/
+static struct BurnRomInfo md_chikiecRomDesc[] = {
+	{ "chiki chiki boys (hack - enhanced colors).bin", 1048576, 0xf63e7e92, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_chikiec)
+STD_ROM_FN(md_chikiec)
+
+struct BurnDriver BurnDrvmd_chikiec = {
+	"md_chikiec", "md_chiki", NULL, NULL, "2016",
+	"Chiki Chiki Boys (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_chikiecRomInfo, md_chikiecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Darius II (Hack, Enhanced Colors)
+// https://www.romhacking.net/hacks/2747/
+static struct BurnRomInfo md_darius2ecRomDesc[] = {
+	{ "darius ii (enhanced colors).md", 1048576, 0x021faa21, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_darius2ec)
+STD_ROM_FN(md_darius2ec)
+
+struct BurnDriver BurnDrvmd_darius2ec = {
+	"md_darius2ec", "md_sagaia", NULL, NULL, "2016",
+	"Darius II (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_darius2ecRomInfo, md_darius2ecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Double Dragon (Hack, Enhanced Colors)
+// https://www.romhacking.net/hacks/2378/
+static struct BurnRomInfo md_ddragonecRomDesc[] = {
+	{ "double dragon (hack - enhanced colors).md", 524288, 0xdb8416cb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ddragonec)
+STD_ROM_FN(md_ddragonec)
+
+struct BurnDriver BurnDrvmd_ddragonec = {
+	"md_ddragonec", "md_ddragon", NULL, NULL, "2015",
+	"Double Dragon (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_ddragonecRomInfo, md_ddragonecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Fatal Fury 2 (Hack, Enhanced Colors v4.0)
+// http://www.romhacking.net/hacks/2323/
+static struct BurnRomInfo md_fatfury2ecRomDesc[] = {
+	{ "fatal fury 2 (enhanced colors v4.0).md", 3145728, 0xeb433a36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_fatfury2ec)
+STD_ROM_FN(md_fatfury2ec)
+
+struct BurnDriver BurnDrvmd_fatfury2ec = {
+	"md_fatfury2ec", "md_fatfury2", NULL, NULL, "2015",
+	"Fatal Fury 2 (Hack, Enhanced Colors v4.0)\0", NULL, "Takara - Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_fatfury2ecRomInfo, md_fatfury2ecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// FIFA Soccer 2020 (Hack, v2.3)
+// http://www.romhacking.net/hacks/5285
+static struct BurnRomInfo md_fifa2020RomDesc[] = {
+	{ "FIFA Soccer 2020 v2.3.bin", 2173824, 0x2ee94b2e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_fifa2020)
+STD_ROM_FN(md_fifa2020)
+
+struct BurnDriver BurnDrvmd_fifa2020 = {
+	"md_fifa2020", "md_fifa95", NULL, NULL, "2020",
+	"FIFA Soccer 2020 (Hack, v2.3)\0", NULL, "TA Marcos", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSFOOTBALL, 0,
+	MegadriveGetZipName, md_fifa2020RomInfo, md_fifa2020RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// FX Unit Yuki - the Henshin Engine (World) (Unl)
+static struct BurnRomInfo md_fxunyukiRomDesc[] = {
+	{ "fx unit yuki - the henshin engine (world) (unl).bin", 6291456, 0x2906876b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_fxunyuki)
+STD_ROM_FN(md_fxunyuki)
+
+struct BurnDriver BurnDrvmd_fxunyuki = {
+	"md_fxunyuki", NULL, NULL, NULL, "2018",
+	"FX Unit Yuki - the Henshin Engine (World) (Unl)\0", "48 Mbit (6MB) cartridge", "Sarupro", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_fxunyukiRomInfo, md_fxunyukiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Golden Axe II (Hack, Enhanced Colors)
+// https://www.romhacking.net/hacks/2104/
+static struct BurnRomInfo md_goldnax2ecRomDesc[] = {
+	{ "golden axe ii (enhanced colors).md", 524288, 0x696caae2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_goldnax2ec)
+STD_ROM_FN(md_goldnax2ec)
+
+struct BurnDriver BurnDrvmd_goldnax2ec = {
+	"md_goldnax2ec", "md_goldnax2", NULL, NULL, "2014",
+	"Golden Axe II (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_goldnax2ecRomInfo, md_goldnax2ecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Golden Axe III - New Character (Ver. 9) (Hack By Ti)
+// Gryphon Hack
+// http://www.romhacking.net/hacks/5202/
+static struct BurnRomInfo md_goldnax3ncRomDesc[] = {
+	{ "GoldenAxeIII_New Character_Hack.bin", 0x200000, 0x29a27509, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_goldnax3nc)
+STD_ROM_FN(md_goldnax3nc)
+
+struct BurnDriver BurnDrvmd_goldnax3nc = {
+	"md_goldnax3nc", "md_goldnax3", NULL, NULL, "2020",
+	"Golden Axe III - New Character (Hack, v9)\0", NULL, "Ti", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_goldnax3ncRomInfo, md_goldnax3ncRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// International Superstar Soccer Deluxe - Real Names + Extras (Hack by Sprill)
+static struct BurnRomInfo md_issdxrneRomDesc[] = {
+	{ "issdx_real_hack.bin", 0x200000, 0xAD08D78E, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_issdxrne)
+STD_ROM_FN(md_issdxrne)
+
+struct BurnDriver BurnDrvmd_issdxrne = {
+	"md_issdxrne", "md_issdx", NULL, NULL, "2016",
+	"International Superstar Soccer Deluxe - Real Names + Extras (Hack)\0", NULL, "Sprill", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,
+	MegadriveGetZipName, md_issdxrneRomInfo, md_issdxrneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Madou Monogatari I (Hack, English v1.1)
+// http://www.romhacking.net/translations/5388/
+static struct BurnRomInfo md_madoumoneRomDesc[] = {
+	{ "Madou Monogatari I T-Eng v1.1 (2021)(LIPEMCO! Translations).bin", 4194304, 0xfac8d75d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_madoumone)
+STD_ROM_FN(md_madoumone)
+
+struct BurnDriver BurnDrvmd_madoumone = {
+	"md_madoumone", "md_madoumon", NULL, NULL, "2021",
+	"Madou Monogatari I (Hack, English v1.1)\0", NULL, "LIPEMCO! Translations", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_madoumoneRomInfo, md_madoumoneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Magical Kid Taruruto (Hack, English)
+// https://www.romhacking.net/translations/7071/
+static struct BurnRomInfo md_mtaruruenRomDesc[] = {
+	{ "Magical Kid Taruruto T-Eng (2023)(tryphon).bin", 591064, 0xcb4d575f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mtaruruen)
+STD_ROM_FN(md_mtaruruen)
+
+struct BurnDriver BurnDrvmd_mtaruruen = {
+	"md_mtaruruen", "md_mtaruru", NULL, NULL, "2023",
+	"Magical Kid Taruruto (Hack, English)\0", NULL, "tryphon", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_mtaruruenRomInfo, md_mtaruruenRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Magic Girl featuring Ling Ling the little Witch (World) (Unl)
+static struct BurnRomInfo md_magicgirlRomDesc[] = {
+	{ "magic girl featuring ling ling the little witch (world) (unl).md", 2097152, 0xe9dc9d93, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_magicgirl)
+STD_ROM_FN(md_magicgirl)
+
+struct BurnDriver BurnDrvmd_magicgirl = {
+	"md_magicgirl", "md_xiaomo", NULL, NULL, "2015",
+	"Magic Girl featuring Ling Ling the little Witch (World) (Unl)\0", NULL, "Super Fighter Team", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_magicgirlRomInfo, md_magicgirlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mega SWIV (Hack, Color Improvement v1.05)
+// https://www.romhacking.net/hacks/2752/
+static struct BurnRomInfo md_megaswivciRomDesc[] = {
+	{ "mega swiv (euro - color improvement v1.05).md", 1048576, 0xe8d76ad1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_megaswivci)
+STD_ROM_FN(md_megaswivci)
+
+struct BurnDriver BurnDrvmd_megaswivci = {
+	"md_megaswivci", "md_megaswiv", NULL, NULL, "2016",
+	"Mega SWIV (Hack, Color Improvement v1.05)\0", NULL, "Fusaru", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_megaswivciRomInfo, md_megaswivciRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Mortal Kombat 3 Mini - Hack by Nemesis_c, r57shell
+static struct BurnRomInfo md_mk3mRomDesc[] = {
+	{ "Mortal Kombat 3 Mini-Hack.bin", 0x400000, 0xD925AA80, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mk3m)
+STD_ROM_FN(md_mk3m)
+
+struct BurnDriver BurnDrvmd_mk3m = {
+	"md_mk3m", "md_mk3", NULL, NULL, "2011",
+	"Mortal Kombat 3 Mini (Hack)\0", NULL, "Nemesis_c, r57shell", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_mk3mRomInfo, md_mk3mRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46921,6 +47458,651 @@ struct BurnDriver BurnDrvmd_mkr = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
 	MegadriveGetZipName, md_mkrRomInfo, md_mkrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// New Zealand Story, The (Hack, Arcade Colors)
+// https://www.romhacking.net/hacks/5083/
+static struct BurnRomInfo md_tnzsacRomDesc[] = {
+	{ "new zealand story, The (hack - arcade colors).bin", 524288, 0x0a35d853, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tnzsac)
+STD_ROM_FN(md_tnzsac)
+
+struct BurnDriver BurnDrvmd_tnzsac = {
+	"md_tnzsac", "md_tnzs", NULL, NULL, "2020",
+	"New Zealand Story, The (Hack, Arcade Colors)\0", NULL, "fabio", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_tnzsacRomInfo, md_tnzsacRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// OutRun (Hack, Arcade Colors v2.1)
+// http://www.romhacking.net/hacks/3940/
+static struct BurnRomInfo md_outrunacRomDesc[] = {
+	{ "outrun (arcade colors)(v2.1).bin", 1048576, 0x921e6107, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_outrunac)
+STD_ROM_FN(md_outrunac)
+
+struct BurnDriver BurnDrvmd_outrunac = {
+	"md_outrunac", "md_outrun", NULL, NULL, "2018",
+	"OutRun (Hack, Arcade Colors v2.1)\0", NULL, "Tor Landeel", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_outrunacRomInfo, md_outrunacRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Prince of Persia 2 - Remastered Edition (Hack, v1.5)
+// https://www.romhacking.net/hacks/4805/
+static struct BurnRomInfo md_ppersia2rRomDesc[] = {
+	{ "prince of persia 2 - remastered edition (v1.5).bin", 2133984, 0x677ab959, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ppersia2r)
+STD_ROM_FN(md_ppersia2r)
+
+struct BurnDriver BurnDrvmd_ppersia2r = {
+	"md_ppersia2r", "md_ppersia2", NULL, NULL, "2019",
+	"Prince of Persia 2 - Remastered Edition (Hack, v1.5)\0", NULL, "Linkuei", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_ppersia2rRomInfo, md_ppersia2rRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Prince of Persia - Remastered Edition (Hack)
+// https://www.romhacking.net/hacks/6969/
+static struct BurnRomInfo md_ppersiarRomDesc[] = {
+	{ "Prince of Persia - Remastered Edition (2022)(Linkuei).bin", 2097152, 0x897f3fe8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ppersiar)
+STD_ROM_FN(md_ppersiar)
+
+struct BurnDriver BurnDrvmd_ppersiar = {
+	"md_ppersiar", "md_ppersia", NULL, NULL, "2022",
+	"Prince of Persia - Remastered Edition (Hack, v1.3)\0", NULL, "Linkuei", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_ppersiarRomInfo, md_ppersiarRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Rock n' Roll Racing (Hack v16 By Ti)
+static struct BurnRomInfo md_rnrracinhRomDesc[] = {
+	{ "Rock n Roll Racing Hack v16.bin", 0x200000, 0x676e3039, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_rnrracinh)
+STD_ROM_FN(md_rnrracinh)
+
+struct BurnDriver BurnDrvmd_rnrracinh = {
+	"md_rnrracinh", "md_rnrracin", NULL, NULL, "2020",
+	"Rock n' Roll Racing (Hack, v16)\0", NULL, "Ti", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_rnrracinhRomInfo, md_rnrracinhRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Samurai Shodown (Hack, Enhanced Colors v2.0)
+// http://www.romhacking.net/hacks/2383/
+static struct BurnRomInfo md_samshoecRomDesc[] = {
+	{ "samurai shodown (enhanced colors)(v2.0).md", 3145728, 0x12cf057a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_samshoec)
+STD_ROM_FN(md_samshoec)
+
+struct BurnDriver BurnDrvmd_samshoec = {
+	"md_samshoec", "md_samsho", NULL, NULL, "2015",
+	"Samurai Shodown (Hack, Enhanced Colors v2.0)\0", NULL, "Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_samshoecRomInfo, md_samshoecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Sega Sonic Bros. C2 Port, revision 2
+static struct BurnRomInfo md_ssonicbror2RomDesc[] = {
+	{ "SegaSonicBrosMDRev2.bin", 0xc0000, 0x91537567, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ssonicbror2)
+STD_ROM_FN(md_ssonicbror2)
+
+struct BurnDriver BurnDrvmd_ssonicbror2 = {
+	"md_ssonicbror2", NULL, NULL, NULL, "1992-2018",
+	"Sega Sonic Bros. (C2 Port, Rev.2)\0", NULL, "Dustin O'Dell", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
+	MegadriveGetZipName, md_ssonicbror2RomInfo, md_ssonicbror2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Shadow of the Beast (Hack, Enhanced Colors)
+// https://www.romhacking.net/hacks/2259/
+static struct BurnRomInfo md_beastecRomDesc[] = {
+	{ "shadow of the beast (enhanced colors).md", 1048576, 0x7eaa73de, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_beastec)
+STD_ROM_FN(md_beastec)
+
+struct BurnDriver BurnDrvmd_beastec = {
+	"md_beastec", "md_beast", NULL, NULL, "2014",
+	"Shadow of the Beast (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_beastecRomInfo, md_beastecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - Hyper Champion Edition (Hack, v2)
+static struct BurnRomInfo md_sf2hce2RomDesc[] = {
+	{ "Street Fighter II' - Hyper Champion Edition (hack-2021).md", 3145728, 0xe5c620a9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2hce2)
+STD_ROM_FN(md_sf2hce2)
+
+struct BurnDriver BurnDrvmd_sf2hce2 = {
+	"md_sf2hce2", "md_sf2", NULL, NULL, "2020-21",
+	"Street Fighter II' - Hyper Champion Edition (Hack, v2)\0", NULL, "Lord Hiryu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf2hce2RomInfo, md_sf2hce2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - Special Champion Edition (Improvement Hack - Color and Sound)
+static struct BurnRomInfo md_sf2icsRomDesc[] = {
+	{ "Street Fighter II' - SCE Improvement.bin", 0x300000, 0x293D2CB1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2ics)
+STD_ROM_FN(md_sf2ics)
+
+struct BurnDriver BurnDrvmd_sf2ics = {
+	"md_sf2ics", "md_sf2", NULL, NULL, "2014",
+	"Street Fighter II' - Special Champion Edition (Hack, Color and Sound)\0", NULL, "Pyron & Stephane.D", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf2icsRomInfo, md_sf2icsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Street Fighter II' - The World Warrior Plus (Hack)
+static struct BurnRomInfo md_sf2wwpRomDesc[] = {
+	{ "Street Fighter II' - World Warrior Plus (hack-2021).md", 3145728, 0x8fad3a36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sf2wwp)
+STD_ROM_FN(md_sf2wwp)
+
+struct BurnDriver BurnDrvmd_sf2wwp = {
+	"md_sf2wwp", "md_sf2", NULL, NULL, "2021",
+	"Street Fighter II' - The World Warrior Plus (Hack)\0", NULL, "Lord Hiryu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_sf2wwpRomInfo, md_sf2wwpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Bare Knuckle 3 Boss Edition (v1.1) (Hack by Kratus)
+static struct BurnRomInfo md_sor2bk3bRomDesc[] = {
+	{ "SoR2_BK3Boss_Hack.bin", 0x356842, 0x5C152787, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2bk3b)
+STD_ROM_FN(md_sor2bk3b)
+
+struct BurnDriver BurnDrvmd_sor2bk3b = {
+	"md_sor2bk3b", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Bare Knuckle 3 Boss Edition (Hack, v1.1)\0", NULL, "Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2bk3bRomInfo, md_sor2bk3bRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 1 By Kratus
+static struct BurnRomInfo md_sor2sfv1RomDesc[] = {
+	{ "SoR2_StreetFighter_v1.bin", 0x33CF86, 0xE03F0C6B, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv1)
+STD_ROM_FN(md_sor2sfv1)
+
+struct BurnDriver BurnDrvmd_sor2sfv1 = {
+	"md_sor2sfv1", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 1 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv1RomInfo, md_sor2sfv1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 2 By Kratus
+static struct BurnRomInfo md_sor2sfv2RomDesc[] = {
+	{ "SoR2_StreetFighter_v2.bin", 0x365298, 0x828786E2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv2)
+STD_ROM_FN(md_sor2sfv2)
+
+struct BurnDriver BurnDrvmd_sor2sfv2 = {
+	"md_sor2sfv2", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 2 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv2RomInfo, md_sor2sfv2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 3 By Kratus
+static struct BurnRomInfo md_sor2sfv3RomDesc[] = {
+	{ "SoR2_StreetFighter_v3.bin", 0x35E7FA, 0xD2ECF98F, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv3)
+STD_ROM_FN(md_sor2sfv3)
+
+struct BurnDriver BurnDrvmd_sor2sfv3 = {
+	"md_sor2sfv3", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 3 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv3RomInfo, md_sor2sfv3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - Street Fighter Version 4 By Kratus
+static struct BurnRomInfo md_sor2sfv4RomDesc[] = {
+	{ "SoR2_StreetFighter_v4.bin", 0x395628, 0x59AA116D, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2sfv4)
+STD_ROM_FN(md_sor2sfv4)
+
+struct BurnDriver BurnDrvmd_sor2sfv4 = {
+	"md_sor2sfv4", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Street Fighter Version 4 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2sfv4RomInfo, md_sor2sfv4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 2 - TMNT Hack By Carzj (M3tro GFX Fix)
+static struct BurnRomInfo md_sor2tmntRomDesc[] = {
+	{ "SoR2_TMNT_Hack.bin", 0x2C4DB0, 0x50E3C7C3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2tmnt)
+STD_ROM_FN(md_sor2tmnt)
+
+struct BurnDriver BurnDrvmd_sor2tmnt = {
+	"md_sor2tmnt", "md_sor2", NULL, NULL, "2017",
+	"Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack)\0", NULL, "Hack By Carzj, Fix By M3tro", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2tmntRomInfo, md_sor2tmntRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage 3 - Extreme Edition (V0.42) (Hack By Gsaurus)
+static struct BurnRomInfo md_sor3exRomDesc[] = {
+	{ "SoR3_Extreme_v042_Hack.bin", 0x300000, 0xD2135A13, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor3ex)
+STD_ROM_FN(md_sor3ex)
+
+struct BurnDriver BurnDrvmd_sor3ex = {
+	"md_sor3ex", "md_sor3", NULL, NULL, "2012",
+	"Streets of Rage 3 - Extreme Edition (Hack, v0.42)\0", NULL, "Gsaurus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor3exRomInfo, md_sor3exRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Streets of Rage - Killer Difficulty by gsaurus
+// https://www.romhacking.net/hacks/1341/
+static struct BurnRomInfo md_sorkillerRomDesc[] = {
+	{ "Streets of Rage - Killer Difficulty (2012)(gsaurus).bin", 0x080000, 0x86eed3d6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sorkiller)
+STD_ROM_FN(md_sorkiller)
+
+struct BurnDriver BurnDrvmd_sorkiller = {
+	"md_sorkiller", "md_sor", NULL, NULL, "2012",
+	"Streets of Rage - Killer Difficulty (Hack, v0.9)\0", NULL, "gsaurus", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sorkillerRomInfo, md_sorkillerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Super Hang-On Enhanced (Hack)
+// https://www.romhacking.net/hacks/3868/
+static struct BurnRomInfo md_shangoneRomDesc[] = {
+	{ "super hang-on enhanced.bin", 524288, 0xff381fed, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shangone)
+STD_ROM_FN(md_shangone)
+
+struct BurnDriver BurnDrvmd_shangone = {
+	"md_shangone", "md_shangon", NULL, NULL, "2018",
+	"Super Hang-On Enhanced (Hack)\0", NULL, "Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING | GBF_ADV, 0,
+	MegadriveGetZipName, md_shangoneRomInfo, md_shangoneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Super Monaco GP 2019 - HE Returns (30th Anniversary Edition) (Hack By TA_Marcos_Translations)
+static struct BurnRomInfo md_smgp2019RomDesc[] = {
+	{ "Super_Monaco_GP2019.bin", 0x080000, 0x12BCABB6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_smgp2019)
+STD_ROM_FN(md_smgp2019)
+
+struct BurnDriver BurnDrvmd_smgp2019 = {
+	"md_smgp2019", "md_smgp", NULL, NULL, "2019",
+	"Super Monaco GP-2019 - HE Returns (Hack, Improvement)\0", NULL, "TA_Marcos_Translations", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_smgp2019RomInfo, md_smgp2019RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Super Street Fighter II - The New Challengers (Hack, Color and Graphic)
+static struct BurnRomInfo md_ssf2cgRomDesc[] = {
+	{ "Super Street Fighter II (hack-2021).md", 5242880, 0xf390add2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_ssf2cg)
+STD_ROM_FN(md_ssf2cg)
+
+struct BurnDriver BurnDrvmd_ssf2cg = {
+	"md_ssf2cg", "md_ssf2", NULL, NULL, "2021",
+	"Super Street Fighter II - The New Challengers (Hack, Color and Graphic)\0", NULL, "Lord Hiryu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SSF2, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_ssf2cgRomInfo, md_ssf2cgRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// T2 - Terminator 2 - Judgment Day Music & Sound Hack (Hack)
+// https://www.romhacking.net/hacks/8083/
+static struct BurnRomInfo md_term2mshRomDesc[] = {
+	{ "T2 - Terminator 2 - Judgment Day Music & Sound Hack (2023)(Segaman).bin", 2097152, 0xee70072a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_term2msh)
+STD_ROM_FN(md_term2msh)
+
+struct BurnDriver BurnDrvmd_term2msh = {
+	"md_term2msh", "md_term2", NULL, NULL, "2023",
+	"T2 - Terminator 2 - Judgment Day Music & Sound Hack (Hack)\0", NULL, "Segaman", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_term2mshRomInfo, md_term2mshRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Teenage Mutant Ninja Turtles: Shredder's Re-Revenge (GlobalHack, v1.01)
+// https://www.romhacking.net/reviews/9774/
+static struct BurnRomInfo md_sor2tmntsrRomDesc[] = {
+	{ "Teenage Mutant Ninja Turtles - Shredder's Re-Revenge GlobHack (2022)(savok).bin", 4063356, 0x6720cc8a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_sor2tmntsr)
+STD_ROM_FN(md_sor2tmntsr)
+
+struct BurnDriver BurnDrvmd_sor2tmntsr = {
+	"md_sor2tmntsr", "md_sor2", NULL, NULL, "2022",
+	"Teenage Mutant Ninja Turtles: Shredder's Re-Revenge (GlobalHack, v1.01)\0", NULL, "savok", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_sor2tmntsrRomInfo, md_sor2tmntsrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Enhanced Colors v2.0)
+// https://www.romhacking.net/hacks/2330/
+static struct BurnRomInfo md_tmnthhecRomDesc[] = {
+	{ "teenage mutant ninja turtles - the hyperstone heist (enhanced colors v2.0).md", 1048576, 0x3dd042f9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tmnthhec)
+STD_ROM_FN(md_tmnthhec)
+
+struct BurnDriver BurnDrvmd_tmnthhec = {
+	"md_tmnthhec", "md_tmhthh", NULL, NULL, "2015",
+	"Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Enhanced Colors v2.0)\0", NULL, "Pyron", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_tmnthhecRomInfo, md_tmnthhecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Teenage Mutant Ninja Turtles - Tournament Fighters Hack (Color & Boss)
+static struct BurnRomInfo md_tmnttficbRomDesc[] = {
+	{ "TMNT Tournament Fighters (Hack).bin", 0x207C14, 0x8DC38DC4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tmnttficb)
+STD_ROM_FN(md_tmnttficb)
+
+struct BurnDriver BurnDrvmd_tmnttficb = {
+	"md_tmnttficb", "md_tmhttf", NULL, NULL, "2014",
+	"Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Improvement)\0", NULL, "Color By fusaru, Boss by Nemesis_c", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_tmnttficbRomInfo, md_tmnttficbRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Thunderbolt II (Prototype) (Unl)
+static struct BurnRomInfo md_tbolt2RomDesc[] = {
+	{ "thunderbolt ii.bin", 0x80000, 0xd5fcc49f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tbolt2)
+STD_ROM_FN(md_tbolt2)
+
+struct BurnDriver BurnDrvmd_tbolt2 = {
+	"md_tbolt2", NULL, NULL, NULL, "1995",
+	"Thunderbolt II (Prototype) (Unl)\0", NULL, "SUN GREEN", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SMOUSE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_tbolt2RomInfo, md_tbolt2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Thunderbolt II (Prototype, Alt) (Unl)
+static struct BurnRomInfo md_tbolt2aRomDesc[] = {
+	{ "Thunderbolt II (Unl) [f1].bin", 0x80000, 0xa2ef16de, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tbolt2a)
+STD_ROM_FN(md_tbolt2a)
+
+struct BurnDriver BurnDrvmd_tbolt2a = {
+	"md_tbolt2a", NULL, NULL, NULL, "1995",
+	"Thunderbolt II (Prototype, Alt) (Unl)\0", NULL, "SUN GREEN", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_tbolt2aRomInfo, md_tbolt2aRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Tom and Jerry - Frantic Antics (Hack, Improvement v2)
+// http://www.romhacking.net/hacks/5292/
+static struct BurnRomInfo md_tomjerryimRomDesc[] = {
+	{ "Tom and Jerry - Frantic Antics (U) (Improvement).bin", 2097152, 0x13bcf0a2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tomjerryim)
+STD_ROM_FN(md_tomjerryim)
+
+struct BurnDriver BurnDrvmd_tomjerryim = {
+	"md_tomjerryim", "md_tomjerry", NULL, NULL, "2020",
+	"Tom and Jerry - Frantic Antics (Hack, Improvement v2)\0", NULL, "Ti", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_tomjerryimRomInfo, md_tomjerryimRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Tom Clown (Taiwan) (Unl)
+static struct BurnRomInfo md_tomclownRomDesc[] = {
+	{ "tom clown (unl) [f1].bin", 524288, 0xbd741108, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_tomclown)
+STD_ROM_FN(md_tomclown)
+
+struct BurnDriver BurnDrvmd_tomclown = {
+	"md_tomclown", NULL, NULL, NULL, "1993",
+	"Tom Clown (Taiwan) (Unl)\0", NULL, "Realtec", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
+	MegadriveGetZipName, md_tomclownRomInfo, md_tomclownRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Turbo OutRun (Hack, Color Improvement)
+// https://www.romhacking.net/hacks/5119/
+static struct BurnRomInfo md_toutrunchRomDesc[] = {
+	{ "turbo outrun (color hack).md", 524288, 0x8884c73a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_toutrunch)
+STD_ROM_FN(md_toutrunch)
+
+struct BurnDriver BurnDrvmd_toutrunch = {
+	"md_toutrunch", "md_toutrun", NULL, NULL, "2020",
+	"Turbo OutRun (Hack, Color Improvement)\0", NULL, "Dolsilwa", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
+	MegadriveGetZipName, md_toutrunchRomInfo, md_toutrunchRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Twin Cobra (Hack, Arcade GFX v2.0)
+// http://www.romhacking.net/hacks/2920/
+static struct BurnRomInfo md_twincobrgfxRomDesc[] = {
+	{ "twin cobra (arcade gfx v2.0).md", 704120, 0x88ea1e4e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_twincobrgfx)
+STD_ROM_FN(md_twincobrgfx)
+
+struct BurnDriver BurnDrvmd_twincobrgfx = {
+	"md_twincobrgfx", "md_twincobr", NULL, NULL, "2016",
+	"Twin Cobra (Hack, Arcade GFX v2.0)\0", NULL, "fusaru", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_twincobrgfxRomInfo, md_twincobrgfxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Twin Hawk (Arcade GFX)
+// http://www.romhacking.net/hacks/3310/
+static struct BurnRomInfo md_twinhawkgfxRomDesc[] = {
+	{ "twin hawk (arcade gfx).md", 524288, 0xabd8ce33, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_twinhawkgfx)
+STD_ROM_FN(md_twinhawkgfx)
+
+struct BurnDriver BurnDrvmd_twinhawkgfx = {
+	"md_twinhawkgfx", "md_twinhawk", NULL, NULL, "2017",
+	"Twin Hawk (Arcade GFX)\0", NULL, "fusaru", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
+	MegadriveGetZipName, md_twinhawkgfxRomInfo, md_twinhawkgfxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// UEFA Euro 2004 Portugal (International Super Star Soccer Deluxe Hack by Glorysun)
+static struct BurnRomInfo md_euro2004RomDesc[] = {
+	{ "UEFA_Euro_2004_Portugal.bin", 0x200000, 0xBEA68ADA, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_euro2004)
+STD_ROM_FN(md_euro2004)
+
+struct BurnDriver BurnDrvmd_euro2004 = {
+	"md_euro2004", "md_issdx", NULL, NULL, "2004",
+	"UEFA Euro 2004 Portugal (China) (Unl)\0", NULL, "Glorysun", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,
+	MegadriveGetZipName, md_euro2004RomInfo, md_euro2004RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ultimate Mortal Kombat Trilogy (Hack, rev.5149)
+static struct BurnRomInfo md_umk3tRomDesc[] = {
+	{ "UMKT_5149.bin", 0xA00000, 0x1d9d2eba, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_umk3t)
+STD_ROM_FN(md_umk3t)
+
+struct BurnDriver BurnDrvmd_umk3t = {
+	"md_umk3t", NULL, NULL, NULL, "2017",
+	"Ultimate Mortal Kombat Trilogy (Hack, rev.5149)\0", NULL, "KABAL_MK", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_umk3tRomInfo, md_umk3tRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -46998,786 +48180,6 @@ struct BurnDriver BurnDrvmd_umk3osc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Mortal Kombat 3 Mini - Hack by Nemesis_c, r57shell
-static struct BurnRomInfo md_mk3mRomDesc[] = {
-	{ "Mortal Kombat 3 Mini-Hack.bin", 0x400000, 0xD925AA80, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_mk3m)
-STD_ROM_FN(md_mk3m)
-
-struct BurnDriver BurnDrvmd_mk3m = {
-	"md_mk3m", "md_mk3", NULL, NULL, "2011",
-	"Mortal Kombat 3 Mini (Hack)\0", NULL, "Nemesis_c, r57shell", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_mk3mRomInfo, md_mk3mRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Street Fighter II' - Special Champion Edition (Improvement Hack - Color and Sound)
-static struct BurnRomInfo md_sf2icsRomDesc[] = {
-	{ "Street Fighter II' - SCE Improvement.bin", 0x300000, 0x293D2CB1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sf2ics)
-STD_ROM_FN(md_sf2ics)
-
-struct BurnDriver BurnDrvmd_sf2ics = {
-	"md_sf2ics", "md_sf2", NULL, NULL, "2014",
-	"Street Fighter II' - Special Champion Edition (Hack, Color and Sound)\0", NULL, "Pyron & Stephane.D", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_sf2icsRomInfo, md_sf2icsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// BCD Verifier by Flamewing (HB, Test)
-static struct BurnRomInfo md_bcdverifierRomDesc[] = {
-	{ "bcd-verifier-u1.bin", 0x101bca, 0x0f9bbe9d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_bcdverifier)
-STD_ROM_FN(md_bcdverifier)
-
-struct BurnDriver BurnDrvmd_bcdverifier = {
-	"md_bcdverifier", NULL, NULL, NULL, "2016",
-	"BCD Verifier (HB, Test)\0", NULL, "Flamewing", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MISC, 0,
-	MegadriveGetZipName, md_bcdverifierRomInfo, md_bcdverifierRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Teenage Mutant Ninja Turtles - Tournament Fighters Hack (Color & Boss)
-static struct BurnRomInfo md_tmnttficbRomDesc[] = {
-	{ "TMNT Tournament Fighters (Hack).bin", 0x207C14, 0x8DC38DC4, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tmnttficb)
-STD_ROM_FN(md_tmnttficb)
-
-struct BurnDriver BurnDrvmd_tmnttficb = {
-	"md_tmnttficb", "md_tmhttf", NULL, NULL, "2014",
-	"Teenage Mutant Ninja Turtles - Tournament Fighters (Hack, Improvement)\0", NULL, "Color By fusaru, Boss by Nemesis_c", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_tmnttficbRomInfo, md_tmnttficbRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - Bare Knuckle 3 Boss Edition (v1.1) (Hack by Kratus)
-static struct BurnRomInfo md_sor2bk3bRomDesc[] = {
-	{ "SoR2_BK3Boss_Hack.bin", 0x356842, 0x5C152787, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2bk3b)
-STD_ROM_FN(md_sor2bk3b)
-
-struct BurnDriver BurnDrvmd_sor2bk3b = {
-	"md_sor2bk3b", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Bare Knuckle 3 Boss Edition (Hack, v1.1)\0", NULL, "Kratus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2bk3bRomInfo, md_sor2bk3bRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - TMNT Hack By Carzj (M3tro GFX Fix)
-static struct BurnRomInfo md_sor2tmntRomDesc[] = {
-	{ "SoR2_TMNT_Hack.bin", 0x2C4DB0, 0x50E3C7C3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2tmnt)
-STD_ROM_FN(md_sor2tmnt)
-
-struct BurnDriver BurnDrvmd_sor2tmnt = {
-	"md_sor2tmnt", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Teenage Mutant Ninja Turtles (Hack)\0", NULL, "Hack By Carzj, Fix By M3tro", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2tmntRomInfo, md_sor2tmntRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Teenage Mutant Ninja Turtles: Shredder's Re-Revenge (GlobalHack, v1.01)
-// https://www.romhacking.net/reviews/9774/
-static struct BurnRomInfo md_sor2tmntsrRomDesc[] = {
-	{ "Teenage Mutant Ninja Turtles - Shredder's Re-Revenge GlobHack (2022)(savok).bin", 4063356, 0x6720cc8a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2tmntsr)
-STD_ROM_FN(md_sor2tmntsr)
-
-struct BurnDriver BurnDrvmd_sor2tmntsr = {
-	"md_sor2tmntsr", "md_sor2", NULL, NULL, "2022",
-	"Teenage Mutant Ninja Turtles: Shredder's Re-Revenge (GlobalHack, v1.01)\0", NULL, "savok", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2tmntsrRomInfo, md_sor2tmntsrRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 3 - Extreme Edition (V0.42) (Hack By Gsaurus)
-static struct BurnRomInfo md_sor3exRomDesc[] = {
-	{ "SoR3_Extreme_v042_Hack.bin", 0x300000, 0xD2135A13, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor3ex)
-STD_ROM_FN(md_sor3ex)
-
-struct BurnDriver BurnDrvmd_sor3ex = {
-	"md_sor3ex", "md_sor3", NULL, NULL, "2012",
-	"Streets of Rage 3 - Extreme Edition (Hack, v0.42)\0", NULL, "Gsaurus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor3exRomInfo, md_sor3exRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage - Killer Difficulty by gsaurus
-// https://www.romhacking.net/hacks/1341/
-static struct BurnRomInfo md_sorkillerRomDesc[] = {
-	{ "Streets of Rage - Killer Difficulty (2012)(gsaurus).bin", 0x080000, 0x86eed3d6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sorkiller)
-STD_ROM_FN(md_sorkiller)
-
-struct BurnDriver BurnDrvmd_sorkiller = {
-	"md_sorkiller", "md_sor", NULL, NULL, "2012",
-	"Streets of Rage - Killer Difficulty (Hack, v0.9)\0", NULL, "gsaurus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sorkillerRomInfo, md_sorkillerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Golden Axe III - New Character (Ver. 9) (Hack By Ti)
-// Gryphon Hack
-// http://www.romhacking.net/hacks/5202/
-static struct BurnRomInfo md_goldnax3ncRomDesc[] = {
-	{ "GoldenAxeIII_New Character_Hack.bin", 0x200000, 0x29a27509, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_goldnax3nc)
-STD_ROM_FN(md_goldnax3nc)
-
-struct BurnDriver BurnDrvmd_goldnax3nc = {
-	"md_goldnax3nc", "md_goldnax3", NULL, NULL, "2020",
-	"Golden Axe III - New Character (Hack, v9)\0", NULL, "Ti", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_goldnax3ncRomInfo, md_goldnax3ncRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// International Superstar Soccer Deluxe - Real Names + Extras (Hack by Sprill)
-static struct BurnRomInfo md_issdxrneRomDesc[] = {
-	{ "issdx_real_hack.bin", 0x200000, 0xAD08D78E, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_issdxrne)
-STD_ROM_FN(md_issdxrne)
-
-struct BurnDriver BurnDrvmd_issdxrne = {
-	"md_issdxrne", "md_issdx", NULL, NULL, "2016",
-	"International Superstar Soccer Deluxe - Real Names + Extras (Hack)\0", NULL, "Sprill", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,
-	MegadriveGetZipName, md_issdxrneRomInfo, md_issdxrneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// UEFA Euro 2004 Portugal (International Super Star Soccer Deluxe Hack by Glorysun)
-static struct BurnRomInfo md_euro2004RomDesc[] = {
-	{ "UEFA_Euro_2004_Portugal.bin", 0x200000, 0xBEA68ADA, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_euro2004)
-STD_ROM_FN(md_euro2004)
-
-struct BurnDriver BurnDrvmd_euro2004 = {
-	"md_euro2004", "md_issdx", NULL, NULL, "2004",
-	"UEFA Euro 2004 Portugal (China) (Unl)\0", NULL, "Glorysun", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSFOOTBALL, 0,
-	MegadriveGetZipName, md_euro2004RomInfo, md_euro2004RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Bare Knuckle III (Hack By Twilight Translations)
-// Source: https://www.romhacking.net/translations/1375/
-static struct BurnRomInfo md_bk3eRomDesc[] = {
-	{ "bare knuckle iii (english translation).bin", 0x300000, 0x68917751, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_bk3e)
-STD_ROM_FN(md_bk3e)
-
-struct BurnDriver BurnDrvmd_bk3e = {
-	"md_bk3e", "md_sor3", NULL, NULL, "2009",
-	"Bare Knuckle III (Hack, English)\0", NULL, "Twilight Transaltions", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_bk3eRomInfo, md_bk3eRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Super Monaco GP 2019 - HE Returns (30th Anniversary Edition) (Hack By TA_Marcos_Translations)
-static struct BurnRomInfo md_smgp2019RomDesc[] = {
-	{ "Super_Monaco_GP2019.bin", 0x080000, 0x12BCABB6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_smgp2019)
-STD_ROM_FN(md_smgp2019)
-
-struct BurnDriver BurnDrvmd_smgp2019 = {
-	"md_smgp2019", "md_smgp", NULL, NULL, "2019",
-	"Super Monaco GP-2019 - HE Returns (Hack, Improvement)\0", NULL, "TA_Marcos_Translations", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
-	MegadriveGetZipName, md_smgp2019RomInfo, md_smgp2019RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - Street Fighter Version 1 By Kratus
-static struct BurnRomInfo md_sor2sfv1RomDesc[] = {
-	{ "SoR2_StreetFighter_v1.bin", 0x33CF86, 0xE03F0C6B, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2sfv1)
-STD_ROM_FN(md_sor2sfv1)
-
-struct BurnDriver BurnDrvmd_sor2sfv1 = {
-	"md_sor2sfv1", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Street Fighter Version 1 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2sfv1RomInfo, md_sor2sfv1RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - Street Fighter Version 2 By Kratus
-static struct BurnRomInfo md_sor2sfv2RomDesc[] = {
-	{ "SoR2_StreetFighter_v2.bin", 0x365298, 0x828786E2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2sfv2)
-STD_ROM_FN(md_sor2sfv2)
-
-struct BurnDriver BurnDrvmd_sor2sfv2 = {
-	"md_sor2sfv2", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Street Fighter Version 2 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2sfv2RomInfo, md_sor2sfv2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - Street Fighter Version 3 By Kratus
-static struct BurnRomInfo md_sor2sfv3RomDesc[] = {
-	{ "SoR2_StreetFighter_v3.bin", 0x35E7FA, 0xD2ECF98F, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2sfv3)
-STD_ROM_FN(md_sor2sfv3)
-
-struct BurnDriver BurnDrvmd_sor2sfv3 = {
-	"md_sor2sfv3", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Street Fighter Version 3 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2sfv3RomInfo, md_sor2sfv3RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Streets of Rage 2 - Street Fighter Version 4 By Kratus
-static struct BurnRomInfo md_sor2sfv4RomDesc[] = {
-	{ "SoR2_StreetFighter_v4.bin", 0x395628, 0x59AA116D, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_sor2sfv4)
-STD_ROM_FN(md_sor2sfv4)
-
-struct BurnDriver BurnDrvmd_sor2sfv4 = {
-	"md_sor2sfv4", "md_sor2", NULL, NULL, "2017",
-	"Streets of Rage 2 - Street Fighter Version 4 (Hack)\0", NULL, "Kratus", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_sor2sfv4RomInfo, md_sor2sfv4RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Sega Sonic Bros. C2 Port, revision 2
-static struct BurnRomInfo md_ssonicbror2RomDesc[] = {
-	{ "SegaSonicBrosMDRev2.bin", 0xc0000, 0x91537567, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_ssonicbror2)
-STD_ROM_FN(md_ssonicbror2)
-
-struct BurnDriver BurnDrvmd_ssonicbror2 = {
-	"md_ssonicbror2", NULL, NULL, NULL, "1992-2018",
-	"Sega Sonic Bros. (C2 Port, Rev.2)\0", NULL, "Dustin O'Dell", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
-	MegadriveGetZipName, md_ssonicbror2RomInfo, md_ssonicbror2RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadrivePALDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Madou Monogatari I (Hack, English v1.1)
-// http://www.romhacking.net/translations/5388/
-static struct BurnRomInfo md_madoumoneRomDesc[] = {
-	{ "Madou Monogatari I T-Eng v1.1 (2021)(LIPEMCO! Translations).bin", 4194304, 0xfac8d75d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_madoumone)
-STD_ROM_FN(md_madoumone)
-
-struct BurnDriver BurnDrvmd_madoumone = {
-	"md_madoumone", "md_madoumon", NULL, NULL, "2021",
-	"Madou Monogatari I (Hack, English v1.1)\0", NULL, "LIPEMCO! Translations", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_madoumoneRomInfo, md_madoumoneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Beggar Prince - English Version (HB, rev1) (Unl)
-static struct BurnRomInfo md_begprinceRomDesc[] = {
-	{ "beggar prince (world) (rev 1) (unl).md", 4194304, 0x6332edcc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_begprince)
-STD_ROM_FN(md_begprince)
-
-struct BurnDriver BurnDrvmd_begprince = {
-	"md_begprince", NULL, NULL, NULL, "2005",
-	"Beggar Prince - English Version (World, rev1) (Unl)\0", NULL, "Super Fighter Team", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
-	MegadriveGetZipName, md_begprinceRomInfo, md_begprinceRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Cascade (HB) (Unl)
-static struct BurnRomInfo md_cascadeRomDesc[] = {
-	{ "cascade (world) (unl).md", 524288, 0xe7b287fe, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_cascade)
-STD_ROM_FN(md_cascade)
-
-struct BurnDriver BurnDrvmd_cascade = {
-	"md_cascade", NULL, NULL, NULL, "2015",
-	"Cascade (HB) (Unl)\0", NULL, "Super Fighter Team", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
-	MegadriveGetZipName, md_cascadeRomInfo, md_cascadeRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Magic Girl featuring Ling Ling the little Witch (World) (Unl)
-static struct BurnRomInfo md_magicgirlRomDesc[] = {
-	{ "magic girl featuring ling ling the little witch (world) (unl).md", 2097152, 0xe9dc9d93, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_magicgirl)
-STD_ROM_FN(md_magicgirl)
-
-struct BurnDriver BurnDrvmd_magicgirl = {
-	"md_magicgirl", "md_xiaomo", NULL, NULL, "2015",
-	"Magic Girl featuring Ling Ling the little Witch (World) (Unl)\0", NULL, "Super Fighter Team", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
-	MegadriveGetZipName, md_magicgirlRomInfo, md_magicgirlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// FX Unit Yuki - the Henshin Engine (world) (unl)
-static struct BurnRomInfo md_fxunyukiRomDesc[] = {
-	{ "fx unit yuki - the henshin engine (world) (unl).bin", 6291456, 0x2906876b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_fxunyuki)
-STD_ROM_FN(md_fxunyuki)
-
-struct BurnDriver BurnDrvmd_fxunyuki = {
-	"md_fxunyuki", NULL, NULL, NULL, "2018",
-	"FX Unit Yuki - the Henshin Engine (World) (Unl)\0", "48 Mbit (6MB) cartridge", "Sarupro", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_fxunyukiRomInfo, md_fxunyukiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Bahamut Senki (Hack, English)
-// https://www.romhacking.net/translations/5574/
-static struct BurnRomInfo md_bahamutseRomDesc[] = {
-	{ "bahamut senki (j)(t-eng).bin", 1048576, 0x89383a55, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_bahamutse)
-STD_ROM_FN(md_bahamutse)
-
-struct BurnDriver BurnDrvmd_bahamutse = {
-	"md_bahamutse", "md_bahamuts", NULL, NULL, "2020",
-	"Bahamut Senki (Hack, English)\0", NULL, "Supper", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
-	MegadriveGetZipName, md_bahamutseRomInfo, md_bahamutseRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Prince of Persia 2 - Remastered Edition (Hack, v1.5)
-// https://www.romhacking.net/hacks/4805/
-static struct BurnRomInfo md_ppersia2rRomDesc[] = {
-	{ "prince of persia 2 - remastered edition (v1.5).bin", 2133984, 0x677ab959, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_ppersia2r)
-STD_ROM_FN(md_ppersia2r)
-
-struct BurnDriver BurnDrvmd_ppersia2r = {
-	"md_ppersia2r", "md_ppersia2", NULL, NULL, "2019",
-	"Prince of Persia 2 - Remastered Edition (Hack, v1.5)\0", NULL, "Linkuei", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_ppersia2rRomInfo, md_ppersia2rRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Prince of Persia - Remastered Edition (Hack)
-// https://www.romhacking.net/hacks/6969/
-static struct BurnRomInfo md_ppersiarRomDesc[] = {
-	{ "Prince of Persia - Remastered Edition (2022)(Linkuei).bin", 2097152, 0x897f3fe8, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_ppersiar)
-STD_ROM_FN(md_ppersiar)
-
-struct BurnDriver BurnDrvmd_ppersiar = {
-	"md_ppersiar", "md_ppersia", NULL, NULL, "2022",
-	"Prince of Persia - Remastered Edition (Hack, v1.3)\0", NULL, "Linkuei", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_ppersiarRomInfo, md_ppersiarRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Back to the Future Part III (Hack, Color Fix)
-// https://www.romhacking.net/hacks/4792/
-static struct BurnRomInfo md_backtof3cfRomDesc[] = {
-	{ "back to the future part iii (color fix).md", 524288, 0x51f67e2f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_backtof3cf)
-STD_ROM_FN(md_backtof3cf)
-
-struct BurnDriver BurnDrvmd_backtof3cf = {
-	"md_backtof3cf", "md_backtof3", NULL, NULL, "2019",
-	"Back to the Future Part III (Hack, Color Fix)\0", NULL, "Greg Kennedy", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_backtof3cfRomInfo, md_backtof3cfRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Castlevania - Bloodlines (Hack, Enhanced Colors)
-// https://www.romhacking.net/hacks/2121/
-static struct BurnRomInfo md_cvaniaecRomDesc[] = {
-	{ "castlevania - bloodlines (hack - enhanced colors).md", 1048576, 0x5ffdffa7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_cvaniaec)
-STD_ROM_FN(md_cvaniaec)
-
-struct BurnDriver BurnDrvmd_cvaniaec = {
-	"md_cvaniaec", "md_cvania", NULL, NULL, "2014",
-	"Castlevania - Bloodlines (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM | GBF_RUNGUN, 0,
-	MegadriveGetZipName, md_cvaniaecRomInfo, md_cvaniaecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// The Chaos Engine (Hack, Amiga Colors and Sound Fix v1.01)
-// http://www.romhacking.net/hacks/2754/
-static struct BurnRomInfo md_chaosengcsRomDesc[] = {
-	{ "chaos engine, the (amiga colors - music speed fix v1.01).md", 1572864, 0x65887f32, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_chaosengcs)
-STD_ROM_FN(md_chaosengcs)
-
-struct BurnDriver BurnDrvmd_chaosengcs = {
-	"md_chaosengcs", "md_chaoseng", NULL, NULL, "2016",
-	"The Chaos Engine (Hack, Amiga Colors and Sound Fix v1.01)\0", NULL, "fusaru", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN, 0,
-	MegadriveGetZipName, md_chaosengcsRomInfo, md_chaosengcsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Chiki Chiki Boys (Hack, Enhanced Colors)
-// https://www.romhacking.net/hacks/2888/
-static struct BurnRomInfo md_chikiecRomDesc[] = {
-	{ "chiki chiki boys (hack - enhanced colors).bin", 1048576, 0xf63e7e92, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_chikiec)
-STD_ROM_FN(md_chikiec)
-
-struct BurnDriver BurnDrvmd_chikiec = {
-	"md_chikiec", "md_chiki", NULL, NULL, "2016",
-	"Chiki Chiki Boys (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_chikiecRomInfo, md_chikiecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Darius II (Hack, Enhanced Colors)
-// https://www.romhacking.net/hacks/2747/
-static struct BurnRomInfo md_darius2ecRomDesc[] = {
-	{ "darius ii (enhanced colors).md", 1048576, 0x021faa21, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_darius2ec)
-STD_ROM_FN(md_darius2ec)
-
-struct BurnDriver BurnDrvmd_darius2ec = {
-	"md_darius2ec", "md_sagaia", NULL, NULL, "2016",
-	"Darius II (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
-	MegadriveGetZipName, md_darius2ecRomInfo, md_darius2ecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Double Dragon (Hack, Enhanced Colors)
-// https://www.romhacking.net/hacks/2378/
-static struct BurnRomInfo md_ddragonecRomDesc[] = {
-	{ "double dragon (hack - enhanced colors).md", 524288, 0xdb8416cb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_ddragonec)
-STD_ROM_FN(md_ddragonec)
-
-struct BurnDriver BurnDrvmd_ddragonec = {
-	"md_ddragonec", "md_ddragon", NULL, NULL, "2015",
-	"Double Dragon (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_ddragonecRomInfo, md_ddragonecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Golden Axe II (Hack, Enhanced Colors)
-// https://www.romhacking.net/hacks/2104/
-static struct BurnRomInfo md_goldnax2ecRomDesc[] = {
-	{ "golden axe ii (enhanced colors).md", 524288, 0x696caae2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_goldnax2ec)
-STD_ROM_FN(md_goldnax2ec)
-
-struct BurnDriver BurnDrvmd_goldnax2ec = {
-	"md_goldnax2ec", "md_goldnax2", NULL, NULL, "2014",
-	"Golden Axe II (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_goldnax2ecRomInfo, md_goldnax2ecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Mega SWIV (Hack, Color Improvement v1.05)
-// https://www.romhacking.net/hacks/2752/
-static struct BurnRomInfo md_megaswivciRomDesc[] = {
-	{ "mega swiv (euro - color improvement v1.05).md", 1048576, 0xe8d76ad1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_megaswivci)
-STD_ROM_FN(md_megaswivci)
-
-struct BurnDriver BurnDrvmd_megaswivci = {
-	"md_megaswivci", "md_megaswiv", NULL, NULL, "2016",
-	"Mega SWIV (Hack, Color Improvement v1.05)\0", NULL, "Fusaru", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
-	MegadriveGetZipName, md_megaswivciRomInfo, md_megaswivciRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// New Zealand Story, The (Hack, Arcade Colors)
-// https://www.romhacking.net/hacks/5083/
-static struct BurnRomInfo md_tnzsacRomDesc[] = {
-	{ "new zealand story, The (hack - arcade colors).bin", 524288, 0x0a35d853, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tnzsac)
-STD_ROM_FN(md_tnzsac)
-
-struct BurnDriver BurnDrvmd_tnzsac = {
-	"md_tnzsac", "md_tnzs", NULL, NULL, "2020",
-	"New Zealand Story, The (Hack, Arcade Colors)\0", NULL, "fabio", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_tnzsacRomInfo, md_tnzsacRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// OutRun (Hack, Arcade Colors v2.1)
-// http://www.romhacking.net/hacks/3940/
-static struct BurnRomInfo md_outrunacRomDesc[] = {
-	{ "outrun (arcade colors)(v2.1).bin", 1048576, 0x921e6107, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_outrunac)
-STD_ROM_FN(md_outrunac)
-
-struct BurnDriver BurnDrvmd_outrunac = {
-	"md_outrunac", "md_outrun", NULL, NULL, "2018",
-	"OutRun (Hack, Arcade Colors v2.1)\0", NULL, "Tor Landeel", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
-	MegadriveGetZipName, md_outrunacRomInfo, md_outrunacRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Samurai Shodown (Hack, Enhanced Colors v2.0)
-// http://www.romhacking.net/hacks/2383/
-static struct BurnRomInfo md_samshoecRomDesc[] = {
-	{ "samurai shodown (enhanced colors)(v2.0).md", 3145728, 0x12cf057a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_samshoec)
-STD_ROM_FN(md_samshoec)
-
-struct BurnDriver BurnDrvmd_samshoec = {
-	"md_samshoec", "md_samsho", NULL, NULL, "2015",
-	"Samurai Shodown (Hack, Enhanced Colors v2.0)\0", NULL, "Pyron", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_samshoecRomInfo, md_samshoecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Shadow of the Beast (Hack, Enhanced Colors)
-// https://www.romhacking.net/hacks/2259/
-static struct BurnRomInfo md_beastecRomDesc[] = {
-	{ "shadow of the beast (enhanced colors).md", 1048576, 0x7eaa73de, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_beastec)
-STD_ROM_FN(md_beastec)
-
-struct BurnDriver BurnDrvmd_beastec = {
-	"md_beastec", "md_beast", NULL, NULL, "2014",
-	"Shadow of the Beast (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT | GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_beastecRomInfo, md_beastecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Super Hang-On Enhanced (Hack)
-// https://www.romhacking.net/hacks/3868/
-static struct BurnRomInfo md_shangoneRomDesc[] = {
-	{ "super hang-on enhanced.bin", 524288, 0xff381fed, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_shangone)
-STD_ROM_FN(md_shangone)
-
-struct BurnDriver BurnDrvmd_shangone = {
-	"md_shangone", "md_shangon", NULL, NULL, "2018",
-	"Super Hang-On Enhanced (Hack)\0", NULL, "Pyron", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING | GBF_ADV, 0,
-	MegadriveGetZipName, md_shangoneRomInfo, md_shangoneRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Enhanced Colors v2.0)
-// https://www.romhacking.net/hacks/2330/
-static struct BurnRomInfo md_tmnthhecRomDesc[] = {
-	{ "teenage mutant ninja turtles - the hyperstone heist (enhanced colors v2.0).md", 1048576, 0x3dd042f9, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tmnthhec)
-STD_ROM_FN(md_tmnthhec)
-
-struct BurnDriver BurnDrvmd_tmnthhec = {
-	"md_tmnthhec", "md_tmhthh", NULL, NULL, "2015",
-	"Teenage Mutant Ninja Turtles - The Hyperstone Heist (Hack, Enhanced Colors v2.0)\0", NULL, "Pyron", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_tmnthhecRomInfo, md_tmnthhecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Turbo OutRun (Hack, Color Improvement)
-// https://www.romhacking.net/hacks/5119/
-static struct BurnRomInfo md_toutrunchRomDesc[] = {
-	{ "turbo outrun (color hack).md", 524288, 0x8884c73a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_toutrunch)
-STD_ROM_FN(md_toutrunch)
-
-struct BurnDriver BurnDrvmd_toutrunch = {
-	"md_toutrunch", "md_toutrun", NULL, NULL, "2020",
-	"Turbo OutRun (Hack, Color Improvement)\0", NULL, "Dolsilwa", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RACING, 0,
-	MegadriveGetZipName, md_toutrunchRomInfo, md_toutrunchRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
 // Vapor Trail (Hack, Enhanced Colors)
 // https://www.romhacking.net/hacks/2465/
 static struct BurnRomInfo md_vaportrecRomDesc[] = {
@@ -47816,6 +48218,25 @@ struct BurnDriver BurnDrvmd_wboy3ac = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
+// WWF Royal Rumble Enhanced Colors + SFX (Hack, v1.05)
+// https://www.romhacking.net/hacks/8078/
+static struct BurnRomInfo md_wwfroyalimpRomDesc[] = {
+	{ "WWF Royal Rumble Enhanced Colors + SFX v1.05 (2023)(Byros).bin", 2097152, 0xd6f4d1ed, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_wwfroyalimp)
+STD_ROM_FN(md_wwfroyalimp)
+
+struct BurnDriver BurnDrvmd_wwfroyalimp = {
+	"md_wwfroyalimp", "md_wwfroyal", NULL, NULL, "2023",
+	"WWF Royal Rumble Enhanced Colors + SFX (Hack, v1.05)\0", NULL, "Byros", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
+	MegadriveGetZipName, md_wwfroyalimpRomInfo, md_wwfroyalimpRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
 // Xenon 2 - Megablast (Hack, Amiga Colors)
 // https://www.romhacking.net/hacks/2937/
 static struct BurnRomInfo md_xenon2acRomDesc[] = {
@@ -47835,208 +48256,122 @@ struct BurnDriver BurnDrvmd_xenon2ac = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Art of Fighting (Hack, Enhanced Colors)
-// http://www.romhacking.net/hacks/2394/
-static struct BurnRomInfo md_aofecRomDesc[] = {
-	{ "art of fighting (enhanced colors).md", 2097152, 0xf28b2502, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+
+// -------------------------
+// Chinese Translation Hacks
+// -------------------------
+
+
+// Aoki Ookami to Shiroki Mejika - Genchou Hishi (Hack, Chinese)
+// Translation by SKOB
+static struct BurnRomInfo md_genchohicRomDesc[] = {
+	{ "aoki ookami to shiroki meshika - genchou hishi (T-Chi).bin", 0x140000, 0x7c161c48, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_aofec)
-STD_ROM_FN(md_aofec)
+STD_ROM_PICK(md_genchohic)
+STD_ROM_FN(md_genchohic)
 
-struct BurnDriver BurnDrvmd_aofec = {
-	"md_aofec", "md_aof", NULL, NULL, "2015",
-	"Art of Fighting (Hack, Enhanced Colors)\0", NULL, "Pyron", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_genchohic = {
+	"md_genchohic", "md_genghis2", NULL, NULL, "199?",
+	"Aoki Ookami to Shiroki Mejika - Genchou Hishi (Hack, Chinese)\0", NULL, "SKOB", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_aofecRomInfo, md_aofecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
+	MegadriveGetZipName, md_genchohicRomInfo, md_genchohicRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Cadash (Hack, Arcade Colors)
-// http://www.romhacking.net/hacks/3905/
-static struct BurnRomInfo md_cadashacRomDesc[] = {
-	{ "cadash (arcade colors).md", 524288, 0x84480043, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Dial Q o Mawase! (Hack, Chinese) (Unl)
+// Translation by Phanteam
+static struct BurnRomInfo md_dialqocRomDesc[] = {
+	{ "dial q o mawase! (T-Chi) (unl).bin", 0x100000, 0x1002c02f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_cadashac)
-STD_ROM_FN(md_cadashac)
+STD_ROM_PICK(md_dialqoc)
+STD_ROM_FN(md_dialqoc)
 
-struct BurnDriver BurnDrvmd_cadashac = {
-	"md_cadashac", "md_cadash", NULL, NULL, "2018",
-	"Cadash (Hack, Arcade Colors)\0", NULL, "Taito - Tor Landeel", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_dialqoc = {
+	"md_dialqoc", "md_dialqo", NULL, NULL, "200?",
+	"Dial Q o Mawase! (Hack, Chinese) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT | GBF_RPG, 0,
-	MegadriveGetZipName, md_cadashacRomInfo, md_cadashacRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MAHJONG | GBF_STRATEGY, 0,
+	MegadriveGetZipName, md_dialqocRomInfo, md_dialqocRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Captain America and the Avengers (Hack, Enhanced Colors)
-// http://www.romhacking.net/hacks/2283/
-static struct BurnRomInfo md_captavenecRomDesc[] = {
-	{ "captain america and the avengers (enhanced colors).md", 1048576, 0x23109899, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (Hack, Chinese)
+// Translation by Bear Team
+static struct BurnRomInfo md_slamdunkcRomDesc[] = {
+	{ "from tv animation slam dunk - kyougou makkou taiketsu! (T-Chi).bin", 0x200000, 0x89253739, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_captavenec)
-STD_ROM_FN(md_captavenec)
+STD_ROM_PICK(md_slamdunkc)
+STD_ROM_FN(md_slamdunkc)
 
-struct BurnDriver BurnDrvmd_captavenec = {
-	"md_captavenec", "md_captaven", NULL, NULL, "2015",
-	"Captain America and the Avengers (Hack, Enhanced Colors)\0", NULL, "Data East - Pyron", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_slamdunkc = {
+	"md_slamdunkc", "md_slamdunk", NULL, NULL, "200?",
+	"From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (Hack, Chinese)\0", NULL, "Bear Team", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_captavenecRomInfo, md_captavenecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2, GBF_SPORTSMISC, 0,
+	MegadriveGetZipName, md_slamdunkcRomInfo, md_slamdunkcRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Fatal Fury 2 (Hack, Enhanced Colors v4.0)
-// http://www.romhacking.net/hacks/2323/
-static struct BurnRomInfo md_fatfury2ecRomDesc[] = {
-	{ "fatal fury 2 (enhanced colors v4.0).md", 3145728, 0xeb433a36, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Gunstar Heroes (Hack, Chinese)
+// Translation by ???
+static struct BurnRomInfo md_gunstarcRomDesc[] = {
+	{ "gunstar heroes (T-Chi).bin", 0x200000, 0xa046c36e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_fatfury2ec)
-STD_ROM_FN(md_fatfury2ec)
+STD_ROM_PICK(md_gunstarc)
+STD_ROM_FN(md_gunstarc)
 
-struct BurnDriver BurnDrvmd_fatfury2ec = {
-	"md_fatfury2ec", "md_fatfury2", NULL, NULL, "2015",
-	"Fatal Fury 2 (Hack, Enhanced Colors v4.0)\0", NULL, "Takara - Pyron", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_gunstarc = {
+	"md_gunstarc", "md_gunstar", NULL, NULL, "2018",
+	"Gunstar Heroes (Hack, Chinese)\0", NULL, "<unknown>", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_VSFIGHT, 0,
-	MegadriveGetZipName, md_fatfury2ecRomInfo, md_fatfury2ecRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_gunstarcRomInfo, md_gunstarcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Twin Cobra (Hack, Arcade GFX v2.0)
-// http://www.romhacking.net/hacks/2920/
-static struct BurnRomInfo md_twincobrgfxRomDesc[] = {
-	{ "twin cobra (arcade gfx v2.0).md", 704120, 0x88ea1e4e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Hybrid Front, The (Hack, Chinese)
+// Translation by cslrxyz
+static struct BurnRomInfo md_hybridfcRomDesc[] = {
+	{ "hybrid front, the (T-Chi).bin", 0x200000, 0x0d6d06f6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_twincobrgfx)
-STD_ROM_FN(md_twincobrgfx)
+STD_ROM_PICK(md_hybridfc)
+STD_ROM_FN(md_hybridfc)
 
-struct BurnDriver BurnDrvmd_twincobrgfx = {
-	"md_twincobrgfx", "md_twincobr", NULL, NULL, "2016",
-	"Twin Cobra (Hack, Arcade GFX v2.0)\0", NULL, "fusaru", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_hybridfc = {
+	"md_hybridfc", "md_hybridf", NULL, NULL, "200?",
+	"Hybrid Front, The (Hack, Chinese)\0", NULL, "cslrxyz", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
-	MegadriveGetZipName, md_twincobrgfxRomInfo, md_twincobrgfxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
+	MegadriveGetZipName, md_hybridfcRomInfo, md_hybridfcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Twin Hawk (Arcade GFX)
-// http://www.romhacking.net/hacks/3310/
-static struct BurnRomInfo md_twinhawkgfxRomDesc[] = {
-	{ "twin hawk (arcade gfx).md", 524288, 0xabd8ce33, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Landstalker - Koutei no Zaihou (Hack, Chinese)
+// Translation by Yi Zhi Zhi Lu
+static struct BurnRomInfo md_landstlkcRomDesc[] = {
+	{ "landstalker - koutei no zaihou (T-Chi).bin", 0x230000, 0xd2982a65, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_twinhawkgfx)
-STD_ROM_FN(md_twinhawkgfx)
+STD_ROM_PICK(md_landstlkc)
+STD_ROM_FN(md_landstlkc)
 
-struct BurnDriver BurnDrvmd_twinhawkgfx = {
-	"md_twinhawkgfx", "md_twinhawk", NULL, NULL, "2017",
-	"Twin Hawk (Arcade GFX)\0", NULL, "fusaru", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_landstlkc = {
+	"md_landstlkc", "md_landstlk", NULL, NULL, "2007",
+	"Landstalker - Koutei no Zaihou (Hack, Chinese)\0", NULL, "Yi Zhi Zhi Lu", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_VERSHOOT, 0,
-	MegadriveGetZipName, md_twinhawkgfxRomInfo, md_twinhawkgfxRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Bill's Tomato Game (Prototype) (Unl)
-static struct BurnRomInfo md_btomatogRomDesc[] = {
-	{ "bill's tomato game (unl)(2017)(psygnosis).bin", 1048576, 0x0e1f263f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_btomatog)
-STD_ROM_FN(md_btomatog)
-
-struct BurnDriver BurnDrvmd_btomatog = {
-	"md_btomatog", NULL, NULL, NULL, "1994-2017",
-	"Bill's Tomato Game (Prototype) (Unl)\0", "originally planned for 1994", "Psygnosis", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_PROTOTYPE, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PUZZLE, 0,
-	MegadriveGetZipName, md_btomatogRomInfo, md_btomatogRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Tom Clown (Taiwan) (Unl)
-static struct BurnRomInfo md_tomclownRomDesc[] = {
-	{ "tom clown (unl) [f1].bin", 524288, 0xbd741108, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tomclown)
-STD_ROM_FN(md_tomclown)
-
-struct BurnDriver BurnDrvmd_tomclown = {
-	"md_tomclown", NULL, NULL, NULL, "1993",
-	"Tom Clown (Taiwan) (Unl)\0", NULL, "Realtec", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
-	MegadriveGetZipName, md_tomclownRomInfo, md_tomclownRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Brave Battle Saga - Legend of the Magic Warrior (China) (Unl)
-static struct BurnRomInfo md_bravebtlRomDesc[] = {
-	{ "brave battle saga - legend of the magic warrior.md", 2097152, 0xf4554624, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_bravebtl)
-STD_ROM_FN(md_bravebtl)
-
-struct BurnDriver BurnDrvmd_bravebtl = {
-	"md_bravebtl", NULL, NULL, NULL, "1996",
-	"Brave Battle Saga - Legend of the Magic Warrior (China) (Unl)\0", "Piko Int. English Translation 2017", "Chuanpu", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_RPG, 0,
-	MegadriveGetZipName, md_bravebtlRomInfo, md_bravebtlRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// FIFA Soccer 2020 (Hack, v2.3)
-// http://www.romhacking.net/hacks/5285
-static struct BurnRomInfo md_fifa2020RomDesc[] = {
-	{ "FIFA Soccer 2020 v2.3.bin", 2173824, 0x2ee94b2e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_fifa2020)
-STD_ROM_FN(md_fifa2020)
-
-struct BurnDriver BurnDrvmd_fifa2020 = {
-	"md_fifa2020", "md_fifa95", NULL, NULL, "2020",
-	"FIFA Soccer 2020 (Hack, v2.3)\0", NULL, "TA Marcos", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_SPORTSFOOTBALL, 0,
-	MegadriveGetZipName, md_fifa2020RomInfo, md_fifa2020RomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Tom and Jerry - Frantic Antics (Hack, Improvement v2)
-// http://www.romhacking.net/hacks/5292/
-static struct BurnRomInfo md_tomjerryimRomDesc[] = {
-	{ "Tom and Jerry - Frantic Antics (U) (Improvement).bin", 2097152, 0x13bcf0a2, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_tomjerryim)
-STD_ROM_FN(md_tomjerryim)
-
-struct BurnDriver BurnDrvmd_tomjerryim = {
-	"md_tomjerryim", "md_tomjerry", NULL, NULL, "2020",
-	"Tom and Jerry - Frantic Antics (Hack, Improvement v2)\0", NULL, "Ti", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_tomjerryimRomInfo, md_tomjerryimRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_PLATFORM | GBF_RPG, 0,
+	MegadriveGetZipName, md_landstlkcRomInfo, md_landstlkcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -48057,6 +48392,25 @@ struct BurnDriver BurnDrvmd_langris2c = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
 	MegadriveGetZipName, md_langris2cRomInfo, md_langris2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Monster World IV (Hack, Chinese v2)
+// Translation by wolfteam & HA MU
+static struct BurnRomInfo md_mworld4cRomDesc[] = {
+	{ "Monster World IV (T-Chi, v2).bin", 0x200000, 0x08d46b12, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_mworld4c)
+STD_ROM_FN(md_mworld4c)
+
+struct BurnDriver BurnDrvmd_mworld4c = {
+	"md_mworld4c", "md_mworld4", NULL, NULL, "2019",
+	"Monster World IV (Hack, Chinese v2)\0", NULL, "Wolfteam & HA MU", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_PLATFORM | GBF_ADV, 0,
+	MegadriveGetZipName, md_mworld4cRomInfo, md_mworld4cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -48099,120 +48453,6 @@ struct BurnDriver BurnDrvmd_ninjabt = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Shining Force II - Koe no Fuuin (Hack, Chinese v2)
-// Translation by Yi Zhi Zhi Lu
-static struct BurnRomInfo md_shinfrc2cRomDesc[] = {
-	{ "shining force ii - koe no fuuin (T-Chi, v2).bin", 0x300000, 0x5dd08aea, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_shinfrc2c)
-STD_ROM_FN(md_shinfrc2c)
-
-struct BurnDriver BurnDrvmd_shinfrc2c = {
-	"md_shinfrc2c", "md_shinfrc2", NULL, NULL, "2007",
-	"Shining Force II - Koe no Fuuin (Hack, Chinese v2)\0", NULL, "Yi Zhi Zhi Lu", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_shinfrc2cRomInfo, md_shinfrc2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Super Shinobi II, The (Hack, Chinese)
-// Translation by cslrxyz
-static struct BurnRomInfo md_supshin2cRomDesc[] = {
-	{ "super shinobi ii, the (Chinese).bin", 0x100000, 0x8d8fb732, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_supshin2c)
-STD_ROM_FN(md_supshin2c)
-
-struct BurnDriver BurnDrvmd_supshin2c = {
-	"md_supshin2c", "md_shinobi3", NULL, NULL, "2009",
-	"Super Shinobi II, The (Hack, Chinese)\0", NULL, "cslrxyz", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
-	MegadriveGetZipName, md_supshin2cRomInfo, md_supshin2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Story of Thor, The - Hikari o Tsugumono (Hack, Chinese)
-// Translation by KEN & MADCELL
-static struct BurnRomInfo md_thorcRomDesc[] = {
-	{ "story of thor, the - hikari o tsugumono (T-Chi).bin", 0x300000, 0x3ca3fcd7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_thorc)
-STD_ROM_FN(md_thorc)
-
-struct BurnDriver BurnDrvmd_thorc = {
-	"md_thorc", "md_thor", NULL, NULL, "2004",
-	"Story of Thor, The - Hikari o Tsugumono (Hack, Chinese)\0", NULL, "YUZO", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_ACTION | GBF_ADV, 0,
-	MegadriveGetZipName, md_thorcRomInfo, md_thorcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Monster World IV (Hack, Chinese v2)
-// Translation by wolfteam & HA MU
-static struct BurnRomInfo md_mworld4cRomDesc[] = {
-	{ "Monster World IV (T-Chi, v2).bin", 0x200000, 0x08d46b12, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_mworld4c)
-STD_ROM_FN(md_mworld4c)
-
-struct BurnDriver BurnDrvmd_mworld4c = {
-	"md_mworld4c", "md_mworld4", NULL, NULL, "2019",
-	"Monster World IV (Hack, Chinese v2)\0", NULL, "Wolfteam & HA MU", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_PLATFORM | GBF_ADV, 0,
-	MegadriveGetZipName, md_mworld4cRomInfo, md_mworld4cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Gunstar Heroes (Hack, Chinese)
-// Translation by ???
-static struct BurnRomInfo md_gunstarcRomDesc[] = {
-	{ "gunstar heroes (T-Chi).bin", 0x200000, 0xa046c36e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_gunstarc)
-STD_ROM_FN(md_gunstarc)
-
-struct BurnDriver BurnDrvmd_gunstarc = {
-	"md_gunstarc", "md_gunstar", NULL, NULL, "2018",
-	"Gunstar Heroes (Hack, Chinese)\0", NULL, "<unknown>", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE, 2, HARDWARE_SEGA_MEGADRIVE, GBF_RUNGUN | GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_gunstarcRomInfo, md_gunstarcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Taikou Risshiden (Hack, Chinese)
-// Translation by Xu Yong Sheng
-static struct BurnRomInfo md_taikoriscRomDesc[] = {
-	{ "taikou risshiden (T-Chi).bin", 0x140000, 0x185f7902, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_taikorisc)
-STD_ROM_FN(md_taikorisc)
-
-struct BurnDriver BurnDrvmd_taikorisc = {
-	"md_taikorisc", "md_taikoris", NULL, NULL, "2009",
-	"Taikou Risshiden (Hack, Chinese)\0", NULL, "Xu Yong Sheng", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
-	MegadriveGetZipName, md_taikoriscRomInfo, md_taikoriscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
 // Nobunaga no Yabou - Haouden (Hack, Chinese)
 // Translation by Xu Yong Sheng
 static struct BurnRomInfo md_nobuhaocRomDesc[] = {
@@ -48228,6 +48468,25 @@ struct BurnDriver BurnDrvmd_nobuhaoc = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 8, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
 	MegadriveGetZipName, md_nobuhaocRomInfo, md_nobuhaocRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Shining Force II - Koe no Fuuin (Hack, Chinese v2)
+// Translation by Yi Zhi Zhi Lu
+static struct BurnRomInfo md_shinfrc2cRomDesc[] = {
+	{ "shining force ii - koe no fuuin (T-Chi, v2).bin", 0x300000, 0x5dd08aea, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_shinfrc2c)
+STD_ROM_FN(md_shinfrc2c)
+
+struct BurnDriver BurnDrvmd_shinfrc2c = {
+	"md_shinfrc2c", "md_shinfrc2", NULL, NULL, "2007",
+	"Shining Force II - Koe no Fuuin (Hack, Chinese v2)\0", NULL, "Yi Zhi Zhi Lu", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_shinfrc2cRomInfo, md_shinfrc2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -48251,59 +48510,40 @@ struct BurnDriver BurnDrvmd_ragnacenc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Dial Q o Mawase! (Hack, Chinese) (Unl)
-// Translation by Phanteam
-static struct BurnRomInfo md_dialqocRomDesc[] = {
-	{ "dial q o mawase! (T-Chi) (unl).bin", 0x100000, 0x1002c02f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Story of Thor, The - Hikari o Tsugumono (Hack, Chinese)
+// Translation by KEN & MADCELL
+static struct BurnRomInfo md_thorcRomDesc[] = {
+	{ "story of thor, the - hikari o tsugumono (T-Chi).bin", 0x300000, 0x3ca3fcd7, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_dialqoc)
-STD_ROM_FN(md_dialqoc)
+STD_ROM_PICK(md_thorc)
+STD_ROM_FN(md_thorc)
 
-struct BurnDriver BurnDrvmd_dialqoc = {
-	"md_dialqoc", "md_dialqo", NULL, NULL, "200?",
-	"Dial Q o Mawase! (Hack, Chinese) (Unl)\0", NULL, "<unknown>", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_thorc = {
+	"md_thorc", "md_thor", NULL, NULL, "2004",
+	"Story of Thor, The - Hikari o Tsugumono (Hack, Chinese)\0", NULL, "YUZO", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_MAHJONG | GBF_STRATEGY, 0,
-	MegadriveGetZipName, md_dialqocRomInfo, md_dialqocRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_ACTION | GBF_ADV, 0,
+	MegadriveGetZipName, md_thorcRomInfo, md_thorcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Hybrid Front, The (Hack, Chinese)
+// Super Shinobi II, The (Hack, Chinese)
 // Translation by cslrxyz
-static struct BurnRomInfo md_hybridfcRomDesc[] = {
-	{ "hybrid front, the (T-Chi).bin", 0x200000, 0x0d6d06f6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+static struct BurnRomInfo md_supshin2cRomDesc[] = {
+	{ "super shinobi ii, the (Chinese).bin", 0x100000, 0x8d8fb732, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_hybridfc)
-STD_ROM_FN(md_hybridfc)
+STD_ROM_PICK(md_supshin2c)
+STD_ROM_FN(md_supshin2c)
 
-struct BurnDriver BurnDrvmd_hybridfc = {
-	"md_hybridfc", "md_hybridf", NULL, NULL, "200?",
-	"Hybrid Front, The (Hack, Chinese)\0", NULL, "cslrxyz", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_supshin2c = {
+	"md_supshin2c", "md_shinobi3", NULL, NULL, "2009",
+	"Super Shinobi II, The (Hack, Chinese)\0", NULL, "cslrxyz", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
-	MegadriveGetZipName, md_hybridfcRomInfo, md_hybridfcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Zero Wing (Hack, Chinese)
-// Translation by Bear Team
-static struct BurnRomInfo md_zerowingcRomDesc[] = {
-	{ "zero wing (T-Chi).bin", 0x100000, 0x7218212f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_zerowingc)
-STD_ROM_FN(md_zerowingc)
-
-struct BurnDriver BurnDrvmd_zerowingc = {
-	"md_zerowingc", "md_zerowing", NULL, NULL, "200?",
-	"Zero Wing (Hack, Chinese)\0", NULL, "Bear Team", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
-	MegadriveGetZipName, md_zerowingcRomInfo, md_zerowingcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SCRFIGHT, 0,
+	MegadriveGetZipName, md_supshin2cRomInfo, md_supshin2cRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
@@ -48327,80 +48567,49 @@ struct BurnDriver BurnDrvmd_surgingc = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Aoki Ookami to Shiroki Mejika - Genchou Hishi (Hack, Chinese)
-// Translation by SKOB
-static struct BurnRomInfo md_genchohicRomDesc[] = {
-	{ "aoki ookami to shiroki meshika - genchou hishi (T-Chi).bin", 0x140000, 0x7c161c48, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+// Taikou Risshiden (Hack, Chinese)
+// Translation by Xu Yong Sheng
+static struct BurnRomInfo md_taikoriscRomDesc[] = {
+	{ "taikou risshiden (T-Chi).bin", 0x140000, 0x185f7902, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_genchohic)
-STD_ROM_FN(md_genchohic)
+STD_ROM_PICK(md_taikorisc)
+STD_ROM_FN(md_taikorisc)
 
-struct BurnDriver BurnDrvmd_genchohic = {
-	"md_genchohic", "md_genghis2", NULL, NULL, "199?",
-	"Aoki Ookami to Shiroki Mejika - Genchou Hishi (Hack, Chinese)\0", NULL, "SKOB", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_taikorisc = {
+	"md_taikorisc", "md_taikoris", NULL, NULL, "2009",
+	"Taikou Risshiden (Hack, Chinese)\0", NULL, "Xu Yong Sheng", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_STRATEGY, 0,
-	MegadriveGetZipName, md_genchohicRomInfo, md_genchohicRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM, GBF_RPG, 0,
+	MegadriveGetZipName, md_taikoriscRomInfo, md_taikoriscRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (Hack, Chinese)
+// Zero Wing (Hack, Chinese)
 // Translation by Bear Team
-static struct BurnRomInfo md_slamdunkcRomDesc[] = {
-	{ "from tv animation slam dunk - kyougou makkou taiketsu! (T-Chi).bin", 0x200000, 0x89253739, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+static struct BurnRomInfo md_zerowingcRomDesc[] = {
+	{ "zero wing (T-Chi).bin", 0x100000, 0x7218212f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
 };
 
-STD_ROM_PICK(md_slamdunkc)
-STD_ROM_FN(md_slamdunkc)
+STD_ROM_PICK(md_zerowingc)
+STD_ROM_FN(md_zerowingc)
 
-struct BurnDriver BurnDrvmd_slamdunkc = {
-	"md_slamdunkc", "md_slamdunk", NULL, NULL, "200?",
-	"From TV Animation Slam Dunk - Kyougou Makkou Taiketsu! (Hack, Chinese)\0", NULL, "Bear Team", "Sega Megadrive",
+struct BurnDriver BurnDrvmd_zerowingc = {
+	"md_zerowingc", "md_zerowing", NULL, NULL, "200?",
+	"Zero Wing (Hack, Chinese)\0", NULL, "Bear Team", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 4, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2, GBF_SPORTSMISC, 0,
-	MegadriveGetZipName, md_slamdunkcRomInfo, md_slamdunkcRomName, NULL, NULL, NULL, NULL, Megadrive4pInputInfo, Megadrive4pDIPInfo,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_HORSHOOT, 0,
+	MegadriveGetZipName, md_zerowingcRomInfo, md_zerowingcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// Landstalker - Koutei no Zaihou (Hack, Chinese)
-// Translation by Yi Zhi Zhi Lu
-static struct BurnRomInfo md_landstlkcRomDesc[] = {
-	{ "landstalker - koutei no zaihou (T-Chi).bin", 0x230000, 0xd2982a65, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
 
-STD_ROM_PICK(md_landstlkc)
-STD_ROM_FN(md_landstlkc)
+// -------------------------
+// Spanish Translation Hacks
+// -------------------------
 
-struct BurnDriver BurnDrvmd_landstlkc = {
-	"md_landstlkc", "md_landstlk", NULL, NULL, "2007",
-	"Landstalker - Koutei no Zaihou (Hack, Chinese)\0", NULL, "Yi Zhi Zhi Lu", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE | HARDWARE_SEGA_MEGADRIVE_PCB_SEGA_SRAM | HARDWARE_SEGA_MEGADRIVE_SRAM_10000, GBF_PLATFORM | GBF_RPG, 0,
-	MegadriveGetZipName, md_landstlkcRomInfo, md_landstlkcRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// Mad Stalker - Full Metal Forth (HB)
-static struct BurnRomInfo md_madstalkerRomDesc[] = {
-	{ "Mad Stalker - Full Metal Forth.bin", 2097152, 0x64e7f1cd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_madstalker)
-STD_ROM_FN(md_madstalker)
-
-struct BurnDriver BurnDrvmd_madstalker = {
-	"md_madstalker", NULL, NULL, NULL, "2020",
-	"Mad Stalker - Full Metal Forth (HB)\0", NULL, "OPERAHOUSE", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_HOMEBREW, 1, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_madstalkerRomInfo, md_madstalkerRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
 
 // Action 52 (Hack, Spanish)
 // https://www.romhacking.net/translations/3599/
@@ -48421,7 +48630,7 @@ struct BurnDriver BurnDrvmd_action52s = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// addams family values (Hack, Spanish)
+// Addams Family Values (Hack, Spanish)
 // https://www.romhacking.net/translations/5708/
 static struct BurnRomInfo md_addfamvsRomDesc[] = {
 	{ "addams family values (hack, spanish).bin", 2101280, 0x07cf6ffd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48434,13 +48643,13 @@ struct BurnDriver BurnDrvmd_addfamvs = {
 	"md_addfamvs", "md_addfamv", NULL, NULL, "2020",
 	"Addams Family Values (Hack, Spanish)\0", NULL, "jackic", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ADV, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION | GBF_ADV, 0,
 	MegadriveGetZipName, md_addfamvsRomInfo, md_addfamvsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// aero the acro-bat (Hack, Spanish)
+// Aero the Acro-Bat (Hack, Spanish)
 // https://www.romhacking.net/translations/4378/
 static struct BurnRomInfo md_aerosRomDesc[] = {
 	{ "aero the acro-bat (hack, spanish).bin", 1048576, 0xfcaf58d3, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48460,7 +48669,7 @@ struct BurnDriver BurnDrvmd_aeros = {
 };
 
 
-// aero the acro-bat 2 (Hack, Spanish)
+// Aero the Acro-Bat 2 (Hack, Spanish)
 // https://www.romhacking.net/translations/5027/
 static struct BurnRomInfo md_aero2sRomDesc[] = {
 	{ "aero the acro-bat 2 (hack, spanish).bin", 2097152, 0x096c0978, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48498,7 +48707,7 @@ struct BurnDriver BurnDrvmd_aburner2s = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// alex kidd in the enchanted castle (Hack, Spanish)
+// Alex Kidd in the Enchanted Castle (Hack, Spanish)
 // https://www.romhacking.net/translations/3109/
 static struct BurnRomInfo md_alexkiddsRomDesc[] = {
 	{ "alex kidd in the enchanted castle (hack, spanish).bin", 262144, 0xd2f3a29e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48517,7 +48726,7 @@ struct BurnDriver BurnDrvmd_alexkidds = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// alien 3 (Hack, Spanish)
+// Alien 3 (Hack, Spanish)
 // https://www.romhacking.net/translations/3436/
 static struct BurnRomInfo md_alien3sRomDesc[] = {
 	{ "alien3 (hack, spanish).bin", 524288, 0x701d308e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48536,8 +48745,7 @@ struct BurnDriver BurnDrvmd_alien3s = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-
-// alien soldier (Hack, Spanish)
+// Alien Soldier (Hack, Spanish)
 // https://www.romhacking.net/translations/5551/
 static struct BurnRomInfo md_aliensolsRomDesc[] = {
 	{ "alien soldier (hack, spanish).bin", 2097152, 0xab991070, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48575,7 +48783,7 @@ struct BurnDriver BurnDrvmd_astorms = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// air diver (Hack, Spanish)
+// Air Diver (Hack, Spanish)
 // https://www.romhacking.net/translations/4771/
 static struct BurnRomInfo md_airdiversRomDesc[] = {
 	{ "air diver (hack, spanish).bin", 524288, 0x3ce6094a, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48594,7 +48802,7 @@ struct BurnDriver BurnDrvmd_airdivers = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// alisia dragoon (Hack, Spanish)
+// Alisia Dragoon (Hack, Spanish)
 //https://www.romhacking.net/translations/3669/
 static struct BurnRomInfo md_alisiadsRomDesc[] = {
 	{ "alisia dragoon (hack, spanish).bin", 1048576, 0x13fc10e1, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48613,7 +48821,7 @@ struct BurnDriver BurnDrvmd_alisiads = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// altered beast (Hack, Spanish)
+// Altered Beast (Hack, Spanish)
 //https://www.romhacking.net/translations/3179/
 static struct BurnRomInfo md_altbeastsRomDesc[] = {
 	{ "altered beast (hack, spanish).bin", 524288, 0xe4ea5e40, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48632,7 +48840,7 @@ struct BurnDriver BurnDrvmd_altbeasts = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// animaniacs (Hack, Spanish)
+// Animaniacs (Hack, Spanish)
 //https://www.romhacking.net/translations/3425/
 static struct BurnRomInfo md_animaniasRomDesc[] = {
 	{ "animaniacs (hack, spanish).bin", 1048576, 0xcceaf148, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48651,7 +48859,26 @@ struct BurnDriver BurnDrvmd_animanias = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// ariel (Hack, Spanish)
+// Aquatic Games Starring James Pond and the Aquabats, The (Hack, Spanish)
+// https://www.romhacking.net/translations/4932/
+static struct BurnRomInfo md_aquagamesRomDesc[] = {
+	{ "the aquatic games starring james pond and the aquabats (hack, spanish).bin", 524288, 0x1776fc2f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_aquagames)
+STD_ROM_FN(md_aquagames)
+
+struct BurnDriver BurnDrvmd_aquagames = {
+	"md_aquagames", "md_aquagame", NULL, NULL, "2019",
+	"Aquatic Games Starring James Pond and the Aquabats, The (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
+	MegadriveGetZipName, md_aquagamesRomInfo, md_aquagamesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Ariel (Hack, Spanish)
 //https://www.romhacking.net/translations/4273/
 static struct BurnRomInfo md_arielsRomDesc[] = {
 	{ "ariel (hack, spanish).bin", 524288, 0x599a1bfb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48670,7 +48897,7 @@ struct BurnDriver BurnDrvmd_ariels = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// arrow flash (Hack, Spanish)
+// Arrow Flash (Hack, Spanish)
 //https://www.romhacking.net/translations/4379/
 static struct BurnRomInfo md_arrowsRomDesc[] = {
 	{ "arrow flash (hack, spanish).bin", 524288, 0x06421584, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48689,7 +48916,7 @@ struct BurnDriver BurnDrvmd_arrows = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// art of fighting (Hack, Spanish)
+// Art of Fighting (Hack, Spanish)
 //https://www.romhacking.net/translations/3083/
 static struct BurnRomInfo md_aofsRomDesc[] = {
 	{ "art of fighting (hack, spanish).bin", 2097152, 0x60ffdc60, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48708,7 +48935,7 @@ struct BurnDriver BurnDrvmd_aofs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// atomic robo-kid (Hack, Spanish)
+// Atomic Robo-Kid (Hack, Spanish)
 //https://www.romhacking.net/translations/3083/
 static struct BurnRomInfo md_atomrobosRomDesc[] = {
 	{ "atomic robo-kid (hack, spanish).bin", 524288, 0xce250d1b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48727,7 +48954,7 @@ struct BurnDriver BurnDrvmd_atomrobos = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// atomic runner (Hack, Spanish)
+// Atomic Runner (Hack, Spanish)
 //https://www.romhacking.net/translations/3526/
 static struct BurnRomInfo md_atomrunsRomDesc[] = {
 	{ "atomic runner (hack, spanish).bin", 1048576, 0x930a9593, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48765,7 +48992,7 @@ struct BurnDriver BurnDrvmd_backtof3s = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// batman returns (Hack, Spanish)
+// Batman Returns (Hack, Spanish)
 // https://www.romhacking.net/translations/3943/
 static struct BurnRomInfo md_batmanrnsRomDesc[] = {
 	{ "batman returns (hack, spanish).bin", 1048576, 0x543701ef, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48784,7 +49011,7 @@ struct BurnDriver BurnDrvmd_batmanrns = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// batman (Hack, Spanish)
+// Batman (Hack, Spanish)
 // https://www.romhacking.net/translations/3175/
 static struct BurnRomInfo md_batmansRomDesc[] = {
 	{ "batman (hack, spanish).bin", 524288, 0xebf4ca7f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48803,7 +49030,7 @@ struct BurnDriver BurnDrvmd_batmans = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// battle golfer yui (Hack, Spanish)
+// Battle Golfer Yui (Hack, Spanish)
 // https://www.romhacking.net/translations/5485/
 static struct BurnRomInfo md_battlyuisRomDesc[] = {
 	{ "battle golfer yui (hack, spanish).bin", 1048576, 0x1ed9c6d0, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48822,7 +49049,7 @@ struct BurnDriver BurnDrvmd_battlyuis = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// battle mania daiginjou (Hack, Spanish)
+// Battle Mania Daiginjou (Hack, Spanish)
 // https://www.romhacking.net/translations/2071/
 static struct BurnRomInfo md_btlmanidsRomDesc[] = {
 	{ "battle mania daiginjou (hack, spanish).bin", 1048576, 0x9e0ef510, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48841,7 +49068,7 @@ struct BurnDriver BurnDrvmd_btlmanids = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// battle squadron (Hack, Spanish)
+// Battle Squadron (Hack, Spanish)
 // https://www.romhacking.net/translations/3659/
 static struct BurnRomInfo md_battlesqsRomDesc[] = {
 	{ "battle squadron (hack, spanish).bin", 524288, 0xcde81fbc, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48860,7 +49087,7 @@ struct BurnDriver BurnDrvmd_battlesqs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// battletoads (Hack, Spanish)
+// Battletoads (Hack, Spanish)
 // https://www.romhacking.net/translations/3569/
 static struct BurnRomInfo md_btoadssRomDesc[] = {
 	{ "battletoads (hack, spanish).bin", 524288, 0xbe072fdd, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48898,7 +49125,7 @@ struct BurnDriver BurnDrvmd_btoadsdds = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// beauty and the beast - belle's quest (Hack, Spanish)
+// Beauty and the Beast - Belle's Quest (Hack, Spanish)
 // https://www.romhacking.net/translations/3150/
 static struct BurnRomInfo md_beautysRomDesc[] = {
 	{ "beauty and the beast - belle's quest (hack, spanish).bin", 1048576, 0x37123c7e, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48917,7 +49144,7 @@ struct BurnDriver BurnDrvmd_beautys = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// beauty and the beast - roar of the beast (Hack, Spanish)
+// Beauty and the Beast - Roar of the Beast (Hack, Spanish)
 // https://www.romhacking.net/translations/3150/
 static struct BurnRomInfo md_beautyrbsRomDesc[] = {
 	{ "beauty and the beast - roar of the beast (hack, spanish).bin", 1048576, 0xc0f52a6d, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48936,7 +49163,7 @@ struct BurnDriver BurnDrvmd_beautyrbs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// beavis and butt-head (Hack, Spanish)
+// Beavis and Butt-Head (Hack, Spanish)
 // https://www.romhacking.net/translations/3466/
 static struct BurnRomInfo md_beavissRomDesc[] = {
 	{ "beavis and butt-head (hack, spanish).bin", 2097152, 0x10967d96, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48955,7 +49182,26 @@ struct BurnDriver BurnDrvmd_beaviss = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// bio hazard battle (Hack, Spanish)
+// Berenstain Bears' Camping Adventure, The (Hack, Spanish)
+// https://www.romhacking.net/translations/4215/
+static struct BurnRomInfo md_berenssRomDesc[] = {
+	{ "the berenstain bears' camping adventure (hack, spanish).bin", 1048576, 0xd2774706, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
+};
+
+STD_ROM_PICK(md_berenss)
+STD_ROM_FN(md_berenss)
+
+struct BurnDriver BurnDrvmd_berenss = {
+	"md_berenss", "md_berens", NULL, NULL, "2019",
+	"Berenstain Bears' Camping Adventure, The (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
+	MegadriveGetZipName, md_berenssRomInfo, md_berenssRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
+	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
+	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
+};
+
+// Bio Hazard Battle (Hack, Spanish)
 // https://www.romhacking.net/translations/3809/
 static struct BurnRomInfo md_biohazrbsRomDesc[] = {
 	{ "bio hazard battle (hack, spanish).bin", 1048576, 0x5a025101, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -48974,7 +49220,7 @@ struct BurnDriver BurnDrvmd_biohazrbs = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// blades of vengeance (Hack, Spanish)
+// Blades of Vengeance (Hack, Spanish)
 // https://www.romhacking.net/translations/3570/
 static struct BurnRomInfo md_bladevensRomDesc[] = {
 	{ "blades of vengeance (hack, spanish).bin", 1048576, 0x19e90563, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -51946,7 +52192,7 @@ struct BurnDriver Burnmd_Dushenzhi = {
 	"md_dushenzhi", NULL, NULL, NULL, "1995",
 	"Du Shen Zhi Meng Huan Poker (Taiwan) (Unl)\0", NULL, "Creaton Softech", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CASINO, 0,
+	BDF_GAME_WORKING | BDF_16BIT_ONLY, 1, HARDWARE_SEGA_MEGADRIVE, GBF_CARD, 0,
 	MegadriveGetZipName, md_DushenzhiRomInfo, md_DushenzhiRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
 	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
@@ -53501,45 +53747,7 @@ struct BurnDriver BurnDrvmd_sf2hce = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// aquatic games starring james pond and the aquabats, the (Hack, Spanish)
-// https://www.romhacking.net/translations/4932/
-static struct BurnRomInfo md_aquagamesRomDesc[] = {
-	{ "the aquatic games starring james pond and the aquabats (hack, spanish).bin", 524288, 0x1776fc2f, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_aquagames)
-STD_ROM_FN(md_aquagames)
-
-struct BurnDriver BurnDrvmd_aquagames = {
-	"md_aquagames", "md_aquagame", NULL, NULL, "2019",
-	"Aquatic Games Starring James Pond and the Aquabats, The (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 1, HARDWARE_SEGA_MEGADRIVE, GBF_SPORTSMISC, 0,
-	MegadriveGetZipName, md_aquagamesRomInfo, md_aquagamesRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// berenstain bears' camping adventure, the (Hack, Spanish)
-// https://www.romhacking.net/translations/4215/
-static struct BurnRomInfo md_berenssRomDesc[] = {
-	{ "the berenstain bears' camping adventure (hack, spanish).bin", 1048576, 0xd2774706, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
-};
-
-STD_ROM_PICK(md_berenss)
-STD_ROM_FN(md_berenss)
-
-struct BurnDriver BurnDrvmd_berenss = {
-	"md_berenss", "md_berens", NULL, NULL, "2019",
-	"Berenstain Bears' Camping Adventure, The (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
-	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_PLATFORM, 0,
-	MegadriveGetZipName, md_berenssRomInfo, md_berenssRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
-	MegadriveInit, MegadriveExit, MegadriveFrame, MegadriveDraw, MegadriveScan,
-	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
-};
-
-// the death and return of superman (Hack, Spanish)
+// Death and Return of Superman, The (Hack, Spanish)
 // https://www.romhacking.net/translations/3673/
 static struct BurnRomInfo md_deathretsRomDesc[] = {
 	{ "the death and return of superman (hack, spanish).bin", 2097152, 0x82b94fc6, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -53558,7 +53766,7 @@ struct BurnDriver BurnDrvmd_deathrets = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// the flintstones (Hack, Spanish)
+// Flintstone, The (Hack, Spanish)
 // https://www.romhacking.net/translations/2113/
 static struct BurnRomInfo md_flintsRomDesc[] = {
 	{ "the flintstones (hack, spanish).bin", 524288, 0x2539bd5b, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -53577,7 +53785,7 @@ struct BurnDriver BurnDrvmd_flints = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// gadget twins (Hack, Spanish)
+// Gadget Twins (Hack, Spanish)
 // https://www.romhacking.net/translations/4507/
 static struct BurnRomInfo md_gadgetsRomDesc[] = {
 	{ "gadget twins (hack, spanish).bin", 1048576, 0xb5e21dcb, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },
@@ -53588,7 +53796,7 @@ STD_ROM_FN(md_gadgets)
 
 struct BurnDriver BurnDrvmd_gadgets = {
 	"md_gadgets", "md_gadget", NULL, NULL, "2019",
-	"Gadget twins (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
+	"Gadget Twins (Hack, Spanish)\0", NULL, "Wave", "Sega Megadrive",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_16BIT_ONLY | BDF_CLONE | BDF_HACK, 2, HARDWARE_SEGA_MEGADRIVE, GBF_ACTION, 0,
 	MegadriveGetZipName, md_gadgetsRomInfo, md_gadgetsRomName, NULL, NULL, NULL, NULL, MegadriveInputInfo, MegadriveDIPInfo,
@@ -53596,7 +53804,7 @@ struct BurnDriver BurnDrvmd_gadgets = {
 	&bMegadriveRecalcPalette, 0x100, 320, 224, 4, 3
 };
 
-// great circus mystery starring mickey & minnie, the (Hack, Spanish)
+// Great Circus Mystery Starring Mickey & Minnie, The (Hack, Spanish)
 // https://www.romhacking.net/translations/3413/
 static struct BurnRomInfo md_mickeycmsRomDesc[] = {
 	{ "the great circus mystery starring mickey & minnie (hack, spanish).bin", 2097152, 0x58cd70c5, BRF_PRG | SEGA_MD_ROM_LOAD16_WORD_SWAP | SEGA_MD_ROM_OFFS_000000  },

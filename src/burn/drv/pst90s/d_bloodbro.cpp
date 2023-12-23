@@ -1117,7 +1117,7 @@ STD_ROM_PICK(weststry)
 STD_ROM_FN(weststry)
 
 struct BurnDriverD BurnDrvWeststry = {
-	"weststry", "bloodbro", NULL, NULL, "1991",
+	"weststry", "bloodbro", NULL, NULL, "1990",
 	"West Story (bootleg of Blood Bros., set 1)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
@@ -1167,7 +1167,7 @@ STD_ROM_PICK(weststrya)
 STD_ROM_FN(weststrya)
 
 struct BurnDriverD BurnDrvWeststrya = {
-	"weststrya", "bloodbro", NULL, NULL, "1991",
+	"weststrya", "bloodbro", NULL, NULL, "1990",
 	"West Story (bootleg of Blood Bros., set 2)\0", NULL, "bootleg (Datsu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
@@ -1196,7 +1196,7 @@ static struct BurnRomInfo skysmashRomDesc[] = {
 
 	{ "rom1",	0x020000, 0xe69986f6, 6 | BRF_SND },           //  9 Samples
 	
-	{ "ss006.u083.4j",	0x00100, 0x00000000, 0 | BRF_OPT | BRF_NODUMP },
+	{ "ss006.u083.4j",	0x00100, 0x8b2ae4a0, 0 | BRF_OPT },
 };
 
 STD_ROM_PICK(skysmash)
