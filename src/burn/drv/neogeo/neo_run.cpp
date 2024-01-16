@@ -133,6 +133,7 @@ UINT8 NeoDiag[2]	 = { 0, 0 };
 UINT8 NeoDebugDip[2] = { 0, 0 };
 UINT8 NeoReset = 0, NeoSystem = 0;
 UINT8 NeoCDBios = 0;
+static ClearOpposite<2, UINT8> clear_opposite;
 
 static UINT8 OldDebugDip[2] = { 0, 0 };
 
@@ -1539,6 +1540,7 @@ INT32 NeoScan(INT32 nAction, INT32* pnMin)
 		SCAN_VAR(nInputSelect);
 
 		SCAN_OFF(NeoInputBank, NeoInput, nAction);
+		clear_opposite.scan();
 
 		SCAN_VAR(nAnalogAxis);
 
@@ -3765,6 +3767,8 @@ static INT32 neogeoReset()
 
 	nCyclesExtra[0] = nCyclesExtra[1] = 0;
 
+	clear_opposite.reset();
+
 	{
 		SekOpen(0);
 		ZetOpen(0);
@@ -4501,16 +4505,6 @@ INT32 NeoRender()
 	return 0;
 }
 
-inline static void NeoClearOpposites(UINT8* nJoystickInputs)
-{
-	if ((*nJoystickInputs & 0x03) == 0x03) {
-		*nJoystickInputs &= ~0x03;
-	}
-	if ((*nJoystickInputs & 0x0C) == 0x0C) {
-		*nJoystickInputs &= ~0x0C;
-	}
-}
-
 static void NeoStandardInputs(INT32 nBank)
 {
 	if (nBank) {
@@ -4524,8 +4518,8 @@ static void NeoStandardInputs(INT32 nBank)
 			NeoInput[10] |= (NeoButton3[i] & 1) << i;
 			NeoInput[11] |= (NeoButton4[i] & 1) << i;
 		}
-		NeoClearOpposites(&NeoInput[ 8]);
-		NeoClearOpposites(&NeoInput[ 9]);
+		clear_opposite.check(0, NeoInput[ 8], 0x0c, 0x03);
+		clear_opposite.check(1, NeoInput[ 9], 0x0c, 0x03);
 
 		if (NeoDiag[1]) {
 			NeoInput[13] |= 0x80;
@@ -4541,9 +4535,8 @@ static void NeoStandardInputs(INT32 nBank)
 			NeoInput[ 2] |= (NeoButton1[i] & 1) << i;
 			NeoInput[ 3] |= (NeoButton2[i] & 1) << i;
 		}
-		NeoClearOpposites(&NeoInput[ 0]);
-		NeoClearOpposites(&NeoInput[ 1]);
-
+		clear_opposite.check(2, NeoInput[ 0], 0x0c, 0x03);
+		clear_opposite.check(3, NeoInput[ 1], 0x0c, 0x03);
 		if (NeoDiag[0]) {
 			NeoInput[ 5] |= 0x80;
 		}
