@@ -19,6 +19,7 @@ HAVE_UWP = 0
 # make the core smaller by removing some demanding drivers
 LIGHT = 0
 SPLIT_UP_LINK ?= 0
+EMULATORJS_THREADS ?= 0
 
 SPACE :=
 SPACE := $(SPACE) $(SPACE)
@@ -401,6 +402,11 @@ else ifeq ($(platform), emscripten)
 	INCLUDE_7Z_SUPPORT = 0
 	EXTERNAL_ZLIB = 1
 	STATIC_LINKING = 1
+	ifeq ($(EMULATORJS_THREADS), 1)
+		LDFLAGS += -pthread
+		CFLAGS += -pthread
+		CXXFLAGS += -pthread
+	endif
 
 # Windows MSVC 2017 all architectures
 else ifneq (,$(findstring windows_msvc2017,$(platform)))
