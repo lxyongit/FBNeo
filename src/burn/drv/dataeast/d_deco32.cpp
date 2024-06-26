@@ -55,9 +55,18 @@ static INT32 global_priority;
 static UINT32 sprite_ctrl;
 static UINT32 lightgun_port;
 
+static UINT16 color_base[3];
+
+static INT32 nExtraCycles;
+
 static UINT8 DrvJoy1[16];
 static UINT8 DrvJoy2[16];
 static UINT8 DrvJoy3[16];
+static UINT8 DrvJoyFS[4];
+// fake start buttons for symmetrical 4p inputs (nslasher: 3p coin & captaven 3p, 4p start)
+// captaven: not hooked up (p1,p2 start buttons are non-functional when system is set to 4players!)
+// therefore, the p3, p4 start buttons are only there to keep symmetry between the inputs for netgames to work
+// nslasher: p3 coin is mirrored to p1 coin
 static UINT8 DrvDips[5];
 static UINT8 DrvReset;
 static UINT16 DrvInputs[3];
@@ -97,6 +106,7 @@ static struct BurnInputInfo CaptavenInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 
 	{"P3 Coin",			BIT_DIGITAL,	DrvJoy3 + 2,	"p3 coin"	},
+	{"P3 Start",		BIT_DIGITAL,	DrvJoyFS + 0,	"p3 start"	}, // see notes for DrvJoyFS[]
 	{"P3 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p3 up"		},
 	{"P3 Down",			BIT_DIGITAL,	DrvJoy2 + 1,	"p3 down"	},
 	{"P3 Left",			BIT_DIGITAL,	DrvJoy2 + 2,	"p3 left"	},
@@ -105,6 +115,7 @@ static struct BurnInputInfo CaptavenInputList[] = {
 	{"P3 Button 2",		BIT_DIGITAL,	DrvJoy2 + 5,	"p3 fire 2"	},
 
 	{"P4 Coin",			BIT_DIGITAL,	DrvJoy3 + 3,	"p4 coin"	},
+	{"P4 Start",		BIT_DIGITAL,	DrvJoyFS + 1,	"p4 start"	}, // ""
 	{"P4 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p4 up"		},
 	{"P4 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p4 down"	},
 	{"P4 Left",			BIT_DIGITAL,	DrvJoy2 + 10,	"p4 left"	},
@@ -124,86 +135,87 @@ STDINPUTINFO(Captaven)
 
 static struct BurnDIPInfo CaptavenDIPList[]=
 {
-	{0x20, 0xff, 0xff, 0xff, NULL			},
-	{0x21, 0xff, 0xff, 0x7f, NULL			},
-	{0x22, 0xff, 0xff, 0xff, NULL			},
-	{0x23, 0xff, 0xff, 0x00, NULL			},
+	DIP_OFFSET(0x22)
+	{0x00, 0xff, 0xff, 0xff, NULL			},
+	{0x01, 0xff, 0xff, 0x7f, NULL			},
+	{0x02, 0xff, 0xff, 0xff, NULL			},
+	{0x03, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    8, "Coin A"		},
-	{0x20, 0x01, 0x07, 0x00, "3 Coins 1 Credits"	},
-	{0x20, 0x01, 0x07, 0x01, "2 Coins 1 Credits"	},
-	{0x20, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
-	{0x20, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
-	{0x20, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
-	{0x20, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
-	{0x20, 0x01, 0x07, 0x03, "1 Coin  5 Credits"	},
-	{0x20, 0x01, 0x07, 0x02, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0x07, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x07, 0x01, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x07, 0x07, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x07, 0x06, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x07, 0x05, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x07, 0x04, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x07, 0x03, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x07, 0x02, "1 Coin  6 Credits"	},
 
 	{0   , 0xfe, 0   ,    8, "Coin B"		},
-	{0x20, 0x01, 0x38, 0x00, "3 Coins 1 Credits"	},
-	{0x20, 0x01, 0x38, 0x08, "2 Coins 1 Credits"	},
-	{0x20, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
-	{0x20, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
-	{0x20, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
-	{0x20, 0x01, 0x38, 0x20, "1 Coin  4 Credits"	},
-	{0x20, 0x01, 0x38, 0x18, "1 Coin  5 Credits"	},
-	{0x20, 0x01, 0x38, 0x10, "1 Coin  6 Credits"	},
+	{0x00, 0x01, 0x38, 0x00, "3 Coins 1 Credits"	},
+	{0x00, 0x01, 0x38, 0x08, "2 Coins 1 Credits"	},
+	{0x00, 0x01, 0x38, 0x38, "1 Coin  1 Credits"	},
+	{0x00, 0x01, 0x38, 0x30, "1 Coin  2 Credits"	},
+	{0x00, 0x01, 0x38, 0x28, "1 Coin  3 Credits"	},
+	{0x00, 0x01, 0x38, 0x20, "1 Coin  4 Credits"	},
+	{0x00, 0x01, 0x38, 0x18, "1 Coin  5 Credits"	},
+	{0x00, 0x01, 0x38, 0x10, "1 Coin  6 Credits"	},
 
 	{0   , 0xfe, 0   ,    2, "Flip Screen"		},
-	{0x20, 0x01, 0x40, 0x40, "Off"			},
-	{0x20, 0x01, 0x40, 0x00, "On"			},
+	{0x00, 0x01, 0x40, 0x40, "Off"			},
+	{0x00, 0x01, 0x40, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Continue Coin"	},
-	{0x20, 0x01, 0x80, 0x80, "1 Start/1 Continue"	},
-	{0x20, 0x01, 0x80, 0x00, "2 Start/1 Continue"	},
+	{0x00, 0x01, 0x80, 0x80, "1 Start/1 Continue"	},
+	{0x00, 0x01, 0x80, 0x00, "2 Start/1 Continue"	},
 
 	{0   , 0xfe, 0   ,    4, "Lives"		},
-	{0x21, 0x01, 0x03, 0x01, "1"			},
-	{0x21, 0x01, 0x03, 0x00, "2"			},
-	{0x21, 0x01, 0x03, 0x03, "3"			},
-	{0x21, 0x01, 0x03, 0x02, "4"			},
+	{0x01, 0x01, 0x03, 0x01, "1"			},
+	{0x01, 0x01, 0x03, 0x00, "2"			},
+	{0x01, 0x01, 0x03, 0x03, "3"			},
+	{0x01, 0x01, 0x03, 0x02, "4"			},
 
 	{0   , 0xfe, 0   ,    4, "Difficulty"		},
-	{0x21, 0x01, 0x0c, 0x08, "Easy"			},
-	{0x21, 0x01, 0x0c, 0x0c, "Normal"		},
-	{0x21, 0x01, 0x0c, 0x04, "Hard"			},
-	{0x21, 0x01, 0x0c, 0x00, "Hardest"		},
+	{0x01, 0x01, 0x0c, 0x08, "Easy"			},
+	{0x01, 0x01, 0x0c, 0x0c, "Normal"		},
+	{0x01, 0x01, 0x0c, 0x04, "Hard"			},
+	{0x01, 0x01, 0x0c, 0x00, "Hardest"		},
 
 	{0   , 0xfe, 0   ,    2, "Coin Slots"		},
-	{0x21, 0x01, 0x10, 0x10, "Common"		},
-	{0x21, 0x01, 0x10, 0x00, "Individual"		},
+	{0x01, 0x01, 0x10, 0x10, "Common"		},
+	{0x01, 0x01, 0x10, 0x00, "Individual"		},
 
 	{0   , 0xfe, 0   ,    2, "Play Mode"		},
-	{0x21, 0x01, 0x20, 0x20, "2 Player"		},
-	{0x21, 0x01, 0x20, 0x00, "4 Player"		},
+	{0x01, 0x01, 0x20, 0x20, "2 Player"		},
+	{0x01, 0x01, 0x20, 0x00, "4 Player"		},
 
 	{0   , 0xfe, 0   ,    2, "Allow Continue"	},
-	{0x21, 0x01, 0x40, 0x00, "Off"			},
-	{0x21, 0x01, 0x40, 0x40, "On"			},
+	{0x01, 0x01, 0x40, 0x00, "Off"			},
+	{0x01, 0x01, 0x40, 0x40, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Demo Sounds"		},
-	{0x21, 0x01, 0x80, 0x80, "Off"			},
-	{0x21, 0x01, 0x80, 0x00, "On"			},
+	{0x01, 0x01, 0x80, 0x80, "Off"			},
+	{0x01, 0x01, 0x80, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Reset"		},
-	{0x22, 0x01, 0x10, 0x10, "Off"			},
-	{0x22, 0x01, 0x10, 0x00, "On"			},
+	{0x02, 0x01, 0x10, 0x10, "Off"			},
+	{0x02, 0x01, 0x10, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Free Play"		},
-	{0x22, 0x01, 0x20, 0x20, "Off"			},
-	{0x22, 0x01, 0x20, 0x00, "On"			},
+	{0x02, 0x01, 0x20, 0x20, "Off"			},
+	{0x02, 0x01, 0x20, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Stage Select"		},
-	{0x22, 0x01, 0x40, 0x40, "Off"			},
-	{0x22, 0x01, 0x40, 0x00, "On"			},
+	{0x02, 0x01, 0x40, 0x40, "Off"			},
+	{0x02, 0x01, 0x40, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Debug Mode"		},
-	{0x22, 0x01, 0x80, 0x80, "Off"			},
-	{0x22, 0x01, 0x80, 0x00, "On"			},
+	{0x02, 0x01, 0x80, 0x80, "Off"			},
+	{0x02, 0x01, 0x80, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Speed Hacks"		},
-	{0x23, 0x01, 0x01, 0x00, "Off"			},
-	{0x23, 0x01, 0x01, 0x01, "On"			},
+	{0x03, 0x01, 0x01, 0x00, "Off"			},
+	{0x03, 0x01, 0x01, 0x01, "On"			},
 };
 
 STDDIPINFO(Captaven)
@@ -280,6 +292,7 @@ static struct BurnInputInfo NslasherInputList[] = {
 	{"P2 Button 2",		BIT_DIGITAL,	DrvJoy1 + 13,	"p2 fire 2"	},
 	{"P2 Button 3",		BIT_DIGITAL,	DrvJoy1 + 14,	"p2 fire 3"	},
 
+	{"P3 Coin",			BIT_DIGITAL,	DrvJoyFS + 3,	"p3 coin"	},
 	{"P3 Start",		BIT_DIGITAL,	DrvJoy2 + 15,	"p3 start"	},
 	{"P3 Up",			BIT_DIGITAL,	DrvJoy2 + 8,	"p3 up"		},
 	{"P3 Down",			BIT_DIGITAL,	DrvJoy2 + 9,	"p3 down"	},
@@ -299,16 +312,17 @@ STDINPUTINFO(Nslasher)
 
 static struct BurnDIPInfo NslasherDIPList[]=
 {
-	{0x1c, 0xff, 0xff, 0x08, NULL			},
-	{0x1d, 0xff, 0xff, 0x00, NULL			},
+	DIP_OFFSET(0x1d)
+	{0x00, 0xff, 0xff, 0x08, NULL			},
+	{0x01, 0xff, 0xff, 0x00, NULL			},
 
 	{0   , 0xfe, 0   ,    2, "Service Mode "	},
-	{0x1c, 0x01, 0x08, 0x08, "Off"			},
-	{0x1c, 0x01, 0x08, 0x00, "On"			},
+	{0x00, 0x01, 0x08, 0x08, "Off"			},
+	{0x00, 0x01, 0x08, 0x00, "On"			},
 
 	{0   , 0xfe, 0   ,    2, "Speed Hacks"			},
-	{0x1d, 0x01, 0x01, 0x00, "Off"				},
-	{0x1d, 0x01, 0x01, 0x01, "On"				},
+	{0x01, 0x01, 0x01, 0x00, "Off"				},
+	{0x01, 0x01, 0x01, 0x01, "On"				},
 };
 
 STDDIPINFO(Nslasher)
@@ -488,7 +502,7 @@ static UINT8 __fastcall deco32_z80_sound_read(UINT16 address)
 		case 0xd000:
 			deco32_sound_irq &= ~0x02;
 			ZetSetIRQLine(0, (deco32_sound_irq != 0) ? CPU_IRQSTATUS_ACK : CPU_IRQSTATUS_NONE);
-			return deco16_soundlatch; 
+			return deco16_soundlatch;
 	}
 
 	return 0;
@@ -985,24 +999,28 @@ static void fghthist_write_long(UINT32 address, UINT32 data)
 	{
 		case 0x1201fc: deco32_soundlatch_write(data); return;
 		case 0x12002c: if (game_select != 1) return; // fghthist only (ignore compiler warning -dink)
-		case 0x150000: // fghthist / nslasher
+		case 0x150000: // fghthist / nslasher / tattass
 			if (game_select == 3) {
 				tattass_control_write(data);
+				global_priority = (data & 3) | (~data & 4); // 3rd bit is inverted in tattass
 			} else {
 				EEPROMWrite(data & 0x20, data & 0x40, data & 0x10);
+				global_priority = data & 7;
 			}
-			global_priority = data & 3;
 		return;
 
 		case 0x140000:
 			ArmSetIRQLine(ARM_IRQ_LINE, CPU_IRQSTATUS_NONE);
 		return;
 
+		case 0x164000: // tmap
+		case 0x164004: // spr0
+		case 0x164008: // spr1
+			color_base[(address & 0xf) / 4] = (data & 7) << 8;
+		return;
+
 		case 0x130000:
 		case 0x148000:
-		case 0x164000:
-		case 0x164004:
-		case 0x164008:
 		case 0x16400c:
 		case 0x16c000:
 		case 0x16c00c:
@@ -1458,6 +1476,8 @@ static INT32 DrvDoReset()
 	raster_irq_scanline = 0;
 	lightgun_latch = 0;
 
+	nExtraCycles = 0;
+
 	HiscoreReset();
 
 	return 0;
@@ -1491,7 +1511,7 @@ static INT32 MemIndex()
 		DrvDVIROM   = Next; Next += 0x1000000;
 	}
 
-	DrvPalette	= (UINT32*)Next; Next += 0x801 * sizeof(UINT32);
+	DrvPalette	= (UINT32*)Next; Next += 0x801 * 2 * sizeof(UINT32);
 
 	AllRam		= Next;
 
@@ -2250,9 +2270,9 @@ static INT32 DragngunCommonInit(INT32 has_z80, UINT32 speedhack)
 	deco16Init(0, 0, 1);
 	deco16_dragngun_kludge = 1; // st.3 boss blank tile fix
 	deco16_set_graphics(DrvGfxROM0, 0x020000 * 2, DrvGfxROM1, 0x120000 * 2, DrvGfxROM2, 0x400000 * 1);
-	deco16_set_color_base(0, 0x200);
+	deco16_set_color_base(0, 0x200); // >> 4 internally (bpp shifts)
 	deco16_set_color_base(1, 0x300);
-	deco16_set_color_base(2, 0x400);
+	deco16_set_color_base(2, 0x400); // >> 8 ""
 	deco16_set_color_base(3, 0x400);
 	deco16_set_color_mask(2, 0x003);
 	deco16_set_color_mask(3, 0x003);
@@ -2332,29 +2352,51 @@ static INT32 DrvExit()
 	return 0;
 }
 
+#ifndef MIN
+#define MIN(x,y)			((x) < (y) ? (x) : (y))
+#endif
+#ifndef MAX
+#define MAX(x,y)			((x) > (y) ? (x) : (y))
+#endif
+
 static void DrvPaletteUpdate()
 {
 	UINT32 *p = (UINT32*)DrvPalBuf;
 	UINT32 *s = (UINT32*)DrvAceRAM;
 
-	UINT8 ptr = s[0x20];
-	UINT8 ptg = s[0x21];
-	UINT8 ptb = s[0x22];
-	UINT8 psr = s[0x23];
-	UINT8 psg = s[0x24];
-	UINT8 psb = s[0x25];
+	UINT8 fadeptr = s[0x20] & 0xff;
+	UINT8 fadeptg = s[0x21] & 0xff;
+	UINT8 fadeptb = s[0x22] & 0xff;
+	UINT8 fadepsr = s[0x23] & 0xff;
+	UINT8 fadepsg = s[0x24] & 0xff;
+	UINT8 fadepsb = s[0x25] & 0xff;
+	UINT16 mode = s[0x26] & 0xffff;
 
 	for (INT32 i = 0; i < 0x2000/4; i++)
 	{
-		UINT8 r = BURN_ENDIAN_SWAP_INT32(p[i]) >> 0;
-		UINT8 g = BURN_ENDIAN_SWAP_INT32(p[i]) >> 8;
-		UINT8 b = BURN_ENDIAN_SWAP_INT32(p[i]) >> 16;
+		UINT8 r = (BURN_ENDIAN_SWAP_INT32(p[i]) >> 0) & 0xff;
+		UINT8 g = (BURN_ENDIAN_SWAP_INT32(p[i]) >> 8) & 0xff;
+		UINT8 b = (BURN_ENDIAN_SWAP_INT32(p[i]) >> 16) & 0xff;
 
-		if (i > 255 && has_ace == 1)
+		DrvPalette[i + 0x800] = BurnHighCol(r,g,b,0);
+
+		if (has_ace == 1)
 		{
-			b = (UINT8)((float)b + (((float)ptb - (float)b) * (float)psb/255.0f));
-			g = (UINT8)((float)g + (((float)ptg - (float)g) * (float)psg/255.0f));
-			r = (UINT8)((float)r + (((float)ptr - (float)r) * (float)psr/255.0f));
+			switch (mode)
+			{
+				default:
+				case 0x1100: // multiplicative fade
+					b = MAX(0, MIN(255, UINT8((b + (((fadeptb - b) * fadepsb) / 255)))));
+					g = MAX(0, MIN(255, UINT8((g + (((fadeptg - g) * fadepsg) / 255)))));
+					r = MAX(0, MIN(255, UINT8((r + (((fadeptr - r) * fadepsr) / 255)))));
+					break;
+				case 0x1000: // additive fade, correct?
+					b = MIN(b + fadepsb, 0xff);
+					g = MIN(g + fadepsg, 0xff);
+					r = MIN(r + fadepsr, 0xff);
+					break;
+			}
+
 		}
 
 		DrvPalette[i] = BurnHighCol(r,g,b,0);
@@ -2368,10 +2410,6 @@ static INT32 default_col_cb(INT32 col)
 
 static INT32 (*m_pri_cb)(INT32, INT32) = NULL;
 static INT32 (*m_col_cb)(INT32) = NULL;
-
-#if defined FBNEO_DEBUG
-extern int counter; // dink debug stuff, to be removed when driver 100%.  (or slightly less)
-#endif
 
 static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 colbase, INT32 /*transp*/, INT32 sizewords, bool invert_flip, INT32 m_raw_shift, INT32 m_alt_format, INT32 layerID )
 {
@@ -2504,25 +2542,6 @@ static void draw_sprites_common(UINT16 *bitmap, UINT8* ram, UINT8 *gfx, INT32 co
 					mult2 = multi + 1;
 
 					y -= 8;
-					if (game_select == 2) {
-						// Hack for nslasher bad trans.  alpha prio's: 0x80 pri0, 0xa0 pri1, 0xc0 pri2, pri3 0xe0
-						UINT32 *ace_ram = (UINT32*)DrvAceRAM;
-
-						//if (counter && layerID && sprite) bprintf(0, _T("%X - %X (%X:%X), "), sprite, colour, global_priority, ace_ram[0]);
-						if (layerID && (sprite == 0x3cd || sprite == 0x3d0) && !(colour&0x80))
-							colour |= (BURN_ENDIAN_SWAP_INT32(ace_ram[0]) == 0x17) ? 0xa0 : 0xc0; // black message boxes (ace_ram[0] == 0x10), shadow on character selection screen (ace_ram[0] == 0x17)
-						if (layerID && (sprite >= 0x82a && sprite <= 0x8b1) && !(colour&0x80))
-							colour |= 0xe0; // level 2 carriage buggy
-						if (layerID && (sprite >= 0x728 && sprite <= 0x79f))
-							colour |= 0x80; // Hong Hua (Girl hero) "special"
-						if (layerID && (sprite == 0x7e0 || sprite == 0x7e4 || sprite == 0x7e8 || sprite == 0x7ec ||
-										sprite == 0x7f0 || sprite == 0x7f4 || sprite == 0x7f8 || sprite == 0x7fc ||
-										sprite == 0x800 || sprite == 0x804)) {
-							colour &= ~0x20; // level 5 mid-boss "hole in plane" wrong priority (doesn't show up until after character goes through the hole w/o this)
-						} else
-							if (layerID && (sprite >= 0x7a0 && sprite <= 0x829))
-								colour &= ~0x80; // level 5 cargobay with bad alpha
-					}
 
 					while (multi >= 0)
 					{
@@ -2869,31 +2888,50 @@ static inline UINT32 alphablend32(UINT32 d, UINT32 s, UINT32 p)
 	INT32 a = 255 - p;
 
 	return (((((s & 0xff00ff) * p) + ((d & 0xff00ff) * a)) & 0xff00ff00) +
-		((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
+			((((s & 0x00ff00) * p) + ((d & 0x00ff00) * a)) & 0x00ff0000)) >> 8;
 }
 
-static UINT32 alphablend16(UINT32 s, UINT32 d, UINT32 p)
+static inline UINT32 alphablend16(UINT32 d, UINT32 s, UINT32 p)
 {
 	p = (p + 2) >> 2;
-	UINT8 a = 63 - p;
+	UINT8 a = 64 - p;
 
 	return (((((s & 0x00f81f) * p) + ((d & 0x00f81f) * a)) & 0x003e07c0) +
-		((((s & 0x0007e0) * p) + ((d & 0x0007e0) * a)) & 0x0001f800)) >> 6;
+			((((s & 0x0007e0) * p) + ((d & 0x0007e0) * a)) & 0x0001f800)) >> 6;
 }
 
-static UINT32 alphablend15(UINT32 s, UINT32 d, UINT32 p)
+static inline UINT32 alphablend15(UINT32 d, UINT32 s, UINT32 p)
 {
 	p = (p + 4) >> 3;
-	UINT8 a = 31 - p;
+	UINT8 a = 32 - p;
 
 	return (((((s & 0x007c1f) * p) + ((d & 0x007c1f) * a)) & 0x00f83e0) +
-		((((s & 0x0003e0) * p) + ((d & 0x0003e0) * a)) & 0x0007c00)) >> 5;
+			((((s & 0x0003e0) * p) + ((d & 0x0003e0) * a)) & 0x0007c00)) >> 5;
+}
+
+static UINT8 ace_get_alpha(UINT8 val)
+{
+	val &= 0x1f;
+
+	UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
+
+	int alpha = BURN_ENDIAN_SWAP_INT32(m_ace_ram[val]) & 0xff;
+	if (alpha > 0x20) {
+		return 0x80;
+	} else {
+		alpha = 255 - (alpha << 3);
+		if (alpha < 0) {
+			alpha = 0;
+		}
+
+		return alpha & 0xff;
+	}
 }
 
 static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 {
-	UINT32 *pal0 = DrvPalette + ((game_select == 2) ? 0x400 : 0x600);
-	UINT32 *pal1 = DrvPalette + ((game_select == 2) ? 0x600 : 0x500);
+	UINT32 *pal0 = DrvPalette + color_base[1];
+	UINT32 *pal1 = DrvPalette + color_base[2];
 	UINT32 *pal2 = DrvPalette;
 
 	INT32 granularity0 = 1<<5;
@@ -2918,6 +2956,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 
 	/* Mix sprites into main bitmap, based on priority & alpha */
 	for (INT32 y=0; y<nScreenHeight; y++) {
+		UINT16* alphaTilemap=pTempDraw[2] + y * nScreenWidth;
 		UINT8* tilemapPri=deco16_prio_map + (y * 512);
 		UINT16* sprite0=pTempDraw[0] + (y * nScreenWidth);
 		UINT16* sprite1=pTempDraw[1] + (y * nScreenWidth);
@@ -2927,7 +2966,7 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 		destLine16 += y * nScreenWidth;
 
 		for (INT32 x=0; x<nScreenWidth; x++) {
-			if (tilemapPri[x] == 8) {
+			if (tilemapPri[x] == 8) { // text layer, always on top!
 				continue;
 			}
 
@@ -2937,35 +2976,54 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 			UINT16 pri1=(priColAlphaPal1&0x6000)>>13;
 			UINT16 col0=((priColAlphaPal0&0x1f00)>>8);
 			UINT16 col1=((priColAlphaPal1&0x0f00)>>8);
-			UINT16 alpha1=priColAlphaPal1&0x8000;
+			if (game_select == 3) { // tattass
+				col0=((priColAlphaPal0&0x0f00)>>8); // diff. masks
+				col1=((priColAlphaPal1&0x3f00)>>8);
+			}
+			bool alpha1=(priColAlphaPal1&0x8000);
+			bool alpha2=(!(priColAlphaPal1&0x1000));
 
+			// Apply sprite bitmap 0 according to priority rules
+			UINT16 coloffs = ((global_priority & 4) == 0) ? 0x800 : 0;
+			bool sprite1_drawn = false;
 			if ((priColAlphaPal0&0xff)!=0)
 			{
 				if ((pri0&0x3)==0 || (pri0&0x3)==1 || ((pri0&0x3)==2 && mixAlphaTilemap))
 				{
 					if (depth == 32)
-						destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+						destLine32[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
 					else if (depth < 24)
-						destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+						destLine16[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
+					sprite1_drawn = true;
 				}
 				else if ((pri0&0x3)==2) // Spri0 under top playfield
 				{
 					if (tilemapPri[x]<4) {
 						if (depth == 32)
-							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+							destLine32[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
 						else if (depth < 24)
-							destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+							destLine16[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
+						sprite1_drawn = true;
 					}
 				}
 				else // Spri0 under top & middle playfields
 				{
 					if (tilemapPri[x]<2) {
 						if (depth == 32)
-							destLine32[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+							destLine32[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
 						else if (depth < 24)
-							destLine16[x]=pal0[(priColAlphaPal0&0xff) + (granularity0 * col0)];
+							destLine16[x]=pal0[coloffs | ((priColAlphaPal0&0xff) + (granularity0 * col0))];
+						sprite1_drawn = true;
 					}
 				}
+			}
+
+			coloffs = (((global_priority & 4) == 0) && sprite1_drawn) ? 0x800 : 0;
+			int alpha = ((!alpha1) || alpha2) ? ace_get_alpha((col1 & 0x8) ? (0x4 + ((col1 & 0x3) / 2)) : ((col1 & 0x7) / 2)) : 0xff;
+
+			if (game_select == 3) {
+				alpha = ace_get_alpha(col1 / 8);
+				col1 &= 0xf;
 			}
 
 			// Apply sprite bitmap 1 according to priority rules
@@ -2975,51 +3033,45 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 				{
 					if (pri1==0 && (((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2))))
 					{
-						if ((global_priority&1)==0 || ((global_priority&1)==1 && tilemapPri[x]<4) || ((global_priority&1)==1 && mixAlphaTilemap)) {
+						if ((global_priority&1)==0 ||
+							((global_priority&1)==1 && tilemapPri[x]<4) ||
+							((global_priority&1)==1 && (mixAlphaTilemap && ((alphaTilemap[x] & 0xf) == 0))))
+							{
 							// usually "shadows" under characters (nslasher)
 							if (depth == 32)
-								destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+								destLine32[x]=alphablend32(destLine32[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 							else if (depth == 16)
-								destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+								destLine16[x]=alphablend16(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 							else if (depth == 15)
-								destLine16[x]=alphablend15(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 0x80);
+								destLine16[x]=alphablend15(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 
 						}
 					}
-					else if ((pri1>=2) || (pri1==1 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0 && (pri0&0x3)!=1 && (pri0&0x3)!=2)))) {
-						INT32 alpha = 0x7f;
-
-						if (game_select == 2 && (pri1 == 1 || pri1 == 3)) { // nslasher: carriage buggy wheels behind / in front of object
-							UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
-							alpha = (mixAlphaTilemap) ? ((BURN_ENDIAN_SWAP_INT32(m_ace_ram[0x17 + (((priColAlphaPal1&0xf0)>>4)/2)])) * 8)-1 : 0x7f;
-							if (alpha<0)
-								alpha=0;
-						}
-
+					else if ((pri1>=2) || (pri1 == 1 && ((global_priority & 1) == 0 || tilemapPri[x] < 4)
+										   && ((priColAlphaPal0 & 0xff) == 0 || ((pri0 & 0x3) != 0 && (pri0 & 0x3) != 1 && ((global_priority & 1) == 0 || (pri0 & 0x3) != 2))))) {
 						if (depth == 32)
-							destLine32[x]=alphablend32(destLine32[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
+							destLine32[x]=alphablend32(destLine32[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 						else if (depth == 16)
-							destLine16[x]=alphablend16(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
+							destLine16[x]=alphablend16(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 						else if (depth == 15)
-							destLine16[x]=alphablend15(destLine16[x], pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)], 255-alpha);
+							destLine16[x]=alphablend15(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 					}
 				}
 				else
 				{
 					if ((pri1==0 && ((priColAlphaPal0&0xff)==0 || ((pri0&0x3)!=0))) || (pri1>=1)) {
 						if (depth == 32)
-							destLine32[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
-						else if (depth < 24)
-							destLine16[x]=pal1[(priColAlphaPal1&0xff) + (granularity1 * col1)];
+							destLine32[x]=alphablend32(destLine32[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
+						else if (depth == 16)
+							destLine16[x]=alphablend16(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
+						else if (depth == 15)
+							destLine16[x]=alphablend15(destLine16[x], pal1[coloffs | ((priColAlphaPal1&0xff) + (granularity1 * col1))], alpha);
 					}
 				}
 			}
 
 			if (mixAlphaTilemap && drawAlphaTilemap)
 			{
-				UINT32 *m_ace_ram = (UINT32*)DrvAceRAM;
-				UINT16* alphaTilemap=pTempDraw[2] + y * nScreenWidth;
-
 				UINT16 p=alphaTilemap[x];
 				if (p&0xf)
 				{
@@ -3029,16 +3081,14 @@ static void mixDualAlphaSprites(INT32 mixAlphaTilemap, INT32 drawAlphaTilemap)
 						&& ((priColAlphaPal1&0xff)==0 || (pri1&0x3)==2 || (pri1&0x3)==3 || alpha1))
 					{
 						/* Alpha values are tied to ACE ram */
-						INT32 alpha=((BURN_ENDIAN_SWAP_INT32(m_ace_ram[0x17 + (((p&0xf0)>>4)/2)])) * 8)-1;
-						if (alpha<0)
-							alpha=0;
+						INT32 alpha_ = ace_get_alpha(0x17 + (((p & 0xf0) >> 4) / 2));
 
 						if (depth == 32)
-							destLine32[x]=alphablend32(destLine32[x], pal2[p], 255-alpha);
+							destLine32[x]=alphablend32(destLine32[x], pal2[coloffs | p], alpha_);
 						else if (depth == 16)
-							destLine16[x]=alphablend16(destLine16[x], pal2[p], 255-alpha);
+							destLine16[x]=alphablend16(destLine16[x], pal2[coloffs | p], alpha_);
 						else if (depth == 15)
-							destLine16[x]=alphablend15(destLine16[x], pal2[p], 255-alpha);
+							destLine16[x]=alphablend15(destLine16[x], pal2[coloffs | p], alpha_);
 
 					}
 				}
@@ -3059,8 +3109,7 @@ static INT32 NslasherDraw()
 
 	UINT32 *ace = (UINT32*)DrvAceRAM;
 
-	INT32 draw_alpha_tmap = 0;
-	INT32 has_alpha = (ace[0x17] && global_priority) ? 1 : 0;
+	INT32 has_alpha = (ace[0x17] && global_priority&3) ? 1 : 0;
 
 	if (global_priority & 2)
 	{
@@ -3075,13 +3124,11 @@ static INT32 NslasherDraw()
 		{
 			if (nBurnLayer & 2) deco16_draw_layer(1, pTransDraw, 2);
 			if (nBurnLayer & 4) deco16_draw_layer(2, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
-			draw_alpha_tmap = (has_alpha && deco16_layer_enabled(2));
 		}
 		else
 		{
 			if (nBurnLayer & 4) deco16_draw_layer(2, pTransDraw, 2);
 			if (nBurnLayer & 2) deco16_draw_layer(1, (has_alpha) ? pTempDraw[2] : pTransDraw, 4 + (has_alpha ? DECO16_LAYER_OPAQUE : 0));
-			draw_alpha_tmap = (has_alpha && deco16_layer_enabled(1));
 		}
 	}
 
@@ -3098,7 +3145,7 @@ static INT32 NslasherDraw()
 
 	BurnTransferCopy(DrvPalette);
 
-	mixDualAlphaSprites(has_alpha, draw_alpha_tmap);
+	mixDualAlphaSprites(has_alpha, has_alpha);
 
 	return 0;
 }
@@ -3285,8 +3332,6 @@ static void dragngun_drawgfxzoom(UINT32 code, UINT32 color,INT32 flipx,INT32 fli
 	}
 }
 
-//extern int counter;
-
 static void dragngun_draw_sprites()
 {
 	const UINT32 *spritedata = (UINT32*)DrvSprBuf;
@@ -3389,6 +3434,7 @@ static void dragngun_draw_sprites()
 					sprite ^= 0xc000;
 				//if (counter) bprintf(0, _T("%X, "), sprite);
 
+				// hack for sprite mask in intro
 				if (sprite >= 0x3e44 && sprite <= 0x3f03 && priority_orig == 1) // dragon-fire masking effect for titlescreen
 					priority = 1; else priority = 7;
 
@@ -3462,7 +3508,7 @@ static INT32 DragngunStartDraw()
 
 	deco16_clear_prio_map();
 
-	BurnTransferClear(0x800);
+	BurnTransferClear(0x400);
 
 	return 0;
 }
@@ -3514,6 +3560,10 @@ static INT32 DrvFrame()
 			DrvInputs[1] = (DrvInputs[1] & ~0x18) | (DrvDips[0] & 8);
 		}
 
+		if (game_select == 2) { // nslasher p3 fake coin button
+			DrvJoy2[0] |= DrvJoyFS[3];
+		}
+
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -3529,7 +3579,7 @@ static INT32 DrvFrame()
 	INT32 nInterleave = 274;
 	INT32 nCyclesTotal[2] = { (INT32)((double)7000000 / 57.799650), (INT32)((double)deco16_sound_cpuclock / 57.799650) };
 	if (game_select == 2) nCyclesTotal[0] = 7080500 / 60; // nslasher
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	ArmOpen(0);
 	h6280Open(0);
@@ -3570,6 +3620,8 @@ static INT32 DrvFrame()
 	h6280Close();
 	ArmClose();
 
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
+
 	if (pBurnDraw && pDrawScanline == NULL) {
 		BurnDrvRedraw();
 	}
@@ -3593,6 +3645,10 @@ static INT32 DrvZ80Frame()
 			DrvInputs[1] = (DrvInputs[1] & ~0x18) | (DrvDips[0] & 8);
 		}
 
+		if (game_select == 2) { // nslasher p3 fake coin button
+			DrvJoy2[0] |= DrvJoyFS[3];
+		}
+
 		for (INT32 i = 0; i < 16; i++) {
 			DrvInputs[0] ^= (DrvJoy1[i] & 1) << i;
 			DrvInputs[1] ^= (DrvJoy2[i] & 1) << i;
@@ -3603,7 +3659,7 @@ static INT32 DrvZ80Frame()
 	INT32 nInterleave = 274;
 	INT32 nCyclesTotal[2] = { 7000000 / 60, 3580000 / 60 };
 	if (game_select == 2) nCyclesTotal[0] = 7080500 / 60; // nslasher
-	INT32 nCyclesDone[2] = { 0, 0 };
+	INT32 nCyclesDone[2] = { nExtraCycles, 0 };
 
 	ArmOpen(0);
 	ZetOpen(0);
@@ -3627,6 +3683,8 @@ static INT32 DrvZ80Frame()
 
 	ZetClose();
 	ArmClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnSoundOut) {
 		deco32_z80_sound_update(pBurnSoundOut, nBurnSoundLen);
@@ -3661,7 +3719,7 @@ static INT32 DrvBSMTFrame()
 
 	INT32 nInterleave = 274;
 	INT32 nCyclesTotal[3] = { 7000000 / 58, 1789790 / 58, 24000000/4 / 58 };
-	INT32 nCyclesDone[3] = { 0, 0, 0 };
+	INT32 nCyclesDone[3] = { nExtraCycles, 0, 0 };
 
 	ArmOpen(0);
 	deco16_vblank = 1;
@@ -3698,6 +3756,8 @@ static INT32 DrvBSMTFrame()
 	}
 
 	ArmClose();
+
+	nExtraCycles = nCyclesDone[0] - nCyclesTotal[0];
 
 	if (pBurnDraw) {
 		BurnDrvRedraw();
@@ -3746,7 +3806,6 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 
 		SCAN_VAR(DrvOkiBank);
 		SCAN_VAR(global_priority);
-		SCAN_VAR(DrvOkiBank);
 		SCAN_VAR(raster_irq_target);
 		SCAN_VAR(raster_irq_masked);
 		SCAN_VAR(raster_irq);
@@ -3756,6 +3815,9 @@ static INT32 DrvScan(INT32 nAction, INT32 *pnMin)
 		SCAN_VAR(lightgun_latch);
 		SCAN_VAR(sprite_ctrl);
 		SCAN_VAR(lightgun_port);
+		SCAN_VAR(color_base);
+
+		SCAN_VAR(nExtraCycles);
 	}
 
 	if (nAction & ACB_WRITE) {

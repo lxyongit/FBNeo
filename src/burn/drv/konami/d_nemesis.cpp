@@ -3589,11 +3589,10 @@ static INT32 SalamandFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 9216000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
-	ZetIdle(nCyclesExtra[1]);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3614,7 +3613,6 @@ static INT32 SalamandFrame()
 	SekClose();
 
 	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nCyclesExtra[1] = ZetTotalCycles(0) - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -3652,11 +3650,10 @@ static INT32 HcrashFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 6144000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
-	ZetIdle(nCyclesExtra[1]);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3681,7 +3678,6 @@ static INT32 HcrashFrame()
 	SekClose();
 
 	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nCyclesExtra[1] = ZetTotalCycles(0) - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -3719,11 +3715,10 @@ static INT32 BlkpnthrFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 9216000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
-	ZetIdle(nCyclesExtra[1]);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3744,7 +3739,6 @@ static INT32 BlkpnthrFrame()
 	SekClose();
 
 	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nCyclesExtra[1] = ZetTotalCycles(0) - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -3868,11 +3862,10 @@ static INT32 CitybombFrame()
 
 	INT32 nInterleave = 256;
 	INT32 nCyclesTotal[2] = { 9216000 / 60, 3579545 / 60 };
-	INT32 nCyclesDone[2] = { nCyclesExtra[0], nCyclesExtra[1] };
+	INT32 nCyclesDone[2] = { nCyclesExtra[0], 0 };
 
 	SekOpen(0);
 	ZetOpen(0);
-	ZetIdle(nCyclesExtra[1]);
 
 	for (INT32 i = 0; i < nInterleave; i++)
 	{
@@ -3894,7 +3887,6 @@ static INT32 CitybombFrame()
 	ZetClose();
 
 	nCyclesExtra[0] = nCyclesDone[0] - nCyclesTotal[0];
-	nCyclesExtra[1] = ZetTotalCycles(0) - nCyclesTotal[1];
 
 	if (pBurnDraw) {
 		DrvDraw();
@@ -4370,8 +4362,8 @@ struct BurnDriver BurnDrvCitybombj = {
 // Kitten Kaboodle
 
 static struct BurnRomInfo kittenkRomDesc[] = {
-	{ "kitten.15k",		0x10000, 0x8267cb2b, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
-	{ "kitten.15h",		0x10000, 0xeb41cfa5, 1 | BRF_PRG | BRF_ESS }, //  1
+	{ "712-b10.15k",	0x10000, 0x8267cb2b, 1 | BRF_PRG | BRF_ESS }, //  0 m68000 Code
+	{ "712-b09.15h",	0x10000, 0xeb41cfa5, 1 | BRF_PRG | BRF_ESS }, //  1
 	{ "712-b08.15f",	0x20000, 0xe6d71611, 1 | BRF_PRG | BRF_ESS }, //  2
 	{ "712-b07.15d",	0x20000, 0x30f75c9f, 1 | BRF_PRG | BRF_ESS }, //  3
 

@@ -24,6 +24,19 @@ Note: some of those "quality of life" hacks might be doable with programming ski
 
 It's distributed under a non-commercial license, see [LICENSE.md](https://github.com/finalburnneo/FBNeo/blob/master/LICENSE.md) and [whatsnew.html](https://github.com/finalburnneo/FBNeo/blob/master/whatsnew.html).
 
+There are controversies about whether libretro's patreon and retroarch's GPL license breaks FBNeo's non-commercial license or not. This is what you should know :
+
+* **"Redistributions may not be sold, nor may they be used in a commercial product or activity."** : By definition, a commercial activity is an activity involving the sale of goods or services. The libretro project does none of that, and it is unclear whether a patreon should be treated as a commercial activity or not when no goods or services are provided in exchange of the donations.
+* **"You may not ask for donations to support your work on any project that uses the FB Neo source code."** : This FBNeo port is using libretro code, not the other way around. This port is directly authored/maintained/supported by members of the FBNeo team, and none of them is receiving donations. Interestingly, if receiving donations was de facto a commercial activity, this term shouldn't be required.
+* *If* the libretro project was a commercial activity, it would still be unclear how it does affect this port. Our win32 standalone builds use the directx api, which belongs to a commercial company. Using the libretro api, which would belong to a commercial activity, wouldn't be any different. Furthermore, in all likeliness, there would still be alternative libretro frontends that don't belong to the libretro project and are not commercial. 
+* Actually, alternative commercial libretro frontends already exist, and we consider we are not concerned as long as they neither redistribute FBNeo nor use it as some mean of advertisement. In this scenario, only a manual installation of the core by the user will be considered legal and supported.
+* While GPL code can't be mixed with non-commercial code, this is a non-issue since this port doesn't contain any GPL-licensed code.
+* Under european law, where the libretro buildbots are located, linking GPL and non-commercial softwares doesn't produce a derivative work, and doesn't extend the GPL license to the non-commercial work (source [here](https://joinup.ec.europa.eu/collection/eupl/licence-compatibility-permissivity-reciprocity-and-interoperability)). It is unclear whether the same applies in non-EU countries or not.
+
+## Note about this readme
+
+It mostly assumes you are using RetroArch as your libretro frontend, some specific instructions might differ if you are using another one.
+
 ## Extensions
 
 zip, 7z
@@ -32,10 +45,11 @@ zip, 7z
 
 From the root of the repository, run
 ```
+make -j5 -C src/burner/libretro clean
 make -j5 -C src/burner/libretro generate-files
 make -j5 -C src/burner/libretro
 ```
-Note : `-j5` is to optimize build time on cpus with 4 cores, you can rise or reduce that value to match your own, however a value too high will increase ram usage and might even cause your system to become instable.
+Note : `-j5` is to optimize build time on cpus with 4 cores (X+1 cores), you can rise or reduce that value to match your own, however a value too high will increase ram usage and might even cause your system to become unstable.
 
 Note : if you need additional parameters, they must be added to both commands.
 
@@ -79,6 +93,9 @@ Refer to a [clrmamepro tutorial](https://docs.libretro.com/guides/arcade-getting
 | Camera            | ✕         |
 | Location          | ✕         |
 | Subsystem         | ✔         |
+| IPS Patch         | ✔         |
+| RomData           | ✔         |
+| Multi-language    | ✔         |
 
 ## Mapping
 
@@ -95,6 +112,7 @@ The following "device type" also exist, but they won't be compatible with every 
 * **Mouse (full)** : same as above, but the buttons will be on the mouse
 * **Pointer** : it will use "pointer" device (can be a mouse/trackball) to determine coordinates on screen, buttons will stay on retropad
 * **Lightgun** : it will use lightgun to determine coordinates on screen, buttons will be on the lightgun too.
+* **Analog Arcade Gun** : it will use the analog stick for gun games but in a different way than "Classic" and "Modern", it is particularily useful if you have a "fixed arcade gun" (arcade gun mounted on an analog control).
 
 ## Emulating consoles and computers
 
@@ -233,6 +251,8 @@ This core widely supports the RetroArch input latency reduction features, with *
 
 Proper support for **runahead second instance** is not guaranteed because it doesn't exist in standalone FBNeo unlike the other methods.
 
+Note : There seems to be possible conflicts when rewind is active simultanneously, see https://github.com/libretro/RetroArch/issues/16374.
+
 ## RetroAchievements
 
 This core provides support for RetroAchievements, and some were added for popular games.
@@ -247,7 +267,14 @@ This core supports the RetroArch cheat feature with the `.cht` files. However it
 
 * Download the pack of cheats from [here](https://github.com/finalburnneo/FBNeo-cheats/archive/master.zip)
 * Uncompress **all of them** into the `SYSTEM_DIRECTORY/fbneo/cheats/` folder (which is **NOT** the same folder as the RetroArch feature with the `.cht` files)
-* Cheats will become available through core options (`Quick Menu > Options`, **NOT** `Quick Menu > Cheats`) afterward.
+* Cheats will become available through core options (`Quick Menu > Core Options`, **NOT** `Quick Menu > Cheats`) afterward.
+
+## Multi-language
+
+This core supports multi-language feature.
+
+* Multi-language is based on the front-end User UI language switching
+* Simplified Chinese and Traditional Chinese have been added.
 
 ## Frequently asked questions
 
@@ -266,12 +293,28 @@ Exceptionally there might be a false positive due to your file being unreadable 
 
 A lot of romhacks are supported natively, so your romhack might already be supported under a specific romset name.
 
-For the unsupported romhacks, you can put the patched version of the romset into `SYSTEM_DIRECTORY/fbneo/patched` (NB: you can strip it of any file that don't differ from non-patched romset if you want), that method will only work if the sizes and names matches with the original romset. 
-**The romset you must launch is still the original non-patched romset (its content will be overrided at runtime by the content of the patched one)**, you can disable that behavior by toggling off the `Allow patched romsets` core option.
+For the unsupported romhacks, there are 3 methods, but those romhacks are not allowed and must be disabled by toggling off the `Allow patched romsets` core option if you intend to use RetroAchievements : 
+
+#### Using the "patched" folder
+
+* Put the patched version of the romset into `SYSTEM_DIRECTORY/fbneo/patched`, this folder has special privileges allowing it to ignore crcs. Sizes and names still need to match the original romset though.
+* Optional : you could strip the patched version from any file that don't differ from the original romset.
+* Note : **The romset you must launch is still the original non-patched romset (its content will be overriden at runtime by the content of the patched one)**.
+
+#### Using IPS Patches
+
+* Put all IPS patch files (including: driver name directory/**.dat|**.ips) into the `SYSTEM_DIRECTORY/fbneo/ips/` folder.
+* IPS Patch will become available through core options (`Quick Menu > Core Options`) afterward. To apply them, you need to launch the game, enable them in core options, then use RetroArch's "restart" action.
+* Note : To avoid competing with loaded games for startup privileges, IPS Patches is initially disabled by default.
+
+#### Using RomData
+
+* Put all RomData files (including: driver name directory/**.dat) into the `SYSTEM_DIRECTORY/fbneo/romdata/` folder
+* RomData will become available through core options (`Quick Menu > Core Options`) afterward. To apply them, you need to launch the game, enable them in core options, then use RetroArch's "restart" action.
 
 ### How can i run that unibios i bought from http://unibios.free.fr/ ?
 
-Same answer as above.
+Use the "patched folder" method from above.
 
 ### I think i found a glitch, how do i report it ?
 
@@ -369,6 +412,8 @@ Removing that limitation was asked in https://github.com/libretro/RetroArch/issu
 The currently available neogeo combos were decided in https://github.com/libretro/FBNeo/issues/51, they won't be replaced, but they might totally disappear if users keep complaining about them.
 
 Note that there was also a request to add a retroarch macro mapper in https://github.com/libretro/RetroArch/issues/8209.
+
+There is also a PR currently opened to implement this : https://github.com/libretro/RetroArch/pull/16035.
 
 ### Why can't i enable hardcore mode in RetroAchievements ?
 

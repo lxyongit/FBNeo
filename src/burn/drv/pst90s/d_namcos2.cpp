@@ -4253,6 +4253,8 @@ static struct BurnRomInfo cosmogngRomDesc[] = {
 
 	{ "co2voi1.bin",	0x80000, 0x5a301349, 0x0a | BRF_SND },           // 19 C140 Samples
 	{ "co2voi2.bin",	0x80000, 0xa27cb45a, 0x0a | BRF_SND },           // 20
+
+	{ "04544191.6n",	0x02000, 0x90db1bf6, 0x00 | BRF_OPT },           // 21 Zoom table
 };
 
 STD_ROM_PICK(cosmogng)
@@ -4274,7 +4276,7 @@ struct BurnDriver BurnDrvCosmogng = {
 	"cosmogng", NULL, NULL, NULL, "1991",
 	"Cosmo Gang the Video (US)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_VERSHOOT, 0,
+	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_POST90S, GBF_SHOOT, 0,
 	NULL, cosmogngRomInfo, cosmogngRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	CosmogngInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	224, 288, 3, 4
@@ -5301,7 +5303,7 @@ struct BurnDriver BurnDrvFinehour = {
 	"finehour", NULL, NULL, NULL, "1989",
 	"Finest Hour (Japan)\0", NULL, "Namco", "System 2",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_SCRFIGHT, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_MISC_PRE90S, GBF_RUNGUN, 0,
 	NULL, finehourRomInfo, finehourRomName, NULL, NULL, NULL, NULL, DefaultInputInfo, DefaultDIPInfo,
 	FinehourInit, Namcos2Exit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x4000,
 	288, 224, 4, 3

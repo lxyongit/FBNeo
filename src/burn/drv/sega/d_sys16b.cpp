@@ -438,8 +438,10 @@ static struct BurnInputInfo HwchampInputList[] = {
 	{"P1 Coin"           , BIT_DIGITAL   , System16InputPort0 + 0, "p1 coin"   },
 	{"P1 Start"          , BIT_DIGITAL   , System16InputPort0 + 4, "p1 start"  },
 	A("Left/Right"       , BIT_ANALOG_REL, &System16AnalogPort0,   "p1 x-axis"  ),
-	A("Left"             , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
-	A("Right"            , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 2"  ),
+	A("Punch Left"       , BIT_ANALOG_REL, &System16AnalogPort1,   "p1 fire 1"  ),
+	A("Punch Right"      , BIT_ANALOG_REL, &System16AnalogPort2,   "p1 fire 2"  ),
+	A("Block Left/Right" , BIT_ANALOG_REL, &System16AnalogPort3,   "p1 fire 3"  ),
+	A("Block Up/Down"    , BIT_ANALOG_REL, &System16AnalogPort4,   "p1 fire 4"  ),
 
 	{"P2 Coin"           , BIT_DIGITAL   , System16InputPort0 + 1, "p2 coin"   },
 	{"P2 Start"          , BIT_DIGITAL   , System16InputPort0 + 5, "p2 start"  },
@@ -1447,37 +1449,35 @@ STDDIPINFO(Goldnaxe)
 
 static struct BurnDIPInfo HwchampDIPList[]=
 {
-	// Default Values
-	{0x0a, 0xff, 0xff, 0xf9, NULL                                 },
-	{0x0b, 0xff, 0xff, 0xff, NULL                                 },
+	DIP_OFFSET(0x0c)
+	{0x00, 0xff, 0xff, 0xff, NULL                                 },
+	{0x01, 0xff, 0xff, 0xf0, NULL                                 },
 
-	// Dip 1
+	SYSTEM16B_COINAGE(0x00)
+
 	{0   , 0xfe, 0   , 2   , "Demo Sounds"                        },
-	{0x0a, 0x01, 0x02, 0x02, "Off"                                },
-	{0x0a, 0x01, 0x02, 0x00, "On"                                 },
+	{0x01, 0x01, 0x02, 0x02, "Off"                                },
+	{0x01, 0x01, 0x02, 0x00, "On"                                 },
 
 	{0   , 0xfe, 0   , 2   , "Start Level Select"                 },
-	{0x0a, 0x01, 0x04, 0x04, "Off"                                },
-	{0x0a, 0x01, 0x04, 0x00, "On"                                 },
+	{0x01, 0x01, 0x04, 0x04, "Off"                                },
+	{0x01, 0x01, 0x04, 0x00, "On"                                 },
 
 	{0   , 0xfe, 0   , 2   , "Allow Continue"                     },
-	{0x0a, 0x01, 0x08, 0x08, "Off"                                },
-	{0x0a, 0x01, 0x08, 0x00, "On"                                 },
+	{0x01, 0x01, 0x08, 0x08, "Off"                                },
+	{0x01, 0x01, 0x08, 0x00, "On"                                 },
 
 	{0   , 0xfe, 0   , 4   , "Difficulty"                         },
-	{0x0a, 0x01, 0x30, 0x20, "Easy"                               },
-	{0x0a, 0x01, 0x30, 0x30, "Normal"                             },
-	{0x0a, 0x01, 0x30, 0x10, "Hard"                               },
-	{0x0a, 0x01, 0x30, 0x00, "Hardest"                            },
+	{0x01, 0x01, 0x30, 0x20, "Easy"                               },
+	{0x01, 0x01, 0x30, 0x30, "Normal"                             },
+	{0x01, 0x01, 0x30, 0x10, "Hard"                               },
+	{0x01, 0x01, 0x30, 0x00, "Hardest"                            },
 
 	{0   , 0xfe, 0   , 4   , "Time Adjust"                        },
-	{0x0a, 0x01, 0xc0, 0x80, "Easy"                               },
-	{0x0a, 0x01, 0xc0, 0xc0, "Normal"                             },
-	{0x0a, 0x01, 0xc0, 0x40, "Hard"                               },
-	{0x0a, 0x01, 0xc0, 0x00, "Hardest"                            },
-
-	// Dip 2
-	SYSTEM16B_COINAGE(0x0b)
+	{0x01, 0x01, 0xc0, 0x80, "Easy"                               },
+	{0x01, 0x01, 0xc0, 0xc0, "Normal"                             },
+	{0x01, 0x01, 0xc0, 0x40, "Hard"                               },
+	{0x01, 0x01, 0xc0, 0x00, "Hardest"                            },
 };
 
 STDDIPINFO(Hwchamp)
@@ -7606,14 +7606,36 @@ static UINT8 HwchampReadIO(UINT32 offset)
 
 		case 0x1810:
 		case 0x1811:
-		case 0x1812:
-		case 0x1818:
-		case 0x1819:
-		case 0x181a: {
+		case 0x1812: {
 			result = (HwchampInputVal & 0x80) >> 7;
 			HwchampInputVal <<= 1;
 			return result & 0xff;
 		}
+		case 0x1818:
+		case 0x1819:
+		case 0x181a: {
+			UINT8 lr = ProcessAnalog(System16AnalogPort3, 0, INPUT_DEADZONE, 0x00, 0xff);
+			UINT8 ud = ProcessAnalog(System16AnalogPort4, 0, INPUT_DEADZONE, 0x00, 0xff);
+
+			result = 0x00;
+
+			if (ud > 0xa0) { // up
+				if (lr > 0xa0) {
+					result |= 1; // right
+				} else if (lr < 0x60) {
+					result |= 4; // left
+				}
+			} else if (ud < 0x60) { // down
+				if (lr > 0xa0) {
+					result |= 2; // right
+				} else if (lr < 0x60) {
+					result |= 8; // left
+				}
+			}
+
+			return result;
+		}
+
 	}
 
 	return sega_315_5195_io_read(offset);
@@ -7621,31 +7643,22 @@ static UINT8 HwchampReadIO(UINT32 offset)
 
 static void HwchampWriteIO(UINT32 offset, UINT8 d)
 {
-	UINT8 temp = 0;
-
 	switch (offset) {
 		case 0x1810:
 		case 0x1818: {
-			temp = 0x80 + (System16AnalogPort0 >> 4);
-			if (temp < 0x01) temp = 0x01;
-			if (temp > 0xfe) temp = 0xfe;
-			HwchampInputVal = temp;
+			HwchampInputVal = ProcessAnalog(System16AnalogPort0, 0, INPUT_DEADZONE, 0x00, 0xff);
 			return;
 		}
 
 		case 0x1811:
 		case 0x1819: {
-			temp = 0x26;
-			if (System16AnalogPort2 > 1) temp = 0xfe;
-			HwchampInputVal = temp;
+			HwchampInputVal = ProcessAnalog(System16AnalogPort2, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x20, 0xff);
 			return;
 		}
 
 		case 0x1812:
 		case 0x181a: {
-			temp = 0x26;
-			if (System16AnalogPort1 > 1) temp = 0xfe;
-			HwchampInputVal = temp;
+			HwchampInputVal = ProcessAnalog(System16AnalogPort1, 0, INPUT_DEADZONE | INPUT_LINEAR | INPUT_MIGHTBEDIGITAL, 0x20, 0xff);
 			return;
 		}
 	}
@@ -9478,7 +9491,7 @@ struct BurnDriver BurnDrvAliensyn = {
 	"aliensyn", NULL, NULL, NULL, "1987",
 	"Alien Syndrome (set 4, System 16B, unprotected)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, AliensynRomInfo, AliensynRomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
 	AliensynInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9488,7 +9501,7 @@ struct BurnDriver BurnDrvAliensyn3 = {
 	"aliensyn3", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 3, System 16B, FD1089A 317-0033)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Aliensyn3RomInfo, Aliensyn3RomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
 	AliensynInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9498,7 +9511,7 @@ struct BurnDriver BurnDrvAliensyn7 = {
 	"aliensyn7", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 7, System 16B, MC-8123B 317-00xx)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_MC8123_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_MC8123_ENC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Aliensyn7RomInfo, Aliensyn7RomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, AliensynDIPInfo,
 	AliensynInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -9508,7 +9521,7 @@ struct BurnDriver BurnDrvAliensynj = {
 	"aliensynj", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 6, Japan, new, System 16B, FD1089A 317-0033)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358_SMALL | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, AliensynjRomInfo, AliensynjRomName, NULL, NULL, NULL, NULL, System16bfire1InputInfo, AliensynjDIPInfo,
 	AliensynInit, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10568,7 +10581,7 @@ struct BurnDriver BurnDrvShinobi2 = {
 	"shinobi2", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 2, System 16B) (FD1094 317-0049)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Shinobi2RomInfo, Shinobi2RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10578,7 +10591,7 @@ struct BurnDriver BurnDrvShinobi2d = {
 	"shinobi2d", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 2, System 16B) (bootleg of FD1094 317-0049 set)\0", NULL, "bootleg", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Shinobi2dRomInfo, Shinobi2dRomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10588,7 +10601,7 @@ struct BurnDriver BurnDrvShinobi3 = {
 	"shinobi3", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 3, System 16B) (MC-8123B 317-0054)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358 | HARDWARE_SEGA_MC8123_ENC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Shinobi3RomInfo, Shinobi3RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10598,7 +10611,7 @@ struct BurnDriver BurnDrvShinobi4 = {
 	"shinobi4", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 4, System 16B) (MC-8123B 317-0054)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_MC8123_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521 | HARDWARE_SEGA_MC8123_ENC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Shinobi4RomInfo, Shinobi4RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10608,7 +10621,7 @@ struct BurnDriver BurnDrvShinobi5 = {
 	"shinobi5", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 5, System 16B) (unprotected)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5358, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Shinobi5RomInfo, Shinobi5RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -10618,7 +10631,7 @@ struct BurnDriver BurnDrvShinobi6 = {
 	"shinobi6", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 6, System 16B) (unprotected)\0", NULL, "Sega", "System 16B",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16B | HARDWARE_SEGA_5521, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Shinobi6RomInfo, Shinobi6RomName, NULL, NULL, NULL, NULL, System16bfire3InputInfo, ShinobiDIPInfo,
 	System16Init, System16Exit, System16BFrame, System16BRender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3

@@ -1,4 +1,4 @@
-// FB Alpha Puckman module
+// FB Neo Puckman module
 // Based on MAME driver by Nicola Salmoria and many others
 
 // Fix Shoot the Bull inputs
@@ -72,42 +72,40 @@ static INT32 watchdog_disable = 0;
 //------------------------------------------------------------------------------------------------------
 
 static struct BurnInputInfo DrvInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"	},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0,	"p1 up"		},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1,	"p1 left"	},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2,	"p1 right"	},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3,	"p1 down"	},
 
-	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
-	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
-	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
-	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"	},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3,	"p2 down"	},
 
-	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
-	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
-	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
-	{"P2 Down",		  BIT_DIGITAL,	DrvJoy2 + 3, "p2 down"},
+	{"Reset",			BIT_DIGITAL,	&DrvReset,		"reset"		},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy1 + 7,	"diag"		},
 
-	{"Reset",		  BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service Mode",	  BIT_DIGITAL,	DrvJoy1 + 7,	"diag"},
-
-	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
-	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
-	{"Dip Switches 3",	BIT_DIPSWITCH,	DrvDips + 1,	"dip"},
-	{"Dip Switches 4",	BIT_DIPSWITCH,	DrvDips + 3,	"dip"},
+	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
+	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
+	{"Dip Switches 3",	BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
+	{"Dip Switches 4",	BIT_DIPSWITCH,	DrvDips + 3,	"dip"		},
 };
 
 STDINPUTINFO(Drv)
 
 static struct BurnInputInfo AlienresInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
-
+	{"P1 Coin",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"	},
 	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, 	"p1 up"		},
 	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, 	"p1 left"	},
 	{"P1 Right",	  BIT_DIGITAL,	DrvJoy1 + 2, 	"p1 right"	},
 	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, 	"p1 down"	},
 	{"P1 Fire",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 fire 1"	},
 
+	{"P2 Coin",		  BIT_DIGITAL,	DrvJoy1 + 6,	"p2 coin"	},
 	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0,	"p2 up"		},
 	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1,	"p2 left"	},
 	{"P2 Right",	  BIT_DIGITAL,	DrvJoy2 + 2,	"p2 right"	},
@@ -126,26 +124,25 @@ static struct BurnInputInfo AlienresInputList[] = {
 STDINPUTINFO(Alienres)
 
 static struct BurnInputInfo lizwizInputList[] = {
-	{"Coin 1",		  BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
-	{"Coin 2",		  BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
-	{"Start 1",		  BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
-	{"Start 2",		  BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
+	{"P1 Coin",			BIT_DIGITAL,	DrvJoy1 + 5,	"p1 coin"},
+	{"P1 Start",		BIT_DIGITAL,	DrvJoy2 + 5,	"p1 start"},
+	{"P1 Up",			BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
+	{"P1 Left",			BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
+	{"P1 Right",		BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
+	{"P1 Down",			BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
+	{"P1 Button 1",		BIT_DIGITAL,	DrvJoy2 + 4, "p1 fire 1"},
 
-	{"P1 Up",		  BIT_DIGITAL,	DrvJoy1 + 0, "p1 up"},
-	{"P1 Left",		  BIT_DIGITAL,	DrvJoy1 + 1, "p1 left"},
-	{"P1 Right",	  	  BIT_DIGITAL,	DrvJoy1 + 2, "p1 right"},
-	{"P1 Down",		  BIT_DIGITAL,	DrvJoy1 + 3, "p1 down"},
-	{"P1 Button 1",	  BIT_DIGITAL,	DrvJoy2 + 4, "p1 fire 1"},
+	{"P2 Coin",			BIT_DIGITAL,	DrvJoy1 + 7,	"p2 coin"},
+	{"P2 Start",		BIT_DIGITAL,	DrvJoy2 + 6, 	"p2 start"},
+	{"P2 Up",			BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
+	{"P2 Left",			BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
+	{"P2 Right",		BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
+	{"P2 Down",			BIT_DIGITAL,	DrvJoy2 + 3, "p2 down"},
+	{"P2 Button 1",		BIT_DIGITAL,	DrvJoy2 + 7, "p2 fire 1"},
 
-	{"P2 Up",		  BIT_DIGITAL,	DrvJoy2 + 0, "p2 up"},
-	{"P2 Left",		  BIT_DIGITAL,	DrvJoy2 + 1, "p2 left"},
-	{"P2 Right",	  	  BIT_DIGITAL,	DrvJoy2 + 2, "p2 right"},
-	{"P2 Down",		  BIT_DIGITAL,	DrvJoy2 + 3, "p2 down"},
-	{"P2 Button 1",	  BIT_DIGITAL,	DrvJoy2 + 7, "p2 fire 1"},
-
-	{"Reset",		  BIT_DIGITAL,	&DrvReset,	"reset"},
-	{"Service Mode",	  BIT_DIGITAL,	DrvJoy1 + 4,	"diag"},
-	{"Tilt",	 	 BIT_DIGITAL,	DrvJoy1 + 6,	"tilt"},
+	{"Reset",		 	BIT_DIGITAL,	&DrvReset,	"reset"},
+	{"Service Mode",	BIT_DIGITAL,	DrvJoy1 + 4,	"diag"},
+	{"Tilt",		  	BIT_DIGITAL,	DrvJoy1 + 6,	"tilt"},
 
 	{"Dip Switches 1",	BIT_DIPSWITCH,	DrvDips + 2,	"dip"},
 	{"Dip Switches 2",	BIT_DIPSWITCH,	DrvDips + 0,	"dip"},
@@ -4495,7 +4492,7 @@ static INT32 mspactwinInit()
 	return rc;
 }
 
-// Ms Pac Man Twin (Argentina)
+// Ms Pac Man Twin (Argentina, set 1)
 
 static struct BurnRomInfo mspactwinRomDesc[] = {
 	{ "m27256.bin",	0x8000, 0x77a99184, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
@@ -4517,10 +4514,40 @@ STD_ROM_FN(mspactwin)
 
 struct BurnDriver BurnDrvMspactwin = {
 	"mspactwin", NULL, NULL, NULL, "1992",
-	"Ms Pac Man Twin (Argentina)\0", NULL, "hack (Susilu)", "Miscellaneous",
+	"Ms Pac Man Twin (Argentina, set 1)\0", NULL, "hack (Susilu)", "Miscellaneous",
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mspactwinRomInfo, mspactwinRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspactwinDIPInfo,
+	mspactwinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+// Ms Pac Man Twin (Argentina, set 2)
+
+static struct BurnRomInfo mspactwinaRomDesc[] = {
+	{ "6_db.u4",	0x8000, 0xa0fb55ba, 1 | BRF_PRG | BRF_ESS }, //  0 maincpu
+
+	{ "1.5e",		0x0800, 0x483c1d1c, 2 | BRF_GRA },           //  1 gfx1
+	{ "3.5h",		0x0800, 0x703912f5, 2 | BRF_GRA },           //  2
+	{ "2.5f",		0x0800, 0x22b0188a, 2 | BRF_GRA },           //  3
+	{ "4.5j",		0x0800, 0x0a8c46a0, 2 | BRF_GRA },           //  4
+
+	{ "mb7051.8h",	0x0020, 0xff344446, 3 | BRF_GRA },           //  5 proms
+	{ "82s129.4a",	0x0100, 0xa8202d0d, 3 | BRF_GRA },           //  6
+
+	{ "mb7052.1k",	0x0100, 0xa9cc86bf, 4 | BRF_SND },           //  7 namco
+	{ "82s129.3k",	0x0100, 0x77245b66, 4 | BRF_GRA },           //  8
+};
+
+STD_ROM_PICK(mspactwina)
+STD_ROM_FN(mspactwina)
+
+struct BurnDriver BurnDrvMspactwina = {
+	"mspactwina", "mspactwin", NULL, NULL, "1992",
+	"Ms Pac Man Twin (Argentina, set 2)\0", NULL, "hack (Susilu)", "Miscellaneous",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_HACK | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspactwinaRomInfo, mspactwinaRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspactwinDIPInfo,
 	mspactwinInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };
@@ -5016,6 +5043,34 @@ struct BurnDriver BurnDrvmspacmanbgd = {
 	NULL, NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
 	NULL, mspacmanbgdRomInfo, mspacmanbgdRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
+	mspacmanbgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
+	224, 288, 3, 4
+};
+
+
+// Mr Pac-Turbo ('Made in Greece' Fermin bootleg)
+
+static struct BurnRomInfo mspacmanbgfRomDesc[] = {
+	{ "ic11.bin",     0x8000, 0x6573a470, 1 | BRF_ESS | BRF_PRG },	//  0 Z80 Code
+
+	{ "ic13.bin",     0x4000, 0x8ee4a3b0, 2 | BRF_GRA },			//  1 Graphics
+
+	{ "82s123.h7",    0x0020, 0x3545e7e9, 3 | BRF_GRA },			//  2 Color Proms
+	{ "82s129-3.d1",  0x0100, 0x3eb3a8e4, 3 | BRF_GRA },			//  3
+
+	{ "82s129-1.a9",  0x0100, 0xa9cc86bf, 4 | BRF_SND },			//  4 Sound Prom
+	{ "82s129-2.c9",  0x0100, 0x77245b66, 0 | BRF_SND | BRF_OPT },	//  5 Timing Prom (not used)
+};
+
+STD_ROM_PICK(mspacmanbgf)
+STD_ROM_FN(mspacmanbgf)
+
+struct BurnDriver BurnDrvmspacmanbgf = {
+	"mspacmanbgf", "mspacman", NULL, NULL, "1988",
+	"Mr Pac-Turbo ('Made in Greece' Fermin bootleg)\0", NULL, "bootleg (Fermin)", "Pac-man",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_ORIENTATION_VERTICAL | BDF_ORIENTATION_FLIPPED | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_PACMAN, GBF_MAZE | GBF_ACTION, 0,
+	NULL, mspacmanbgfRomInfo, mspacmanbgfRomName, NULL, NULL, NULL, NULL, DrvInputInfo, mspacmanDIPInfo,
 	mspacmanbgInit, DrvExit, DrvFrame, DrvDraw, DrvScan, &DrvRecalc, 0x200,
 	224, 288, 3, 4
 };

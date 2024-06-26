@@ -38,6 +38,7 @@ struct NeoReallocInfo {
 
 struct NEO_CALLBACK {
 	void (*pInitialise)();
+	void (*pResetCallback)();
 	void (*pInstallHandlers)();
 	void (*pRemoveHandlers)();
 	void (*pBankswitch)();
@@ -86,6 +87,8 @@ extern UINT8* YM2610ADPCMAROM[MAX_SLOT];
 extern UINT8* Neo68KFix[MAX_SLOT];
 
 extern UINT32 nNeo68KROMBank;
+
+extern UINT32 nAllCodeSize;
 
 extern UINT8 *NeoSpriteRAM, *NeoTextRAM;
 
@@ -159,11 +162,11 @@ INT32 NeoRenderSprites();
 void NeoSpriteCalcLimit();
 
 // neo_decrypt.cpp
-extern UINT8 nNeoProtectionXor;
+extern INT32 nNeoProtectionXor;
 
 void NeoCMC42Init();
 void NeoCMC50Init();
-void NeoCMCDecrypt(INT32 extra_xor, UINT8* rom, UINT8* buf, INT32 offset, INT32 block_size, INT32 rom_size);
+void NeoCMCDecrypt(UINT8 extra_xor, UINT8* rom, UINT8* buf, INT32 offset, INT32 block_size, INT32 rom_size);
 void NeoCMCExtractSData(UINT8* rom, UINT8* sdata, INT32 rom_size, INT32 sdata_size);
 
 void neogeo_cmc50_m1_decrypt();

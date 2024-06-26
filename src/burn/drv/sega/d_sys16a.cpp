@@ -3827,7 +3827,7 @@ struct BurnDriver BurnDrvAliensynjo = {
 	"aliensynjo", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 1, Japan, old, System 16A, FD1089A 317-0033)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, AliensynjoRomInfo, AliensynjoRomName, NULL, NULL, NULL, NULL, System16afire1InputInfo, AliensynDIPInfo,
 	AliensynjoInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -3837,7 +3837,7 @@ struct BurnDriver BurnDrvAliensyn2 = {
 	"aliensyn2", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 2, System 16A, FD1089A 317-0033)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089A_ENC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Aliensyn2RomInfo, Aliensyn2RomName, NULL, NULL, NULL, NULL, System16afire1InputInfo, AliensynDIPInfo,
 	AliensynjoInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -3847,7 +3847,7 @@ struct BurnDriver BurnDrvAliensyn5 = {
 	"aliensyn5", "aliensyn", NULL, NULL, "1987",
 	"Alien Syndrome (set 5, System 16A, FD1089B 317-0037)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_MAZE, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1089B_ENC, GBF_MAZE | GBF_RUNGUN, 0,
 	NULL, Aliensyn5RomInfo, Aliensyn5RomName, NULL, NULL, NULL, NULL, System16afire1InputInfo, AliensynDIPInfo,
 	Aliensyn5Init, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4034,7 +4034,7 @@ struct BurnDriver BurnDrvShinobi = {
 	"shinobi", NULL, NULL, NULL, "1987",
 	"Shinobi (set 6, System 16A) (unprotected)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, ShinobiRomInfo, ShinobiRomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
 	ShinobiInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4044,7 +4044,7 @@ struct BurnDriver BurnDrvShinobi1 = {
 	"shinobi1", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 1, System 16A) (FD1094 317-0050)\0", NULL, "Sega", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A | HARDWARE_SEGA_FD1094_ENC, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Shinobi1RomInfo, Shinobi1RomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
 	ShinobiInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4054,7 +4054,7 @@ struct BurnDriver BurnDrvShinobi1d = {
 	"shinobi1d", "shinobi", NULL, NULL, "1987",
 	"Shinobi (set 1, System 16A) (bootleg of FD1094 317-0050 set)\0", NULL, "bootleg", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, Shinobi1dRomInfo, Shinobi1dRomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
 	ShinobiInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4064,7 +4064,7 @@ struct BurnDriver BurnDrvShinobls = {
 	"shinobls", "shinobi", NULL, NULL, "1987",
 	"Shinobi (Star bootleg, System 16A)\0", NULL, "bootleg (Star)", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG | BDF_HISCORE_SUPPORTED, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, ShinoblsRomInfo, ShinoblsRomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
 	ShinobiInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3
@@ -4074,7 +4074,7 @@ struct BurnDriver BurnDrvShinoblb = {
 	"shinoblb", "shinobi", NULL, NULL, "1987",
 	"Shinobi (Beta bootleg)\0", NULL, "bootleg (Beta)", "System 16A",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM, 0,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_BOOTLEG, 2, HARDWARE_SEGA_SYSTEM16A, GBF_PLATFORM | GBF_SCRFIGHT, 0,
 	NULL, ShinoblbRomInfo, ShinoblbRomName, NULL, NULL, NULL, NULL, System16afire3InputInfo, ShinobiDIPInfo,
 	ShinobiInit, System16Exit, System16AFrame, System16ARender, System16Scan,
 	NULL, 0x1800, 320, 224, 4, 3

@@ -48,6 +48,8 @@ bool bAutoLoadGameList = false;
 
 bool bQuietLoading = false;
 
+bool bShonkyProfileMode = false;
+
 bool bNoChangeNumLock = 1;
 static bool bNumlockStatus;
 
@@ -386,7 +388,7 @@ int OpenDebugLog()
 #if defined (FBNEO_DEBUG)
  #if defined (APP_DEBUG_LOG)
 
-    time_t nTime;
+	time_t nTime;
 	tm* tmTime;
 
 	time(&nTime);
@@ -611,13 +613,13 @@ static BOOL CALLBACK MonInfoProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcM
 	iMonitor.cbSize = sizeof(MONITORINFOEX);
 	GetMonitorInfo(hMonitor, &iMonitor);
 
-    width = iMonitor.rcMonitor.right - iMonitor.rcMonitor.left;
-    height = iMonitor.rcMonitor.bottom - iMonitor.rcMonitor.top;
+	width  = iMonitor.rcMonitor.right - iMonitor.rcMonitor.left;
+	height = iMonitor.rcMonitor.bottom - iMonitor.rcMonitor.top;
 
 	if (width == 1536 && height == 864) {
 		// Workaround: (1/2)
 		// Win8-10 sets Desktop Zoom to 125% by default, creating this bad/weird resolution.
-		width = 1920;
+		width  = 1920;
 		height = 1080;
 	}
 
@@ -625,11 +627,11 @@ static BOOL CALLBACK MonInfoProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcM
 		(!HorScreen[0] && iMonitor.dwFlags & MONITORINFOF_PRIMARY)) {
 
 		// Set values for horizontal monitor
-		nVidHorWidth = width;
+		nVidHorWidth  = width;
 		nVidHorHeight = height;
 
 		// also add this to the presets
-		VidPreset[3].nWidth = width;
+		VidPreset[3].nWidth  = width;
 		VidPreset[3].nHeight = height;
 
 		GetAspectRatio(width, height, &nVidScrnAspectX, &nVidScrnAspectY);
@@ -639,11 +641,11 @@ static BOOL CALLBACK MonInfoProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcM
 		(!VerScreen[0] && iMonitor.dwFlags & MONITORINFOF_PRIMARY)) {
 
 		// Set values for vertical monitor
-		nVidVerWidth = width;
+		nVidVerWidth  = width;
 		nVidVerHeight = height;
 
 		// also add this to the presets
-		VidPresetVer[3].nWidth = width;
+		VidPresetVer[3].nWidth  = width;
 		VidPresetVer[3].nHeight = height;
 
 		GetAspectRatio(width, height, &nVidVerScrnAspectX, &nVidVerScrnAspectY);
@@ -661,7 +663,7 @@ void MonitorAutoCheck()
 
 	numScreens = GetSystemMetrics(SM_CMONITORS);
 
-    // If only one monitor or not using a DirectX9 blitter, only use primary monitor
+	// If only one monitor or not using a DirectX9 blitter, only use primary monitor
 	if (numScreens == 1 || nVidSelect < 3) {
 		int x, y;
 
@@ -1021,6 +1023,9 @@ int ProcessCmdLine()
 			}
 		} else if (_tcscmp(szOpt2, _T("-a")) == 0) {
 			bVidArcaderes = 1;
+		} else if (_tcscmp(szOpt2, _T("-p")) == 0) {
+			bShonkyProfileMode = true;
+			bFullscreen = 0;
 		} else if (_tcscmp(szOpt2, _T("-w")) == 0) {
 			nCmdOptUsed = 2;
 			bFullscreen = 0;
@@ -1082,18 +1087,18 @@ int ProcessCmdLine()
 				}
 			}
 		} else {
-			bQuietLoading	= true;
-			bDoIpsPatch		= false;
+			bQuietLoading = true;
+			bDoIpsPatch   = false;
 
 			for (i = 0; i < nBurnDrvCount; i++) {
 				nBurnDrvActive = i;
 				if ((_tcscmp(BurnDrvGetText(DRV_NAME), szName) == 0) && (!(BurnDrvGetFlags() & BDF_BOARDROM))) {
 					TCHAR* szSub = _tcsstr(szCmdLine, _T("-sub"));	// Handling -sub additional parameters
-					if (szSub) {  // With -sub parameters
-						szSub += _tcslen(_T("-sub"));	// The parameter does not contain the identifier itself
+					if (szSub) {									// With -sub parameters
+						szSub += _tcslen(_T("-sub"));				// The parameter does not contain the identifier itself
 
 						INT32 nPara;
-						_stscanf(szSub, _T("%d"), &nPara);	// String to int
+						_stscanf(szSub, _T("%d"), &nPara);			// String to int
 
 						nSubDrvSelected = nPara;
 						szSub = NULL;
@@ -1102,13 +1107,13 @@ int ProcessCmdLine()
 					if (szIps) {  // With -ips parameters
 						bDoIpsPatch = true;
 
-						szIps += _tcslen(_T("-ips"));	// The parameter does not contain the identifier itself
+						szIps += _tcslen(_T("-ips"));				// The parameter does not contain the identifier itself
 
-						FILE* fp = NULL;
-						INT32 nList = 0;	// Sequence of DAT array
+						FILE* fp    = NULL;
+						INT32 nList = 0;							// Sequence of DAT array
 						TCHAR szTmp[1024];
 						TCHAR szDat[MAX_PATH];
-						TCHAR szDatList[1024 / 2][MAX_PATH];	// Comma separated, at least 2 characters
+						TCHAR szDatList[1024 / 2][MAX_PATH];		// Comma separated, at least 2 characters
 						TCHAR* argv = _tcstok(szIps, _T(","));
 
 						if (argv) {	// Argv may be null
@@ -1173,7 +1178,7 @@ int ProcessCmdLine()
 
 					if (bDoIpsPatch) {
 						LoadIpsActivePatches();
-						GetIpsDrvDefine();	// Entry point: cmdline launch
+						IpsPatchInit();	// Entry point: cmdline launch
 					}
 
 					if (DrvInit(i, true)) { // failed (bad romset, etc.)

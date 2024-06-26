@@ -540,8 +540,6 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 		fclose(test);
 	}
 #endif
-	
-	if (!nEnableSamples) return;
 
 	soundbuf = (INT16*)BurnMalloc(0x1000 * 2 * 2); // mixing buffer
 
@@ -585,8 +583,11 @@ void BurnSampleInit(INT32 bAdd /*add samples to stream?*/)
 
 		destination = NULL;
 		length = 0;
-		ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
-		
+
+		if (nEnableSamples) {
+			ZipLoadOneFile((char*)path, (const char*)szSampleName, &destination, &length);
+		}
+
 		if (length) {
 			sample_ptr->flags = si.nFlags;
 			bprintf(0, _T("Loading \"%S\": "), szSampleName);
@@ -819,7 +820,7 @@ static void BurnSampleRender_INT(UINT32 pLen)
 	for (INT32 i = 0; i < nTotalSamples; i++)
 	{
 		sample_ptr = &samples[i];
-		if (sample_ptr->playing == 0) continue;
+		if (sample_ptr->playing == 0 || sample_ptr->length == 0) continue;
 
 		INT32 playlen = pLen;
 		INT32 length = sample_ptr->length;

@@ -839,8 +839,8 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="kaettmarbro" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<description>Kaettekita Mario Brothers (Japan)</description>
+	<game name="kaettmarbro" cloneof="returnmarbro" romof="returnmarbro" sourcefile="nes/d_nes.cpp">
+		<description>Kaettekita Mario Bros. (Japan)</description>
 		<year>1988</year>
 		<manufacturer>Nintendo</manufacturer>
 		<rom name="Kaettekita Mario Brothers (Japan).fds" size="131016" crc="12358ded"/>
@@ -914,10 +914,20 @@
 		<driver status="good"/>
 	</game>
 	<game name="kikikai" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<description>Kiki Kaikai - Dotou Hen (Japan)</description>
+		<comment>Hack, Mysterious Ghost World - The Turbulent Chapters</comment>
+		<description>Kiki Kaikai - Dotou Hen (Hack, English)</description>
+		<year>2024</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Kiki Kaikai Dotou Hen T-Eng (2024)(BlackPaladin).fds" size="131000" crc="61d3af7e"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="kikikaij" cloneof="kikikai" romof="kikikai" sourcefile="nes/d_nes.cpp">
+		<description>Kiki Kaikai - Dotou Hen (Japan) (Rev 1)</description>
 		<year>1987</year>
 		<manufacturer>Taito</manufacturer>
-		<rom name="Kiki Kaikai - Dotou Hen (Japan).fds" size="131000" crc="7f446c09"/>
+		<rom name="Kiki Kaikai Dotou Hen (J)(Rev 1)(1987)(Taito).fds" size="131000" crc="007aa4fd"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -927,6 +937,16 @@
 		<year>1987</year>
 		<manufacturer>Bandai</manufacturer>
 		<rom name="Kinnikuman - Kinnikusei Oui Soudatsusen (Japan).fds" size="131016" crc="5149b663"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="kittentale" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Kitten's Tale, A - The Adventures of Chatran (Hack, English)</description>
+		<year>2024</year>
+		<manufacturer>BlackPaladin</manufacturer>
+		<rom name="Kitten's Tale, A - The Adventures of Chatran T-Eng (2024)(BlackPaladin).fds" size="131000" crc="a05d0c22"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -968,7 +988,7 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="konekmon" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+	<game name="konekmon" cloneof="kittentale" romof="kittentale" sourcefile="nes/d_nes.cpp">
 		<description>Koneko Monogatari - The Adventures of Chatran (Japan)</description>
 		<year>1986</year>
 		<manufacturer>Pony Canyon</manufacturer>
@@ -1128,7 +1148,7 @@
 	</game>
 	<game name="mystemurcas" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Mysterious Murasame Castle (Hack, English)</description>
+		<description>Mysterious Murasame Castle, The (Hack, English)</description>
 		<year>2011</year>
 		<manufacturer>Spinner 8 and friends</manufacturer>
 		<rom name="Mysterious Murasame Castle (T-Eng).fds" size="131000" crc="5da99951"/>
@@ -1270,6 +1290,16 @@
 		<year>1988</year>
 		<manufacturer>Taito</manufacturer>
 		<rom name="Replicart (Japan).fds" size="131016" crc="c3cbc847"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="returnmarbro" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Return of Mario Bros. (Hack, English)</description>
+		<year>2021</year>
+		<manufacturer>FCandChill</manufacturer>
+		<rom name="Return of Mario Bros. T-Eng (2021)(FCandChill).fds" size="131000" crc="c3c31d57"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1604,21 +1634,21 @@
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
 	</game>
-	<game name="youkaiyashiki" romof="fdsbios" sourcefile="nes/d_nes.cpp">
-		<comment>Hack</comment>
-		<description>Youkai Yashiki (Hack, English)</description>
-		<year>2008</year>
-		<manufacturer>KingMike's Translations</manufacturer>
-		<rom name="Youkai Yashiki (T-Eng).fds" size="131000" crc="546589ab"/>
-		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
-		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
-		<driver status="good"/>
-	</game>
 	<game name="youkaiyashikij" cloneof="youkaiyashiki" romof="youkaiyashiki" sourcefile="nes/d_nes.cpp">
 		<description>Youkai Yashiki (Japan)</description>
 		<year>1987</year>
 		<manufacturer>Irem</manufacturer>
 		<rom name="Youkai Yashiki (Japan).fds" size="131016" crc="a888c6df"/>
+		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
+		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
+		<driver status="good"/>
+	</game>
+	<game name="youkaiyashiki" romof="fdsbios" sourcefile="nes/d_nes.cpp">
+		<comment>Hack</comment>
+		<description>Youkai Yashiki ~ Ghost Manor (Hack, English)</description>
+		<year>2008</year>
+		<manufacturer>KingMike's Translations</manufacturer>
+		<rom name="Youkai Yashiki (T-Eng).fds" size="131000" crc="546589ab"/>
 		<rom name="fdsbios.nes" merge="fdsbios.nes" size="8192" crc="5e607dcf"/>
 		<video type="raster" orientation="horizontal" width="256" height="224" aspectx="256" aspecty="224"/>
 		<driver status="good"/>
@@ -1643,7 +1673,7 @@
 	</game>
 	<game name="zeldanoden" romof="fdsbios" sourcefile="nes/d_nes.cpp">
 		<comment>Hack</comment>
-		<description>Zelda no Densetsu - The Hyrule Fantasy (Hack, English)</description>
+		<description>Zelda no Densetsu - The Hyrule Fantasy (Hack, English v1.1)</description>
 		<year>2016</year>
 		<manufacturer>Jordiway73</manufacturer>
 		<rom name="Zelda no Densetsu - The Hyrule Fantasy (T-Eng).fds" size="131016" crc="ee11aa63"/>
