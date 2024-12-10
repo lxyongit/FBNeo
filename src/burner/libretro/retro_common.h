@@ -25,6 +25,7 @@
 #define RETRO_GAME_TYPE_NEOCD	13
 #define RETRO_GAME_TYPE_NGP		14
 #define RETRO_GAME_TYPE_CHF		15
+#define RETRO_GAME_TYPE_SNES	16
 
 #define PERCENT_VALUES \
 	  {"25%",	NULL }, \
@@ -256,6 +257,7 @@ extern char g_rom_dir[MAX_PATH];
 extern TCHAR szAppPathDefPath[MAX_PATH];
 extern TCHAR szAppIpsesPath[MAX_PATH];
 extern TCHAR szAppRomdatasPath[MAX_PATH];
+extern UINT32 nDiagInputHoldCounter;
 
 char* str_char_replace(char* destination, char c_find, char c_replace);
 void set_neo_system_bios();
