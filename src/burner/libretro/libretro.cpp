@@ -104,9 +104,6 @@ static void retro_audio_buff_status_cb(bool active, unsigned occupancy, bool und
 
 // Mapping of PC inputs to game inputs
 struct GameInp* GameInp = NULL;
-UINT32 nGameInpCount = 0;
-INT32 nAnalogSpeed = 0x0100;
-INT32 nFireButtons = 0;
 
 char g_driver_name[128];
 char g_rom_dir[MAX_PATH];
@@ -310,7 +307,7 @@ static INT32 __cdecl libretro_bprintf(INT32 nStatus, TCHAR* szFormat, ...)
 	va_list vp;
 
 	// some format specifiers don't translate well into the retro logs, replace them
-	szFormat = string_replace_substring(szFormat, "%S", strlen("%S"), "%s", strlen("%s"));
+	szFormat = string_replace_substring(szFormat, strlen(szFormat), "%S", strlen("%S"), "%s", strlen("%s"));
 
 	// retro logs prefer ending with \n
 	// 2021-10-26: disabled it's causing overflow in a few cases, find a better way to do this...
@@ -1128,7 +1125,7 @@ static bool open_archive()
 					memset(&ri, 0, sizeof(ri));
 					BurnDrvGetRomInfo(&ri, i);
 
-					if ((ri.nType & BRF_NODUMP) || (ri.nType == 0) || (ri.nLen == 0) || ((NULL == pDataRomDesc) && (-1 == pRDI->nDescCount) && (0 == ri.nCrc)))
+					if ((ri.nType & BRF_NODUMP) || (ri.nType == 0) || (ri.nLen == 0) || ((NULL == pDataRomDesc) && (0 == ri.nCrc)))
 					{
 						pRomFind[i].nState = STAT_OK;
 						continue;
@@ -1155,7 +1152,7 @@ static bool open_archive()
 
 					if (index >= 0)
 					{
-						if ((NULL == pDataRomDesc) && (-1 == pRDI->nDescCount))						// Not in romdata mode
+						if ((NULL == pDataRomDesc))						// Not in romdata mode
 						{
 							if (unknown_crc)
 								HandleMessage(RETRO_LOG_WARN, "[FBNeo] Using ROM with unknown crc 0x%08x and name %s from archive %s\n", real_rom_crc, rom_name, g_find_list_path[z].path.c_str());
@@ -1401,12 +1398,12 @@ void retro_reset()
 	}
 
 	// romdata & ips patches run!
-	if ((-1 != nIndex) || (nPatches > 0))
+	if ((nIndex >= 0) || (nPatches > 0))
 	{
 		retro_incomplete_exit();
 
 		if (nPatches > 0) IpsPatchInit();
-		if (-1 != nIndex) RomDataInit();
+		if (nIndex >= 0) RomDataInit();
 
 		retro_load_game_common();
 	} 
@@ -1588,14 +1585,18 @@ void retro_get_system_av_info(struct retro_system_av_info *info)
 	if (nBurnDrvActive != ~0U)
 	{
 		BurnDrvGetAspect(&game_aspect_x, &game_aspect_y);
-
+#if 0
 		// if game is vertical and rotation couldn't occur, "fix" the rotated aspect ratio
+		// note (2025-02-12): apparently, nowaday, retroarch rotates the aspect ratio automatically
+		//                    if the rotation couldn't occur, so this code isn't necessary anymore,
+		//                    and actually became harmful for users with disabled rotation
 		if ((BurnDrvGetFlags() & BDF_ORIENTATION_VERTICAL) && !bRotationDone)
 		{
 			int temp = game_aspect_x;
 			game_aspect_x = game_aspect_y;
 			game_aspect_y = temp;
 		}
+#endif
 	}
 	else
 	{
