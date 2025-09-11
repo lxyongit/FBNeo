@@ -2501,9 +2501,9 @@ static struct BurnRomInfo kov2k7jqkRomDesc[] = {
 	
 	{ "m0600.rom",     			0x0400000, 0x3ada4fd6, 5 | BRF_SND },			// 12 Samples	
 	
-	{ "p0600.115",     				0x0400000, 0x527a2924, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "p0600.117",     		0x0400000, 0xc4d19fe6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "p0600.119",     		0x0400000, 0xb2ee0885, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	// { "p0600.115",     				0x0400000, 0x527a2924, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	// { "p0600.117",     		0x0400000, 0xc4d19fe6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	// { "p0600.119",     		0x0400000, 0xb2ee0885, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "kov_igs027a.bin", 			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 13 Internal ARM7 Rom
 };
