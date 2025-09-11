@@ -2485,6 +2485,8 @@ struct BurnDriver BurnDrvKov111 = {
 };
 
 static struct BurnRomInfo kov2k7RomDesc[] = {
+	{ "p0600.2007",     		0x0400000, 0x390ebbfc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
 	{ "t0600.rom",     			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  5 Tile data
 	
 	{ "a0600.rom",     			0x0800000, 0xd8167834, 3 | BRF_GRA },			//  6 Sprite Color Data
@@ -2496,8 +2498,6 @@ static struct BurnRomInfo kov2k7RomDesc[] = {
 	{ "b0601.rom",     			0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },			// 11
 	
 	{ "m0600.rom",     			0x0400000, 0x3ada4fd6, 5 | BRF_SND },			// 12 Samples	
-	{ "p0600.117",     		0x0400000, 0xc4d19fe6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "p0600.2007",     		0x0400000, 0x390ebbfc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "kov_igs027a.bin", 			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 13 Internal ARM7 Rom
 };
@@ -2508,7 +2508,7 @@ STD_ROM_FN(kov2k7)
 struct BurnDriver BurnDrvKov2k7 = {
 	"kov2k7", "kov", "pgm", NULL, "1999",
 	"Knights of Valour / Sanguo Zhan Ji / Sangoku Senki (ver. 111, Japanese Board)\0", NULL, "IGS", "PolyGame Master",
-	L"Knights of Valour\0\u4e09\u56fd\u6218\u7eaa\0\u4e09\u570b\u6230\u7d00 (ver. 111, Japanese Board)\0", NULL, NULL, NULL,
+	L"Knights of Valour\0\u4e09\u56fd\u6218\u7eaa\0\u4e09\u570b\u6230\u7d00 (ver. 2007, Japanese Board)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
 	NULL, kov2k7RomInfo, kov2k7RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov2k7DIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
