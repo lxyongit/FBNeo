@@ -2485,7 +2485,9 @@ struct BurnDriver BurnDrvKov111 = {
 };
 
 static struct BurnRomInfo kov2k7jqkRomDesc[] = {
-	{ "nebula.rom",     		0x0400000, 0x09ddbf0d, 1 | BRF_PRG }, //  0 68K Code
+	{ "p0600.120",     		0x0400000, 0x6392a1c3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
+	{ "nebula.rom",     		0x0400000, 0x09ddbf0d, 1 | BRF_PRG | BRF_ESS  }, //  1 68K Code
 
 	{ "t0600.rom",     			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  5 Tile data
 	
@@ -2502,7 +2504,6 @@ static struct BurnRomInfo kov2k7jqkRomDesc[] = {
 	{ "p0600.115",     				0x0400000, 0x527a2924, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "p0600.117",     		0x0400000, 0xc4d19fe6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 	{ "p0600.119",     		0x0400000, 0xb2ee0885, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
-	{ "p0600.120",     		0x0400000, 0x6392a1c3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "kov_igs027a.bin", 			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 13 Internal ARM7 Rom
 };
