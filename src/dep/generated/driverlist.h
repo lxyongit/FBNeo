@@ -10065,6 +10065,7 @@ DRV		BurnDrvCpsKnightsu;
 DRV		BurnDrvsnes_Knightsround;
 DRV		BurnDrvCpsKnights;
 DRV		BurnDrvKov111;
+DRV		BurnDrvKov2k7;
 DRV		BurnDrvKov114;
 DRV		BurnDrvKov115;
 DRV		BurnDrvKov;
@@ -32966,6 +32967,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnDrvsnes_Knightsround,	// Knights of the Round (USA)
 	&BurnDrvCpsKnights,			// Knights of the Round (World 911127)
 	&BurnDrvKov111,				// Knights of Valour / Sanguo Zhan Ji / Sangoku Senki (ver. 111, Japanese Board)
+  &BurnDrvKov2k7,				// Knights of Valour / Sanguo Zhan Ji / Sangoku Senki (ver. 2007)
 	&BurnDrvKov114,				// Knights of Valour / Sanguo Zhan Ji / Sangoku Senki (ver. 114, Hong Kong)
 	&BurnDrvKov115,				// Knights of Valour / Sanguo Zhan Ji / Sangoku Senki (ver. 115)
 	&BurnDrvKov,				// Knights of Valour / Sanguo Zhan Ji / Sangoku Senki (ver. 117, Hong Kong)
@@ -55787,6 +55789,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "snes_knightsround", "snes/d_snes.cpp"},
 	{ "knights", "capcom/d_cps1.cpp"},
 	{ "kov111", "pgm/d_pgm.cpp"},
+	{ "kov2k7", "pgm/d_pgm.cpp"},
 	{ "kov114", "pgm/d_pgm.cpp"},
 	{ "kov115", "pgm/d_pgm.cpp"},
 	{ "kov", "pgm/d_pgm.cpp"},
