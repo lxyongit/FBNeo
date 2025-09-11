@@ -418,7 +418,7 @@ static struct BurnDIPInfo kov111DIPList[] = {
 	{0x2E,	0x01, 0x0F,	0x05, "World"							},
 };
 
-static struct BurnDIPInfo kov2k7DIPList[] = {
+static struct BurnDIPInfo kov2k7jqkDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x02, NULL								},
 
 	{0,		0xFE, 0,	6,    "Region (Fake)"					},
@@ -798,7 +798,7 @@ STDDIPINFOEXT(orlegendtw,	orlegend,	orlegendtw	)
 STDDIPINFOEXT(orlegendkr,	orlegend,	orlegendkr	)
 STDDIPINFOEXT(kov,			pgm,		kov			)
 STDDIPINFOEXT(kov111,		pgm,		kov111		)
-STDDIPINFOEXT(kov2k7,		pgm,		kov2k7		)
+STDDIPINFOEXT(kov2k7jqk,		pgm,		kov2k7jqk		)
 STDDIPINFOEXT(kov114,		pgm,		kov114		)
 STDDIPINFOEXT(kov115,		pgm,		kov115		)
 STDDIPINFOEXT(kovshp101,	pgm,		kovshp101	)
@@ -2484,7 +2484,9 @@ struct BurnDriver BurnDrvKov111 = {
 	448, 224, 4, 3
 };
 
-static struct BurnRomInfo kov2k7RomDesc[] = {
+static struct BurnRomInfo kov2k7jqkRomDesc[] = {
+	{ "nebula.rom",     		0x0400000, 0x09ddbf0d, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+
 	{ "p0600.2007",     		0x0400000, 0x390ebbfc, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "t0600.rom",     			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  5 Tile data
@@ -2498,19 +2500,24 @@ static struct BurnRomInfo kov2k7RomDesc[] = {
 	{ "b0601.rom",     			0x0400000, 0xa0bb1c2f, 4 | BRF_GRA },			// 11
 	
 	{ "m0600.rom",     			0x0400000, 0x3ada4fd6, 5 | BRF_SND },			// 12 Samples	
+	
+	{ "p0600.115",     				0x0400000, 0x527a2924, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "p0600.117",     		0x0400000, 0xc4d19fe6, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "p0600.119",     		0x0400000, 0xb2ee0885, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
+	{ "p0600.120",     		0x0400000, 0x6392a1c3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
 	{ "kov_igs027a.bin", 			0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	// 13 Internal ARM7 Rom
 };
 
-STDROMPICKEXT(kov2k7, kov2k7, pgm)
-STD_ROM_FN(kov2k7)
+STDROMPICKEXT(kov2k7jqk, kov2k7jqk, pgm)
+STD_ROM_FN(kov2k7jqk)
 
-struct BurnDriver BurnDrvKov2k7 = {
-	"kov2k7", "kov", "pgm", NULL, "1999",
-	"Knights of Valour / Sanguo Zhan Ji / Sangoku Senki (ver. 111, Japanese Board)\0", NULL, "IGS", "PolyGame Master",
-	L"Knights of Valour\0\u4e09\u56fd\u6218\u7eaa\0\u4e09\u570b\u6230\u7d00 (ver. 2007, Japanese Board)\0", NULL, NULL, NULL,
+struct BurnDriver BurnDrvKov2k7jqk = {
+	"kov2k7jqk", "kov", "pgm", NULL, "1999",
+	"Knights of Valour / Sanguo Zhan Ji / Sangoku Senki (ver. 2007jqk)\0", NULL, "IGS", "PolyGame Master",
+	L"Knights of Valour\0\u4e09\u56fd\u6218\u7eaa\0\u4e09\u570b\u6230\u7d00 (ver. 2007jqk)\0", NULL, NULL, NULL,
 	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_IGS_PGM/* | HARDWARE_IGS_USE_ARM_CPU*/, GBF_SCRFIGHT, 0,
-	NULL, kov2k7RomInfo, kov2k7RomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov2k7DIPInfo,
+	NULL, kov2k7jqkRomInfo, kov2k7jqkRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kov2k7jqkDIPInfo,
 	kovInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
 	448, 224, 4, 3
 };
