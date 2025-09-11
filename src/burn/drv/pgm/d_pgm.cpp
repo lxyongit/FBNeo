@@ -2487,7 +2487,7 @@ struct BurnDriver BurnDrvKov111 = {
 static struct BurnRomInfo kov2k7jqkRomDesc[] = {
 	{ "p0600.120",     		0x0400000, 0x6392a1c3, 1 | BRF_PRG | BRF_ESS }, //  0 68K Code
 
-	{ "nebula.rom",     		0x0000952, 0x00000000, 1 | BRF_ESS  }, //  1 68K Code
+	// { "nebula.rom",     		0x0000952, 0x00000000, 1 | BRF_ESS  }, //  1 68K Code
 
 	{ "t0600.rom",     			0x0800000, 0x4acc1ad6, 2 | BRF_GRA },			//  5 Tile data
 	
