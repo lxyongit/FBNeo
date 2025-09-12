@@ -9594,14 +9594,14 @@ static struct BurnRomInfo kovzscsRomDesc[] = {
 	{ "b0602.v200",				0x0400000, 0x091aaa7d, 4 | BRF_GRA },	//  13 
 	{ "b0602x.v200",				0x0400000, 0x16844847, 4 | BRF_GRA   },	//  14 
 
-	{ "p0600_xs.322",				0x0400000, 0x5ba83059, 1 | BRF_PRG | BRF_ESS },	//  15 
+	{ "p0600_xs.322",				0x0454f54, 0x5ba83059, 1 | BRF_PRG | BRF_ESS },	//  15 
 	{ "kovsharm.bin",				0x0004000, 0x23fa66e7, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  16 
 
 	{ "m0600.rom",				0x0400000, 0x3ada4fd6, 5 | BRF_SND},	//  17 
 	{ "m0600x.rom",				0x0400000, 0x968a15b9, 5 | BRF_SND },	//  18 
 	{ "t0600.rom",				0x0800000, 0x4acc1ad6, 2 | BRF_GRA },	//  19 
 	{ "t0600x.320",				0x0400000, 0x164b3c94, 2 | BRF_GRA},	//  20 
-	{ "t0600x.rom",				0x0800000, 0x4afd743c, 2 | BRF_GRA },	//  21 
+	{ "t0600x.rom",				0x0800004, 0x4afd743c, 2 | BRF_GRA },	//  21 
 };
 
 STDROMPICKEXT(kovzscs, kovzscs, pgm)
