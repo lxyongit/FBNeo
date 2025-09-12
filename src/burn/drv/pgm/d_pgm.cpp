@@ -9580,9 +9580,9 @@ static struct BurnRomInfo kovzscsRomDesc[] = {
 	{ "a0602.rom",     			0x0800000, 0xefb30f14, 3 | BRF_GRA },			//  8
 	{ "a0603.rom",     			0x0400000, 0x5ce4b5fa, 3 | BRF_GRA },			//  9
 	
-	{ "a0600x.rom",				0x2200000, 0xb5747009, 3 | BRF_GRA },	//  1 
+	{ "a0600x.rom",				0x0800000, 0xb5747009, 3 | BRF_GRA },	//  1 
 	{ "a0602x.rom",				0x0800000, 0xefb30f14, 3 | BRF_GRA },	//  4 
-	{ "a0603x.rom",				0x0200000, 0x5ce4b5fa, 3 | BRF_GRA },	//  6 
+	{ "a0603x.rom",				0x0400000, 0x5ce4b5fa, 3 | BRF_GRA },	//  6 
 	{ "a0604.v200",				0x0800000, 0x8a85f9a0, 3 | BRF_GRA },	//  7 
 	{ "a0604x.v200",				0x0800000, 0xcea605ec, 3 | BRF_GRA },	//  8 
 
