@@ -22898,7 +22898,7 @@ DRV		BurnSpeczybex;
 DRV		BurnSpeczynaps;
 DRV		BurnSpecZzoom;
 DRV		BurnDrvZzyzzyxx;
-DRV		BurnDrvkof2002bl;
+DRV		BurnDrvKof2002bl;
 DRV		BurnDrvkof97bl;
 DRV		BurnDrvkovzscs;
 DRV		BurnDrvZzyzzyxx2;
@@ -45803,7 +45803,7 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpeczynaps,			// Zynaps (48K)
 	&BurnSpecZzoom,				// Zzoom (48K)
 	&BurnDrvZzyzzyxx,			// Zzyzzyxx (set 1)
-		&BurnDrvkof2002bl,			// kof2002bl
+		&BurnDrvKof2002bl,			// kof2002bl
 		&BurnDrvkof97bl,			// kof97bl
 		&BurnDrvkovzscs,			// kovzscs
 	&BurnDrvZzyzzyxx2,			// Zzyzzyxx (set 2)
