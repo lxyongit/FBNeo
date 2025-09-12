@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE datafile PUBLIC "-//Logiqx//DTD ROM Management Datafile//EN" "http://www.logiqx.com/Dats/datafile.dtd">
+
+<datafile>
+	<header>
+		<name>-insert name-</name>
+		<description>-insert description-</description>
+		<category>Standard DatFile</category>
+		<version>-insert version-</version>
+		<date>-insert date-</date>
+		<author>-insert author-</author>
+		<email>-insert email-</email>
+		<homepage>-insert homepage-</homepage>
+		<url>-insert url-</url>
+		<comment>-insert comment-</comment>
+		<clrmamepro/>
+	</header>
+	<machine name="kof2002bl" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
+		<description>kof2002bl</description>
+		<year>????</year>
+		<manufacturer>????</manufacturer>
+		<rom name="265-c1.c1" size="8388608" crc="aeea48d1"/>
+		<rom name="265-c2.c2" size="8388608" crc="d032c491"/>
+		<rom name="265-c3.c3" size="8388608" crc="06db6db8"/>
+		<rom name="265-c4.c4" size="8388608" crc="6c48ade4"/>
+		<rom name="265-c5.c5" size="8388608" crc="6f7e0598"/>
+		<rom name="265-c6.c6" size="8388608" crc="94ade762"/>
+		<rom name="265-c7.c7" size="8388608" crc="e3aa1ebd"/>
+		<rom name="265-c8.c8" size="8388608" crc="55126e22"/>
+		<rom name="265-m1.bin" size="131072" crc="85aaa632"/>
+		<rom name="265-m1_decrypted.bin" size="131072" crc="1c661a4b"/>
+		<rom name="265-p1.p1" size="1048576" crc="b713becc"/>
+		<rom name="265-p2.sp2" size="4194304" crc="c5b0316b"/>
+		<rom name="265-v1.bin" size="8388608" crc="15e8f3f5"/>
+		<rom name="265-v2.bin" size="8388608" crc="da41d6f9"/>
+	</machine>
+	<machine name="kof97bl" romof="neogeo" sourcefile="neogeo/d_neogeo.cpp">
+		<description>kof97bl</description>
+		<year>????</year>
+		<manufacturer>????</manufacturer>
+		<rom name="kof97_c1.rom" size="8388608" crc="5f8bf0a1"/>
+		<rom name="kof97_c2.rom" size="8388608" crc="e4d45c81"/>
+		<rom name="kof97_c3.rom" size="8388608" crc="581d6618"/>
+		<rom name="kof97_c4.rom" size="8388608" crc="49bb1e68"/>
+		<rom name="kof97_c5.rom" size="4194304" crc="34fc4e51"/>
+		<rom name="kof97_c6.rom" size="4194304" crc="4ff4d47b"/>
+		<rom name="kof97_m1.rom" size="131072" crc="45348747"/>
+		<rom name="kof97_p1.rom" size="1048576" crc="7db81ad9"/>
+		<rom name="kof97_p2.rom" size="4194304" crc="dda07010"/>
+		<rom name="kof97_s1.rom" size="131072" crc="8514ecf5"/>
+		<rom name="kof97_v1.rom" size="4194304" crc="22a2b5b5"/>
+		<rom name="kof97_v2.rom" size="4194304" crc="2304e744"/>
+		<rom name="kof97_v3.rom" size="4194304" crc="759eb954"/>
+	</machine>
+	<machine name="kovshzs" romof="pgm" sourcefile="pgm/d_pgm.cpp">
+		<description>kovshzs</description>
+		<year>????</year>
+		<manufacturer>????</manufacturer>
+		<rom name="a0600.rom" size="8388608" crc="ee091a4f"/>
+		<rom name="a0600x.rom" size="35651584" crc="b5747009"/>
+		<rom name="a0601.rom" size="8388608" crc="ff7a4373"/>
+		<rom name="a0602.rom" size="8388608" crc="efb30f14"/>
+		<rom name="a0602x.rom" size="8388608" crc="efb30f14"/>
+		<rom name="a0603.rom" size="2097152" crc="5ce4b5fa"/>
+		<rom name="a0603x.rom" size="2097152" crc="5ce4b5fa"/>
+		<rom name="a0604.v200" size="8388608" crc="8a85f9a0"/>
+		<rom name="a0604x.v200" size="8388608" crc="cea605ec"/>
+		<rom name="b0600.rom" size="8388608" crc="fbb494e5"/>
+		<rom name="b0600x.rom" size="16777216" crc="58981585"/>
+		<rom name="b0601.rom" size="4194304" crc="f43e4276"/>
+		<rom name="b0601x.rom" size="4194304" crc="f43e4276"/>
+		<rom name="b0602.v200" size="4194304" crc="091aaa7d"/>
+		<rom name="b0602x.v200" size="4194304" crc="16844847"/>
+		<rom name="de_p0600.322" size="4194304" crc="5ba83059"/>
+		<rom name="kovsharm.bin" size="16384" crc="23fa66e7"/>
+		<rom name="m0600.rom" size="4194304" crc="3ada4fd6"/>
+		<rom name="m0600x.rom" size="4194304" crc="968a15b9"/>
+		<rom name="t0600.rom" size="8388608" crc="4acc1ad6"/>
+		<rom name="t0600x.320" size="4194304" crc="164b3c94"/>
+		<rom name="t0600x.rom" size="8388608" crc="4afd743c"/>
+	</machine>
+</datafile>
