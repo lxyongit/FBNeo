@@ -68501,8 +68501,8 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "spec_zzoom", "spectrum/d_spectrum.cpp"},
 	{ "zzyzzyxx", "pre90s/d_jack.cpp"},
 	{ "zzyzzyxx2", "pre90s/d_jack.cpp"},
-	{ "\0", "\0"}
 	{ "kof2002bl", "neogeo/d_neogeo.cpp"},
 	{ "kof97bl", "neogeo/d_neogeo.cpp"},
 	{ "kovshzs", "pgm/d_pgm.cpp"},
+  { "\0", "\0"}
 };
