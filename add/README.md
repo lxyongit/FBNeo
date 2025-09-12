@@ -10,7 +10,10 @@
   - DIP 开关信息 (`BurnDIPInfo`)
   - ROM 描述信息 (`BurnRomInfo`)
   - 驱动结构 (`BurnDriver`)
-- 生成 driverlist.h 中的驱动声明
+- 生成 driverlist.h 中的完整条目：
+  - DRV 驱动声明 (`DRV BurnDrv{name};`)
+  - pDriver 数组条目 (`&BurnDrv{name}`)
+  - sourcefile_table 条目 (`{ "{name}", "{sourcefile}"}`)
 - 可选择性地将代码插入到实际文件中
 
 ## 使用方法
@@ -73,12 +76,32 @@ add/
 └── README.md        # 说明文档
 ```
 
+## driverlist.h 结构说明
+
+脚本会在 `driverlist.h` 文件中添加三种条目：
+
+1. **DRV 声明** - 在文件开头的驱动声明部分：
+   ```cpp
+   DRV     BurnDrv{name};
+   ```
+
+2. **pDriver 数组** - 在驱动指针数组中：
+   ```cpp
+   &BurnDrv{name},     // {description}
+   ```
+
+3. **sourcefile_table** - 在源文件映射表中：
+   ```cpp
+   { "{name}", "{sourcefile}"},
+   ```
+
 ## 注意事项
 
 1. 运行前请备份重要文件
 2. 确保 XML 文件格式正确
 3. 生成的代码可能需要手动调整以符合具体需求
 4. 建议先选择不插入文件，检查生成的代码无误后再实际插入
+5. driverlist.h 中的条目应该按字母顺序排列，脚本目前简单插入到末尾
 
 ## 示例 XML 格式
 

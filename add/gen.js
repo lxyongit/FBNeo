@@ -374,11 +374,59 @@ function insertCodeToFile(filePath, code, insertPoint) {
 
 // 插入到driverlist.h
 function insertDriverListEntries(machines) {
-    const entries = machines.map(machine => `DRV\t\tBurnDrv${machine.name};`);
-    const code = entries.join('\n');
-    
-    // 找到最后一个DRV声明后插入
-    return insertCodeToFile(CONFIG.DRIVERLIST_FILE, code, 'DRV\t\tBurnDrv');
+    try {
+        let content = fs.readFileSync(CONFIG.DRIVERLIST_FILE, 'utf8');
+        let modified = false;
+        
+        machines.forEach(machine => {
+            // 1. 添加DRV声明 - 在最后一个DRV声明前插入
+            const drvDeclaration = `DRV\t\tBurnDrv${machine.name};`;
+            const drvInsertPoint = 'DRV\t\tBurnDrvZzyzzyxx2;';
+            const drvInsertIndex = content.indexOf(drvInsertPoint);
+            if (drvInsertIndex !== -1) {
+                content = content.substring(0, drvInsertIndex) + drvDeclaration + '\n' + content.substring(drvInsertIndex);
+                modified = true;
+                console.log(`添加DRV声明: ${drvDeclaration}`);
+            }
+            
+            // 2. 添加到pDriver数组 - 在倒数第二个条目后插入
+            const pDriverEntry = `\t&BurnDrv${machine.name},\t\t\t// ${machine.description}`;
+            const pDriverArrayEnd = '&BurnDrvZzyzzyxx2,';
+            const pDriverInsertIndex = content.indexOf(pDriverArrayEnd);
+            if (pDriverInsertIndex !== -1) {
+                content = content.substring(0, pDriverInsertIndex) + pDriverEntry + '\n\t' + content.substring(pDriverInsertIndex);
+                modified = true;
+                console.log(`添加到pDriver数组: ${pDriverEntry}`);
+            }
+            
+            // 3. 添加到sourcefile_table - 按字母顺序插入
+            const sourcefileEntry = `\t{ "${machine.name}", "${machine.sourcefile}"},`;
+            
+            // 找到sourcefile_table的结束位置
+            const tableStart = content.indexOf('static game_sourcefile_entry sourcefile_table[] = {');
+            const tableEnd = content.indexOf('};', tableStart + 1);
+            
+            if (tableStart !== -1 && tableEnd !== -1) {
+                // 简单插入到表格末尾，实际应该按字母顺序插入
+                const beforeTableEnd = content.substring(0, tableEnd);
+                const afterTableEnd = content.substring(tableEnd);
+                content = beforeTableEnd + sourcefileEntry + '\n' + afterTableEnd;
+                modified = true;
+                console.log(`添加到sourcefile_table: ${sourcefileEntry}`);
+            }
+        });
+        
+        if (modified) {
+            fs.writeFileSync(CONFIG.DRIVERLIST_FILE, content, 'utf8');
+            console.log('成功更新 driverlist.h');
+            return true;
+        }
+        
+        return false;
+    } catch (error) {
+        console.error('更新 driverlist.h 失败:', error);
+        return false;
+    }
 }
 
 // 插入PGM代码

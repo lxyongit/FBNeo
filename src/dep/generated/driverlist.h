@@ -22901,7 +22901,6 @@ DRV		BurnDrvZzyzzyxx;
 DRV		BurnDrvkof2002bl;
 DRV		BurnDrvkof97bl;
 DRV		BurnDrvkovshzs;
-
 DRV		BurnDrvZzyzzyxx2;
 #undef DRV
 
@@ -45804,6 +45803,9 @@ static struct BurnDriver* pDriver[] = {
 	&BurnSpeczynaps,			// Zynaps (48K)
 	&BurnSpecZzoom,				// Zzoom (48K)
 	&BurnDrvZzyzzyxx,			// Zzyzzyxx (set 1)
+		&BurnDrvkof2002bl,			// kof2002bl
+		&BurnDrvkof97bl,			// kof97bl
+		&BurnDrvkovshzs,			// kovshzs
 	&BurnDrvZzyzzyxx2,			// Zzyzzyxx (set 2)
 };
 
@@ -68500,4 +68502,7 @@ static game_sourcefile_entry sourcefile_table[] = {
 	{ "zzyzzyxx", "pre90s/d_jack.cpp"},
 	{ "zzyzzyxx2", "pre90s/d_jack.cpp"},
 	{ "\0", "\0"}
+	{ "kof2002bl", "neogeo/d_neogeo.cpp"},
+	{ "kof97bl", "neogeo/d_neogeo.cpp"},
+	{ "kovshzs", "pgm/d_pgm.cpp"},
 };
