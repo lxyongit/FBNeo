@@ -382,14 +382,8 @@ function insertDriverListEntries(machines) {
             
             // 3. 添加到sourcefile_table - 在 { "\0", "\0"} 之前插入
             const sourcefileEntry = `\t{ "${machine.name}", "${machine.sourcefile}"},`;
-            const sourcefileInsertPoint = '\t{ "\\0", "\\0"}';
-            const sourcefileInsertIndex = content.indexOf(sourcefileInsertPoint);
-            
-            if (sourcefileInsertIndex !== -1) {
-                content = content.substring(0, sourcefileInsertIndex) + sourcefileEntry + '\n' + content.substring(sourcefileInsertIndex);
-                modified = true;
-                console.log(`添加到sourcefile_table: ${sourcefileEntry}`);
-            }
+            const sourcefileInsertPoint = '{ "\\0", "\\0"}';
+            content.replace(sourcefileInsertPoint, sourcefileEntry + '\n' + sourcefileInsertPoint);
         });
         
         if (modified) {
