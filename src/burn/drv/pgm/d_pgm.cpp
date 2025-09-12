@@ -9575,6 +9575,8 @@ static struct BurnDIPInfo kovzscsDIPList[] = {
 STDDIPINFOEXT(kovzscs,		pgm, kovzscs)
 
 static struct BurnRomInfo kovzscsRomDesc[] = {
+	{ "p0600_xs.322",				0x0400000, 0x5ba83059, 1 | BRF_PRG | BRF_ESS },	//  15 
+
 	{ "a0600.rom",     			0x0800000, 0xee091a4f, 3 | BRF_GRA },			//  6 Sprite Color Data
 	{ "a0601.rom",     			0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  7
 	{ "a0602.rom",     			0x0800000, 0xefb30f14, 3 | BRF_GRA },			//  8
@@ -9594,8 +9596,7 @@ static struct BurnRomInfo kovzscsRomDesc[] = {
 	{ "b0602.v200",				0x0400000, 0x091aaa7d, 4 | BRF_GRA },	//  13 
 	{ "b0602x.v200",				0x0400000, 0x16844847, 4 | BRF_GRA   },	//  14 
 
-	{ "p0600_xs.322",				0x0454f54, 0x5ba83059, 1 | BRF_PRG | BRF_ESS },	//  15 
-	{ "kovsharm.bin",				0x0004000, 0x23fa66e7, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  16 
+	// { "kovsharm.bin",				0x0004000, 0x23fa66e7, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  16 
 
 	{ "m0600.rom",				0x0400000, 0x3ada4fd6, 5 | BRF_SND},	//  17 
 	{ "m0600x.rom",				0x0400000, 0x968a15b9, 5 | BRF_SND },	//  18 
