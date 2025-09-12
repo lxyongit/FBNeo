@@ -429,7 +429,7 @@ function insertPGMCode(machine, code) {
     const insertPoint = 'struct BurnDriver BurnDrv';
     const fullCode = `// ${machine.description}
 
-${code.dipInfo}
+${code.dipInfo[0].toUpperCase() + code.dipInfo.slice(1)}
 
 ${code.romDesc}
 
@@ -444,7 +444,7 @@ function insertNeoGeoCode(machine, code) {
     const insertPoint = 'struct BurnDriver BurnDrv';
     const fullCode = `// ${machine.description}
 
-${code.dipInfo}
+${code.dipInfo[0].toUpperCase() + code.dipInfo.slice(1)}
 
 ${code.romDesc}
 

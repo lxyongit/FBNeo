@@ -9575,10 +9575,10 @@ static struct BurnDIPInfo kovzscsDIPList[] = {
 STDDIPINFOEXT(kovzscs,		pgm, kovzscs)
 
 static struct BurnRomInfo kovzscsRomDesc[] = {
-	{ "a0600.rom",     			0x0800000, 0xd8167834, 3 | BRF_GRA },			//  6 Sprite Color Data
+	{ "a0600.rom",     			0x0800000, 0xee091a4f, 3 | BRF_GRA },			//  6 Sprite Color Data
 	{ "a0601.rom",     			0x0800000, 0xff7a4373, 3 | BRF_GRA },			//  7
-	{ "a0602.rom",     			0x0800000, 0xe7a32959, 3 | BRF_GRA },			//  8
-	{ "a0603.rom",     			0x0400000, 0xec31abda, 3 | BRF_GRA },			//  9
+	{ "a0602.rom",     			0x0800000, 0xefb30f14, 3 | BRF_GRA },			//  8
+	{ "a0603.rom",     			0x0400000, 0x5ce4b5fa, 3 | BRF_GRA },			//  9
 	
 	{ "a0600x.rom",				0x2200000, 0xb5747009, 3 | BRF_GRA },	//  1 
 	{ "a0602x.rom",				0x0800000, 0xefb30f14, 3 | BRF_GRA },	//  4 
