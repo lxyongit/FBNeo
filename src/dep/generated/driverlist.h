@@ -22898,6 +22898,10 @@ DRV		BurnSpeczybex;
 DRV		BurnSpeczynaps;
 DRV		BurnSpecZzoom;
 DRV		BurnDrvZzyzzyxx;
+DRV		BurnDrvkof2002bl;
+DRV		BurnDrvkof97bl;
+DRV		BurnDrvkovshzs;
+
 DRV		BurnDrvZzyzzyxx2;
 #undef DRV
 

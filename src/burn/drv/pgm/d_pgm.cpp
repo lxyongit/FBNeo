@@ -9563,6 +9563,81 @@ static struct BurnRomInfo killbldjqRomDesc[] = {
 STDROMPICKEXT(killbldjq, killbldjq, pgm)
 STD_ROM_FN(killbldjq)
 
+// kovshzs
+
+static struct BurnDIPInfo kovshzsDIPList[] = {
+	{0x2D,	0xFF, 0xFF,	0x00, NULL														},
+	{0x2F,  0xFF, 0x01, 0x01, NULL														},
+
+	{0,		0xFE, 0,	2,    "Test mode"										},
+	{0x2D,	0x01, 0x01,	0x00, "Off"												},
+	{0x2D,	0x01, 0x01,	0x01, "On"												},
+
+	{0,		0xFE, 0,	2,    "Music"											},
+	{0x2D,	0x01, 0x02,	0x02, "Off"												},
+	{0x2D,	0x01, 0x02,	0x00, "On"												},
+
+	{0,		0xFE, 0,	2,    "Voice"											},
+	{0x2D,	0x01, 0x04,	0x04, "Off"												},
+	{0x2D,	0x01, 0x04,	0x00, "On"												},
+
+	{0,		0xFE, 0,	2,    "Free play"										},
+	{0x2D,	0x01, 0x08,	0x00, "Off"												},
+	{0x2D,	0x01, 0x08,	0x08, "On"												},
+
+	{0,		0xFE, 0,	2,    "Stop mode"										},
+	{0x2D,	0x01, 0x10,	0x00, "Off"												},
+	{0x2D,	0x01, 0x10,	0x10, "On"												},
+
+	{0,     0xFE, 0,	4,    "Bios select (Fake)"						},
+	{0x2F,  0x01, 0x0f,	0x00, "Older"											},
+	{0x2F,  0x01, 0x0f,	0x01, "Newer"											},
+	{0x2F,  0x01, 0x0f,	0x02, "Newer (no intro, calendar)"			},
+	{0x2F,  0x01, 0x0f,	0x03, "Newer (no intro)"						},
+};
+
+STDDIPINFOEXT(kovshzs,		pgm, kovshzs)
+
+static struct BurnRomInfo kovshzsRomDesc[] = {
+	{ "a0600.rom",				0x0800000, 0xee091a4f, 1 | BRF_PRG | BRF_ESS },	//  0 
+	{ "a0600x.rom",				0x2200000, 0xb5747009, 1 | BRF_PRG | BRF_ESS },	//  1 
+	{ "a0601.rom",				0x0800000, 0xff7a4373, 1 | BRF_PRG | BRF_ESS },	//  2 
+	{ "a0602.rom",				0x0800000, 0xefb30f14, 1 | BRF_PRG | BRF_ESS },	//  3 
+	{ "a0602x.rom",				0x0800000, 0xefb30f14, 1 | BRF_PRG | BRF_ESS },	//  4 
+	{ "a0603.rom",				0x0200000, 0x5ce4b5fa, 1 | BRF_PRG | BRF_ESS },	//  5 
+	{ "a0603x.rom",				0x0200000, 0x5ce4b5fa, 1 | BRF_PRG | BRF_ESS },	//  6 
+	{ "a0604.v200",				0x0800000, 0x8a85f9a0, 1 | BRF_PRG | BRF_ESS },	//  7 
+	{ "a0604x.v200",				0x0800000, 0xcea605ec, 1 | BRF_PRG | BRF_ESS },	//  8 
+	{ "b0600.rom",				0x0800000, 0xfbb494e5, 1 | BRF_PRG | BRF_ESS },	//  9 
+	{ "b0600x.rom",				0x1000000, 0x58981585, 1 | BRF_PRG | BRF_ESS },	//  10 
+	{ "b0601.rom",				0x0400000, 0xf43e4276, 1 | BRF_PRG | BRF_ESS },	//  11 
+	{ "b0601x.rom",				0x0400000, 0xf43e4276, 1 | BRF_PRG | BRF_ESS },	//  12 
+	{ "b0602.v200",				0x0400000, 0x091aaa7d, 1 | BRF_PRG | BRF_ESS },	//  13 
+	{ "b0602x.v200",				0x0400000, 0x16844847, 1 | BRF_PRG | BRF_ESS },	//  14 
+	{ "de_p0600.322",				0x0400000, 0x5ba83059, 1 | BRF_PRG | BRF_ESS },	//  15 
+	{ "kovsharm.bin",				0x0004000, 0x23fa66e7, 4 | BRF_GRA },	//  16 
+	{ "m0600.rom",				0x0400000, 0x3ada4fd6, 1 | BRF_PRG | BRF_ESS },	//  17 
+	{ "m0600x.rom",				0x0400000, 0x968a15b9, 1 | BRF_PRG | BRF_ESS },	//  18 
+	{ "t0600.rom",				0x0800000, 0x4acc1ad6, 1 | BRF_PRG | BRF_ESS },	//  19 
+	{ "t0600x.320",				0x0400000, 0x164b3c94, 1 | BRF_PRG | BRF_ESS },	//  20 
+	{ "t0600x.rom",				0x0800000, 0x4afd743c, 1 | BRF_PRG | BRF_ESS },	//  21 
+};
+
+STDROMPICKEXT(kovshzs, kovshzs, pgm)
+STD_ROM_FN(kovshzs)
+
+struct BurnDriver BurnDrvkovshzs = {
+	"kovshzs", NULL, "pgm", NULL, "????",
+	"kovshzs\0", NULL, "????", "PolyGame Master",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, kovshzsRomInfo, kovshzsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshzsDIPInfo,
+	pgmInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+
 struct BurnDriver BurnDrvKillbldjq = {
 	"killbldjq", "killbld", "pgm", NULL, "2023",
 	"The Killing Blade - Infinite Energy (Hack)\0", NULL, "hack", "PolyGame Master",

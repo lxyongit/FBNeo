@@ -29197,6 +29197,103 @@ static struct BurnRomInfo shinobingRomDesc[] = {
 STDROMPICKEXT(shinobing, shinobing, neogeo)
 STD_ROM_FN(shinobing)
 
+// kof2002bl
+
+static struct BurnDIPInfo kof2002blDIPList[] = {
+	{0x19,	0xF0, 0x00,	0x00, NULL},
+
+	{0x00,	0xFF, 0xFF,	0x00, NULL}, // DIP 1
+	{0x01,	0xFF, 0x7F,	0x00, NULL}, // DIP 2
+	{0x02,	0xFF, 0xFF,	0x86, NULL}, // System
+	{0x08,	0xFF, 0xFF,	0x00, NULL}, // Fake DIP (Overscan)
+
+	{0,		0xFE, 0,	2,	  "Setting mode"},
+	{0x00,	0x01, 0x01,	0x00, "Off"},
+	{0x00,	0x01, 0x01,	0x01, "On"},
+};
+
+STDDIPINFOEXT(kof2002bl,		neogeo, kof2002bl)
+
+static struct BurnRomInfo kof2002blRomDesc[] = {
+	{ "265-c1.c1",    0x800000, 0xaeea48d1, 3 | BRF_GRA }, //  0 Sprite data
+	{ "265-c2.c2",    0x800000, 0xd032c491, 3 | BRF_GRA }, //  1 Sprite data
+	{ "265-c3.c3",    0x800000, 0x06db6db8, 3 | BRF_GRA }, //  2 Sprite data
+	{ "265-c4.c4",    0x800000, 0x6c48ade4, 3 | BRF_GRA }, //  3 Sprite data
+	{ "265-c5.c5",    0x800000, 0x6f7e0598, 3 | BRF_GRA }, //  4 Sprite data
+	{ "265-c6.c6",    0x800000, 0x94ade762, 3 | BRF_GRA }, //  5 Sprite data
+	{ "265-c7.c7",    0x800000, 0xe3aa1ebd, 3 | BRF_GRA }, //  6 Sprite data
+	{ "265-c8.c8",    0x800000, 0x55126e22, 3 | BRF_GRA }, //  7 Sprite data
+	{ "265-m1.bin",    0x020000, 0x85aaa632, 4 | BRF_ESS | BRF_PRG }, //  8 Z80 code
+	{ "265-m1_decrypted.bin",    0x020000, 0x1c661a4b, 4 | BRF_ESS | BRF_PRG }, //  9 Z80 code
+	{ "265-p1.p1",    0x100000, 0xb713becc, 1 | BRF_ESS | BRF_PRG }, //  10 68K code
+	{ "265-p2.sp2",    0x400000, 0xc5b0316b, 1 | BRF_ESS | BRF_PRG }, //  11 68K code
+	{ "265-v1.bin",    0x800000, 0x15e8f3f5, 5 | BRF_SND }, //  12 Sound data
+	{ "265-v2.bin",    0x800000, 0xda41d6f9, 5 | BRF_SND }, //  13 Sound data
+};
+
+STDROMPICKEXT(kof2002bl, kof2002bl, neogeo)
+STD_ROM_FN(kof2002bl)
+
+struct BurnDriver BurnDrvkof2002bl = {
+	"kof2002bl", NULL, "neogeo", NULL, "????",
+	"kof2002bl\0", NULL, "????", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, kof2002blRomInfo, kof2002blRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, kof2002blDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
+
+// kof97bl
+
+static struct BurnDIPInfo kof97blDIPList[] = {
+	{0x19,	0xF0, 0x00,	0x00, NULL},
+
+	{0x00,	0xFF, 0xFF,	0x00, NULL}, // DIP 1
+	{0x01,	0xFF, 0x7F,	0x00, NULL}, // DIP 2
+	{0x02,	0xFF, 0xFF,	0x86, NULL}, // System
+	{0x08,	0xFF, 0xFF,	0x00, NULL}, // Fake DIP (Overscan)
+
+	{0,		0xFE, 0,	2,	  "Setting mode"},
+	{0x00,	0x01, 0x01,	0x00, "Off"},
+	{0x00,	0x01, 0x01,	0x01, "On"},
+};
+
+STDDIPINFOEXT(kof97bl,		neogeo, kof97bl)
+
+static struct BurnRomInfo kof97blRomDesc[] = {
+	{ "kof97_c1.rom",    0x800000, 0x5f8bf0a1, 3 | BRF_GRA }, //  0 Sprite data
+	{ "kof97_c2.rom",    0x800000, 0xe4d45c81, 3 | BRF_GRA }, //  1 Sprite data
+	{ "kof97_c3.rom",    0x800000, 0x581d6618, 3 | BRF_GRA }, //  2 Sprite data
+	{ "kof97_c4.rom",    0x800000, 0x49bb1e68, 3 | BRF_GRA }, //  3 Sprite data
+	{ "kof97_c5.rom",    0x400000, 0x34fc4e51, 3 | BRF_GRA }, //  4 Sprite data
+	{ "kof97_c6.rom",    0x400000, 0x4ff4d47b, 3 | BRF_GRA }, //  5 Sprite data
+	{ "kof97_m1.rom",    0x020000, 0x45348747, 4 | BRF_ESS | BRF_PRG }, //  6 Z80 code
+	{ "kof97_p1.rom",    0x100000, 0x7db81ad9, 1 | BRF_ESS | BRF_PRG }, //  7 68K code
+	{ "kof97_p2.rom",    0x400000, 0xdda07010, 1 | BRF_ESS | BRF_PRG }, //  8 68K code
+	{ "kof97_s1.rom",    0x020000, 0x8514ecf5, 2 | BRF_GRA }, //  9 Text layer tiles
+	{ "kof97_v1.rom",    0x400000, 0x22a2b5b5, 5 | BRF_SND }, //  10 Sound data
+	{ "kof97_v2.rom",    0x400000, 0x2304e744, 5 | BRF_SND }, //  11 Sound data
+	{ "kof97_v3.rom",    0x400000, 0x759eb954, 5 | BRF_SND }, //  12 Sound data
+};
+
+STDROMPICKEXT(kof97bl, kof97bl, neogeo)
+STD_ROM_FN(kof97bl)
+
+struct BurnDriver BurnDrvkof97bl = {
+	"kof97bl", NULL, "neogeo", NULL, "????",
+	"kof97bl\0", NULL, "????", "Neo Geo MVS",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
+	NULL, kof97blRomInfo, kof97blRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, kof97blDIPInfo,
+	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000, 304, 224, 4, 3
+};
+
+
+
 struct BurnDriver BurnDrvShinobing = {
 	"shinobing", NULL, "neogeo", NULL, "2024",
 	"Shinobi Neo Geo (HB, v1.1)\0", "Unofficial port", "Hoffman", "Neo Geo MVS",
