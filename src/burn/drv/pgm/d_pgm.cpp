@@ -9594,8 +9594,8 @@ static struct BurnRomInfo kovzscsRomDesc[] = {
 	{ "b0602.v200",				0x0400000, 0x091aaa7d, 4 | BRF_GRA },	//  13 
 	{ "b0602x.v200",				0x0400000, 0x16844847, 4 | BRF_GRA },	//  14 
 
-	{ "de_p0600.322",				0x0400000, 0x5ba83059, 1 | BRF_PRG | BRF_ESS },	//  15 
-	{ "kovsharm.bin",				0x0004000, 0x23fa66e7, 4 | BRF_GRA },	//  16 
+	// { "de_p0600.322",				0x0400000, 0x5ba83059, 1 | BRF_PRG | BRF_ESS },	//  15 
+	{ "kovsharm.bin",				0x0004000, 0x00000000, 7 | BRF_PRG | BRF_ESS | BRF_NODUMP },	//  16 
 
 	{ "m0600.rom",				0x0400000, 0x3ada4fd6, 5 | BRF_SND},	//  17 
 	{ "m0600x.rom",				0x0400000, 0x968a15b9, 5 | BRF_SND },	//  18 
