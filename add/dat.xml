@@ -52,8 +52,8 @@
 		<rom name="kof97_v2.rom" size="4194304" crc="2304e744"/>
 		<rom name="kof97_v3.rom" size="4194304" crc="759eb954"/>
 	</machine>
-	<machine name="kovshzs" romof="pgm" sourcefile="pgm/d_pgm.cpp">
-		<description>kovshzs</description>
+	<machine name="kovzscs" romof="pgm" sourcefile="pgm/d_pgm.cpp">
+		<description>kovzscs</description>
 		<year>????</year>
 		<manufacturer>????</manufacturer>
 		<rom name="a0600.rom" size="8388608" crc="ee091a4f"/>

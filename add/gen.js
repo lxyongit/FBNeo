@@ -399,18 +399,13 @@ function insertDriverListEntries(machines) {
                 console.log(`添加到pDriver数组: ${pDriverEntry}`);
             }
             
-            // 3. 添加到sourcefile_table - 按字母顺序插入
+            // 3. 添加到sourcefile_table - 在 { "\0", "\0"} 之前插入
             const sourcefileEntry = `\t{ "${machine.name}", "${machine.sourcefile}"},`;
+            const sourcefileInsertPoint = '\t{ "\\0", "\\0"}';
+            const sourcefileInsertIndex = content.indexOf(sourcefileInsertPoint);
             
-            // 找到sourcefile_table的结束位置
-            const tableStart = content.indexOf('static game_sourcefile_entry sourcefile_table[] = {');
-            const tableEnd = content.indexOf('};', tableStart + 1);
-            
-            if (tableStart !== -1 && tableEnd !== -1) {
-                // 简单插入到表格末尾，实际应该按字母顺序插入
-                const beforeTableEnd = content.substring(0, tableEnd);
-                const afterTableEnd = content.substring(tableEnd);
-                content = beforeTableEnd + sourcefileEntry + '\n' + afterTableEnd;
+            if (sourcefileInsertIndex !== -1) {
+                content = content.substring(0, sourcefileInsertIndex) + sourcefileEntry + '\n' + content.substring(sourcefileInsertIndex);
                 modified = true;
                 console.log(`添加到sourcefile_table: ${sourcefileEntry}`);
             }

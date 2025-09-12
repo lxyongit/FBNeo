@@ -90,7 +90,7 @@ add/
    &BurnDrv{name},     // {description}
    ```
 
-3. **sourcefile_table** - 在源文件映射表中：
+3. **sourcefile_table** - 在源文件映射表中（在 `{ "\0", "\0"}` 之前）：
    ```cpp
    { "{name}", "{sourcefile}"},
    ```

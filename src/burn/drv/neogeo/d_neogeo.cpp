@@ -29199,21 +29199,6 @@ STD_ROM_FN(shinobing)
 
 // kof2002bl
 
-static struct BurnDIPInfo kof2002blDIPList[] = {
-	{0x19,	0xF0, 0x00,	0x00, NULL},
-
-	{0x00,	0xFF, 0xFF,	0x00, NULL}, // DIP 1
-	{0x01,	0xFF, 0x7F,	0x00, NULL}, // DIP 2
-	{0x02,	0xFF, 0xFF,	0x86, NULL}, // System
-	{0x08,	0xFF, 0xFF,	0x00, NULL}, // Fake DIP (Overscan)
-
-	{0,		0xFE, 0,	2,	  "Setting mode"},
-	{0x00,	0x01, 0x01,	0x00, "Off"},
-	{0x00,	0x01, 0x01,	0x01, "On"},
-};
-
-STDDIPINFOEXT(kof2002bl,		neogeo, kof2002bl)
-
 static struct BurnRomInfo kof2002blRomDesc[] = {
 	{ "265-c1.c1",    0x800000, 0xaeea48d1, 3 | BRF_GRA }, //  0 Sprite data
 	{ "265-c2.c2",    0x800000, 0xd032c491, 3 | BRF_GRA }, //  1 Sprite data
@@ -29234,17 +29219,15 @@ static struct BurnRomInfo kof2002blRomDesc[] = {
 STDROMPICKEXT(kof2002bl, kof2002bl, neogeo)
 STD_ROM_FN(kof2002bl)
 
-struct BurnDriver BurnDrvkof2002bl = {
-	"kof2002bl", NULL, "neogeo", NULL, "????",
-	"kof2002bl\0", NULL, "????", "Neo Geo MVS",
+struct BurnDriver BurnDrvKof2002bl = {
+	"kof2002bl", NULL, "neogeo", NULL, "2002",
+	"The King of Fighters 2002bl (NGM-2650 ~ NGH-2650)\0", NULL, "Eolith / Playmore", "Neo Geo MVS",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO, GBF_VSFIGHT, 0,
-	NULL, kof2002blRomInfo, kof2002blRomName, NULL, NULL, NULL, NULL, neogeoInputInfo, kof2002blDIPInfo,
-	NeoInit, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
-	0x1000, 304, 224, 4, 3
+	BDF_GAME_WORKING, 2, HARDWARE_PREFIX_CARTRIDGE | HARDWARE_SNK_NEOGEO | HARDWARE_SNK_CMC50 | HARDWARE_SNK_ENCRYPTED_M1, GBF_VSFIGHT, FBF_KOF,
+	NULL, kof2002RomInfo, kof2002RomName, NULL, NULL, NULL, NULL, neogeoInputInfo, neogeoDIPInfo,
+	kof2002Init, NeoExit, NeoFrame, NeoRender, NeoScan, &NeoRecalcPalette,
+	0x1000,	304, 224, 4, 3
 };
-
-
 
 // kof97bl
 
