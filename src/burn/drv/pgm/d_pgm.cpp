@@ -9620,6 +9620,62 @@ struct BurnDriver BurnDrvKovzscs = {
 
 
 
+// kovshzs
+
+Static struct BurnDIPInfo kovshzsDIPList[] = {
+	{0x2E,	0xFF, 0xFF,	0x04, NULL								},
+
+	{0,		0xFE, 0,	6,    "Region (Fake)"					},
+	{0x2E,	0x01, 0x0F,	0x00, "China"							},
+	{0x2E,	0x01, 0x0F,	0x01, "Taiwan"							},
+	{0x2E,	0x01, 0x0F,	0x02, "Japan"							},
+	{0x2E,	0x01, 0x0F,	0x03, "Korea"							},
+	{0x2E,	0x01, 0x0F,	0x04, "Hong Kong"						},
+	{0x2E,	0x01, 0x0F,	0x05, "World"							},
+};
+
+STDDIPINFOEXT(kovshzs,		pgm, kovshzs)
+
+static struct BurnRomInfo kovshzsRomDesc[] = {
+	{ "a0600.rom",				0x0800000, 0xee091a4f, 3 | BRF_GRA },	//  0 
+	{ "a0600x.rom",				0x2200000, 0xb5747009, 3 | BRF_GRA },	//  1 
+	{ "a0601.rom",				0x0800000, 0xff7a4373, 3 | BRF_GRA},	//  2 
+	{ "a0602.rom",				0x0800000, 0xefb30f14, 3 | BRF_GRA },	//  3 
+	{ "a0602x.rom",				0x0800000, 0xefb30f14, 3 | BRF_GRA },	//  4 
+	{ "a0603.rom",				0x0200000, 0x5ce4b5fa, 3 | BRF_GRA },	//  5 
+	{ "a0603x.rom",				0x0200000, 0x5ce4b5fa, 3 | BRF_GRA},	//  6 
+	{ "a0604.v200",				0x0800000, 0x8a85f9a0, 3 | BRF_GRA },	//  7 
+	{ "a0604x.v200",				0x0800000, 0xcea605ec, 3 | BRF_GRA },	//  8 
+	{ "b0600.rom",				0x0800000, 0xfbb494e5, 4 | BRF_GRA },	//  9 
+	{ "b0600x.rom",				0x1000000, 0x58981585, 4 | BRF_GRA  },	//  10 
+	{ "b0601.rom",				0x0400000, 0xf43e4276, 4 | BRF_GRA  },	//  11 
+	{ "b0601x.rom",				0x0400000, 0xf43e4276, 4 | BRF_GRA  },	//  12 
+	{ "b0602.v200",				0x0400000, 0x091aaa7d, 4 | BRF_GRA  },	//  13 
+	{ "b0602x.v200",				0x0400000, 0x16844847, 4 | BRF_GRA  },	//  14 
+	// { "kovsharm.bin",				0x0004000, 0x23fa66e7, 4 | BRF_GRA },	//  15 
+	{ "m0600.rom",				0x0400000, 0x3ada4fd6, 5 | BRF_SND  },	//  16 
+	{ "m0600x.rom",				0x0400000, 0x968a15b9, 5 | BRF_SND  },	//  17 
+	{ "p0600_zs.322",				0x0454f63, 0x5ba83059, 1 | BRF_PRG | BRF_ESS },	//  18 
+	{ "t0600.rom",				0x0800000, 0x4acc1ad6, 2 | BRF_GRA },	//  19 
+	{ "t0600x.320",				0x0400000, 0x164b3c94, 2 | BRF_GRA },	//  20 
+	{ "t0600x.rom",				0x0800004, 0x4afd743c, 2 | BRF_GRA },	//  21 
+};
+
+STDROMPICKEXT(kovshzs, kovshzs, pgm)
+STD_ROM_FN(kovshzs)
+
+struct BurnDriver BurnDrvkovshzs = {
+	"kovshzs", NULL, "pgm", NULL, "????",
+	"kovshzs\0", NULL, "????", "PolyGame Master",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING, 4, HARDWARE_IGS_PGM, GBF_SCRFIGHT, 0,
+	NULL, kovshzsRomInfo, kovshzsRomName, NULL, NULL, NULL, NULL, pgmInputInfo, kovshzsDIPInfo,
+	pgmInit, pgmExit, pgmFrame, pgmDraw, pgmScan, &nPgmPalRecalc, 0x900,
+	448, 224, 4, 3
+};
+
+
+
 struct BurnDriver BurnDrvKillbldjq = {
 	"killbldjq", "killbld", "pgm", NULL, "2023",
 	"The Killing Blade - Infinite Energy (Hack)\0", NULL, "hack", "PolyGame Master",
