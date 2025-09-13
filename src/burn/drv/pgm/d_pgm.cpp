@@ -9622,7 +9622,7 @@ struct BurnDriver BurnDrvKovzscs = {
 
 // kovshzs
 
-Static struct BurnDIPInfo kovshzsDIPList[] = {
+static struct BurnDIPInfo kovshzsDIPList[] = {
 	{0x2E,	0xFF, 0xFF,	0x04, NULL								},
 
 	{0,		0xFE, 0,	6,    "Region (Fake)"					},
