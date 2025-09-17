@@ -777,13 +777,11 @@ static int apply_cheats_from_variables()
 		var.key = cheat_option->option_name.c_str();
 		if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) == false || !var.value)
 			continue;
-			HandleMessage(RETRO_LOG_INFO, "Setting cheats apply_cheats_from_variables to %s\n", cheat_option->option_name.c_str());
 
 		for (int cheat_value_idx = 0; cheat_value_idx < cheat_option->values.size(); cheat_value_idx++)
 		{
 			cheat_core_option_value *cheat_value = &(cheat_option->values[cheat_value_idx]);
-			HandleMessage(RETRO_LOG_INFO, "Setting cheats apply_cheats_from_variables to value:%s varvalue:%s varkey:%s\n", cheat_value->friendly_name.c_str(), var.value, var.key);
-			HandleMessage(RETRO_LOG_INFO, "Setting cheats apply_cheats_from_variables CheatEnable to %s-%s\n", cheat_option->num, cheat_value->nValue);
+			HandleMessage(RETRO_LOG_INFO, "Setting cheats apply_cheats_from_variables CheatEnable to%s: %d-%d\n", cheat_option->option_name.c_str(), cheat_option->num, cheat_value->nValue);
 
 			if (cheat_value->friendly_name.compare(var.value) != 0)
 				continue;
