@@ -701,8 +701,6 @@ static int create_variables_from_cheats()
 	// options, and some core options need to be known before BurnDrvInit is called...
 	ConfigCheatLoad();
 
-	HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s-%s\n", szAppCheatsPath, BurnDrvGetText(DRV_NAME));
-	HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_core_options.size());
 	cheat_core_options.clear();
 	const char * drvname = BurnDrvGetTextA(DRV_NAME);
 
@@ -731,11 +729,6 @@ static int create_variables_from_cheats()
 			cheat_option->num = num;
 			cheat_option->values.reserve(count);
 			cheat_option->values.assign(count, cheat_core_option_value());
-			HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_option->option_name.c_str());
-			HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_option->friendly_name.c_str());
-			HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_option->friendly_name_categorized.c_str());
-			HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_option->default_value.c_str());
-			HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_option->values.size());
 			for (int i = 0; i < count; i++) {
 				cheat_core_option_value *cheat_value = &cheat_option->values[i];
 				cheat_value->nValue = i;
@@ -788,9 +781,11 @@ static int apply_cheats_from_variables()
 		for (int cheat_value_idx = 0; cheat_value_idx < cheat_option->values.size(); cheat_value_idx++)
 		{
 			cheat_core_option_value *cheat_value = &(cheat_option->values[cheat_value_idx]);
+			HandleMessage(RETRO_LOG_INFO, "Setting cheats apply_cheats_from_variables to %s\n%s\n%s\n%s\n", cheat_option->option_name.c_str(), cheat_value->friendly_name.c_str(), var.value, var.key);
 			if (cheat_value->friendly_name.compare(var.value) != 0)
 				continue;
 			CheatEnable(cheat_option->num, cheat_value->nValue);
+			HandleMessage(RETRO_LOG_INFO, "Setting cheats apply_cheats_from_variables to %s-%s\n", cheat_option->num, cheat_value->nValue);
 		}
 	}
 	return 0;
