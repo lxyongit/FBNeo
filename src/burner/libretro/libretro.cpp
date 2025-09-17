@@ -700,7 +700,10 @@ static int create_variables_from_cheats()
 	// be done early because libretro won't accept a variable number of core
 	// options, and some core options need to be known before BurnDrvInit is called...
 	ConfigCheatLoad();
-
+	TCHAR szFilename[MAX_PATH] = _T("");
+	_T("%s%s.ini"), szAppCheatsPath, BurnDrvGetText(DRV_NAME);
+	HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", szFilename);
+	HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_core_options.size());
 	cheat_core_options.clear();
 	const char * drvname = BurnDrvGetTextA(DRV_NAME);
 
@@ -729,6 +732,11 @@ static int create_variables_from_cheats()
 			cheat_option->num = num;
 			cheat_option->values.reserve(count);
 			cheat_option->values.assign(count, cheat_core_option_value());
+			HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_option->option_name.c_str());
+			HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_option->friendly_name.c_str());
+			HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_option->friendly_name_categorized.c_str());
+			HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_option->default_value.c_str());
+			HandleMessage(RETRO_LOG_INFO, "Setting cheats create_variables_from_cheats to %s\n", cheat_option->values.size());
 			for (int i = 0; i < count; i++) {
 				cheat_core_option_value *cheat_value = &cheat_option->values[i];
 				cheat_value->nValue = i;
