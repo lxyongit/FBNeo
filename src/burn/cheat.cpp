@@ -171,10 +171,11 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 				deactivate = 1;
 			}
 
-			// Return OK if the cheat is already active with the same option
-			if (pCurrentCheat->nCurrent == nOption) {
-				return 0;
-			}
+				// Return OK if the cheat is already active with the same option
+				// But if we're deactivating, we must proceed even if current == default
+				if (!deactivate && pCurrentCheat->nCurrent == nOption) {
+					return 0;
+				}
 
 			if (HW_NES && pCurrentCheat->nCurrent != nOption) {
 				// NES: going from one option to the next in a list, must deactivate
@@ -182,7 +183,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 				NESCheatDisable(pCurrentCheat, nCheat);
 			}
 
-			if (deactivate) { // disable cheat option
+				if (deactivate) { // disable cheat option
 				if (pCurrentCheat->nType != 1) {
 					nOption = pCurrentCheat->nCurrent; // Set to the first option as there is no addressinfo associated with default (disabled) cheat entry. -dink
 
@@ -202,7 +203,7 @@ INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 							cheat_subptr->open(cheat_ptr->nCPU);
 						}
 
-						if (pCurrentCheat->bRestoreOnDisable && !pAddressInfo->bRelAddress) {
+						if (!pAddressInfo->bRelAddress) {
 							// Write back original values to memory
 							bprintf(0, _T("Cheat #%d, option #%d. action: "), nCheat, nOption);
 							bprintf(0, _T("Undo cheat @ 0x%X -> 0x%X.\n"), pAddressInfo->nAddress, pAddressInfo->nOriginalValue);
