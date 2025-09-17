@@ -3,6 +3,12 @@
 
 #include "burnint.h"
 
+#ifdef __EMSCRIPTEN__
+#define EMSCRIPTEN_KEEPALIVE extern "C" __attribute__((used))
+#else
+#define EMSCRIPTEN_KEEPALIVE
+#endif
+
 #define CHEAT_MAXCPU	8 // enough?
 
 // any system that uses Game Genie/Pro Action Replay codes can be defined as HW_NES...
@@ -137,7 +143,7 @@ static void NESCheatDisable(CheatInfo* pCurrentCheat, INT32 nCheat)
 }
 
 // For WASM export, compile with -s EXPORTED_FUNCTIONS="['_CheatEnable']"
-extern "C"
+EMSCRIPTEN_KEEPALIVE
 INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 {
 	INT32 nCurrentCheat = 0;
