@@ -136,6 +136,8 @@ static void NESCheatDisable(CheatInfo* pCurrentCheat, INT32 nCheat)
 	}
 }
 
+// For WASM export, compile with -s EXPORTED_FUNCTIONS="['_CheatEnable']"
+extern "C"
 INT32 CheatEnable(INT32 nCheat, INT32 nOption) // -1 / 0 - disable
 {
 	INT32 nCurrentCheat = 0;
