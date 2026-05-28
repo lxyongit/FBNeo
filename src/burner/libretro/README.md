@@ -82,27 +82,27 @@ Refer to a [clrmamepro tutorial](https://docs.libretro.com/guides/arcade-getting
 
 ## Features
 
-| Feature           | Supported |
-|-------------------|-----------|
-| Saves             | ✔         |
-| States            | ✔         |
-| Rewind            | ✔         |
-| Run-Ahead         | ✔         |
-| Preemptive Frames | ✔         |
-| Netplay           | ✔         |
-| RetroAchievements | ✔         |
-| RetroArch Cheats  | ✔         |
-| Native Cheats     | ✔         |
-| Controllers       | ✔         |
-| Multi-Mouse       | ✔         |
-| Rumble            | ✕         |
-| Sensors           | ✕         |
-| Camera            | ✕         |
-| Location          | ✕         |
-| Subsystem         | ✔         |
-| IPS Patch         | ✔         |
-| RomData           | ✔         |
-| Multi-language    | ✔         |
+| Feature                                                           | Supported |
+|-------------------------------------------------------------------|-----------|
+| Saves                                                             | ✔         |
+| States                                                            | ✔         |
+| Rewind                                                            | ✔         |
+| Run-Ahead                                                         | ✔         |
+| Preemptive Frames                                                 | ✔         |
+| Netplay                                                           | ✔         |
+| [Memory Monitoring (achievements)](../guides/memorymonitoring.md) | ✔         |
+| RetroArch Cheats                                                  | ✔         |
+| Native Cheats                                                     | ✔         |
+| Controllers                                                       | ✔         |
+| Multi-Mouse                                                       | ✔         |
+| Rumble                                                            | ✕         |
+| Sensors                                                           | ✕         |
+| Camera                                                            | ✕         |
+| Location                                                          | ✕         |
+| Subsystem                                                         | ✔         |
+| IPS Patch                                                         | ✔         |
+| RomData                                                           | ✔         |
+| Multi-language                                                    | ✔         |
 
 ## Mapping
 
@@ -170,43 +170,50 @@ You can also emulate consoles by prefixing the name of the roms with `XXX_` and 
 
 ## BIOS
 
-Bioses will be searched through 3 folders :
+When loading a romset requiring a bios romset, it will be searched through 3 folders in that order :
 
 * the folder of the current romset
 * the `SYSTEM_DIRECTORY/fbneo/` folder
 * the `SYSTEM_DIRECTORY/` folder
 
-The following bioses are required for some of the emulated systems :
+The following bios romsets are required for some of the emulated arcade systems :
 
-* neogeo.zip (Neo Geo BIOS)
-* neocdz.zip (Neo Geo CDZ System BIOS)
-* decocass.zip (DECO Cassette System BIOS)
-* isgsm.zip (ISG Selection Master Type 2006 System BIOS)
-* midssio.zip (Midway SSIO Sound Board Internal ROM)
-* nmk004.zip (NMK004 Internal ROM)
-* pgm.zip (PGM System BIOS)
-* skns.zip (Super Kaneko Nova System BIOS)
-* ym2608.zip (YM2608 Internal ROM)
-* cchip.zip (C-Chip Internal ROM)
-* bubsys.zip (Bubble System BIOS)
-* namcoc69.zip (Namco C69 BIOS)
-* namcoc70.zip (Namco C70 BIOS)
-* namcoc75.zip (Namco C75 BIOS)
-* coleco.zip (ColecoVision System BIOS)
-* fdsbios.zip (FDS System BIOS)
-* msx.zip (MSX1 System BIOS)
-* ngp.zip (NeoGeo Pocket BIOS)
-* spectrum.zip (ZX Spectrum BIOS)
-* spec128.zip (ZX Spectrum 128 BIOS)
-* spec1282a.zip (ZX Spectrum 128 +2a BIOS)
-* channelf.zip (Fairchild Channel F BIOS)
-* dsp1.zip (SNES DSP-1)
-* dsp1b.zip (SNES DSP-1B)
-* dsp2.zip (SNES DSP-2)
-* dsp3.zip (SNES DSP-3)
-* dsp4.zip (SNES DSP-4)
-* st010.zip (SNES Seta ST010)
-* st011.zip (SNES Seta ST011)
+| Romset name | Note                                       |
+|-------------|--------------------------------------------|
+| bubsys      | Bubble System BIOS                         |
+| cchip       | C-Chip Internal ROM                        |
+| decocass    | DECO Cassette System BIOS                  |
+| isgsm       | ISG Selection Master Type 2006 System BIOS |
+| midssio     | Midway SSIO Sound Board Internal ROM       |
+| msx         | MSX1 System BIOS                           |
+| namcoc69    | Namco C69 BIOS                             |
+| namcoc70    | Namco C70 BIOS                             |
+| namcoc75    | Namco C75 BIOS                             |
+| neogeo      | Neo Geo BIOS                               |
+| nmk004      | NMK004 Internal ROM                        |
+| pgm         | PGM System BIOS                            |
+| skns        | Super Kaneko Nova System BIOS              |
+| ym2608      | YM2608 Internal ROM                        |
+
+The following bios romsets are required for some of the emulated non-arcade systems :
+
+| Romset name | Note                     |
+|-------------|--------------------------|
+| channelf    | Fairchild Channel F BIOS |
+| coleco      | ColecoVision System BIOS |
+| dsp1        | SNES DSP-1               |
+| dsp1b       | SNES DSP-1B              |
+| dsp2        | SNES DSP-2               |
+| dsp3        | SNES DSP-3               |
+| dsp4        | SNES DSP-4               |
+| fdsbios     | FDS System BIOS          |
+| neocdz      | Neo Geo CDZ System BIOS  |
+| ngp         | NeoGeo Pocket BIOS       |
+| spectrum    | ZX Spectrum BIOS         |
+| spec128     | ZX Spectrum 128 BIOS     |
+| spec1282a   | ZX Spectrum 128 +2a BIOS |
+| st010       | SNES Seta ST010          |
+| st011       | SNES Seta ST011          |
 
 ## Samples
 
@@ -214,49 +221,60 @@ Samples should be put under `SYSTEM_DIRECTORY/fbneo/samples`.
 
 Here is a list of samples currently in use :
 
-* blockade.zip
-* buckrog.zip
-* carnival.zip
-* cheekyms.zip
-* congo.zip
-* dkongjr.zip
-* dkong.zip
-* donpachi.zip
-* elim2.zip
-* fantasy.zip
-* galaga.zip
-* gaplus.zip
-* gridlee.zip
-* heiankyo.zip
-* invaders.zip
-* journey.zip
-* mario.zip
-* mmagic.zip
-* natodef.zip
-* nitedrvr.zip
-* nsub.zip
-* qbert.zip
-* radarscp.zip
-* rallyx.zip
-* reactor.zip
-* safarir.zip
-* sasuke.zip
-* sfz3mix.zip
-* sharkatt.zip
-* spacefb.zip
-* spacfury.zip
-* stinger.zip
-* subroc3d.zip
-* thehand.zip
-* thief.zip
-* tr606drumkit.zip
-* turbo.zip
-* twotiger.zip
-* vanguard.zip
-* xevious.zip
-* zaxxon.zip
-* zektor.zip
-* zerohour.zip
+| Sample name  | Note                                                                   |
+|--------------|------------------------------------------------------------------------|
+| blockade     |                                                                        |
+| buckrog      |                                                                        |
+| carnival     |                                                                        |
+| cheekyms     | Not from MAME                                                          |
+| circus       |                                                                        |
+| crash        |                                                                        |
+| congo        |                                                                        |
+| depthch      |                                                                        |
+| digger       | Not from MAME                                                          |
+| dkongjr      |                                                                        |
+| dkong        |                                                                        |
+| donpachi     | Not from MAME, optional, replace OG music by HQ music, requires dipsw. |
+| elim2        |                                                                        |
+| fantasy      |                                                                        |
+| galaga       |                                                                        |
+| gaplus       |                                                                        |
+| gridlee      |                                                                        |
+| heiankyo     | Not from MAME                                                          |
+| invaders     |                                                                        |
+| invds        | Not from MAME                                                          |
+| invinco      |                                                                        |
+| journey      |                                                                        |
+| mario        |                                                                        |
+| mmagic       |                                                                        |
+| natodef      |                                                                        |
+| nitedrvr     | Not from MAME                                                          |
+| nsub         |                                                                        |
+| paprium      | Not from MAME, megadrive, huge usage of disk space and ram (2.1GB)     |
+| qbert        |                                                                        |
+| radarscp     | Not from MAME                                                          |
+| rallyx       |                                                                        |
+| reactor      |                                                                        |
+| safarir      |                                                                        |
+| sasuke       |                                                                        |
+| seawolf      |                                                                        |
+| sfz3mix      | Not from MAME, optional, replace OG music by HQ music, no dipsw.       |
+| sharkatt     |                                                                        |
+| sot4w        | Not from MAME, megadrive                                               |
+| spacefb      |                                                                        |
+| spacfury     |                                                                        |
+| stinger      | Not from MAME                                                          |
+| subroc3d     |                                                                        |
+| thehand      |                                                                        |
+| thief        |                                                                        |
+| tr606drumkit | Not from MAME                                                          |
+| turbo        |                                                                        |
+| twotiger     |                                                                        |
+| vanguard     |                                                                        |
+| xevious      |                                                                        |
+| zaxxon       |                                                                        |
+| zektor       |                                                                        |
+| zerohour     |                                                                        |
 
 ## Hiscores
 
@@ -305,11 +323,14 @@ As far as we are concerned, you are supposed to dump your own games, so we can't
 
 ### Why am i getting a white screen ?
 
-The white screen tells you if the romset is supported at all and which files are wrong or missing. 
-Especially, if present, the line "Verify the following romsets : <romset> <parent> <bios>" tells you the list of romset/parent/bios needed by the romset you are trying to run.
+If present, the line `Verify the following romsets : <romset> <parent> <bios>` gives you the list of split romsets required by the game you are trying to run. This is mainly for reference since you might not be striving to use romsets in split format. The next few lines give you the list of files it couldn't find within those romsets.
 
-Exceptionally there might be a false positive due to your file being unreadable for some reason (file corruption during transfer, file permission, damaged disk drive, ...).
-This is a rabbit hole and something you should only concern yourself if you already used clrmamepro to verify your romsets.
+Otherwise, a `Romset is unknown` message means the romset couldn't be found by its filename in our database.
+
+Both problems result from not reading the [arcade documentation](https://docs.libretro.com/guides/arcade-getting-started/#step-3-use-the-correct-version-romsets-for-that-emulator).
+Exceptionally there might be false positives due to your files being unreadable for some reason (file corruption during transfer, file permission, damaged disk drive, [retroarch regression](https://github.com/libretro/RetroArch/issues/18582), ...). This is usually a rabbit hole and something you should only concern yourself after using clrmamepro to verify your romsets.
+
+Rarely you could get a "Failed initializing driver" message, this is something you should report [here](https://github.com/finalburnneo/FBNeo/issues)
 
 ### How can i run that romhack i found ?
 
@@ -321,7 +342,6 @@ For the unsupported romhacks, there are 3 methods, but those romhacks are not al
 
 * Put the patched version of the romset into `SYSTEM_DIRECTORY/fbneo/patched`, this folder has special privileges allowing it to ignore crcs. Sizes and names still need to match the original romset though.
 * Optional : you could strip the patched version from any file that don't differ from the original romset.
-* Note : **The romset you must launch is still the original non-patched romset (its content will be overriden at runtime by the content of the patched one)**.
 
 #### Using IPS Patches
 
@@ -333,6 +353,8 @@ For the unsupported romhacks, there are 3 methods, but those romhacks are not al
 
 * Put all RomData files (including: driver name directory/**.dat) into the `SYSTEM_DIRECTORY/fbneo/romdata/` folder
 * RomData will become available through core options (`Quick Menu > Core Options`) afterward. To apply them, you need to launch the game, enable them in core options, then use RetroArch's "restart" action.
+
+Please note that all 3 methods still require that you launch the original non-patched romset, it will be patched/replaced at runtime.
 
 ### How can i run that unibios i bought from http://unibios.free.fr/ ?
 
@@ -375,12 +397,12 @@ There are several things to know :
 
 * You need to follow the instructions about [emulating consoles](#emulating-consoles-and-computers)
 * You need a copy of the `neocdz.zip` and `neogeo.zip` bioses
-* The supported format is single file MODE1/2352 cue/bin (use "CDmage" to convert your iso if needed), **they must not be compressed**
+* The supported format is single file MODE1/2352 cue/bin (the format where there is one .cue file with one single .bin file). Use "CDmage" to convert your dump if needed. **It must not be compressed**
 
-You can convert your unsupported cd images by following this tutorial :
+You can convert your unsupported dumps by following this tutorial :
 
 * Get [CDMage 1.02.1 (beta)](https://www.videohelp.com/software/CDMage) (freeware & no ads). **Don't get CDMage 1.01.5, it doesn't have the "Save As" function**
-* File > Open > select your iso (NB : for multi-track, select the .cue file, not the .iso file)
+* File > Open > select your dump (NB : always choose the .cue file if there is one)
 * File > Save As > write the name of your new file
 * Make sure you select MODE1/2352 in the second drop-down
 * Press OK, wait for the process to finish (a few seconds on my computer), and it’s done !
@@ -388,6 +410,15 @@ You can convert your unsupported cd images by following this tutorial :
 ### Why can't i launch Killer instinct ? I heard it's supported.
 
 That driver was disabled for now, it didn't meet our quality criteria.
+
+### Where is the hires dipswitch on vector games ? It seems gone.
+
+It was streamlined into a global `Resolution` core option affecting all vector games at once, with new resolutions available.
+
+For best visual results, it's recommended to match your screen's height, some examples using a 1080p screen :
+* for horizontal games, you'll want to use 1440x1080
+* for vertical games (tempest, tacscan), if you are running them on a vertical screen with the settings to rotate them, you'll also want to use 1440x1080
+* for those same vertical games, if you are running them at default settings on a horizontal screen, you'll want to use 1080x810
 
 ### Why are vertical games not working properly ?
 
@@ -403,12 +434,15 @@ Additionally :
 * If you are playing on a vertical screen, you'll want to use the `Vertical Mode` core option to rotate the display for your needs, it should also be possible to rotate display from `Settings > Video > Output > Video Rotation` but that method might handle the aspect ratio incorrectly.
 * If you are using a bezel pack, make sure it's compatible with FBNeo (apparently, some were written specifically to work with MAME's internal rotation) and to follow its official instructions. In some case it seems enabling `Settings > On-Screen Display > On-Screen Overlay > Auto-Scale Overlay` (`input_overlay_auto_scale = "true"` in `retroarch.cfg`) can help.
 
-### Why is the music high-pitched, too fast and/or different from upstream ?
+### Why is the music high-pitched, too fast and/or different from what i think it should be ?
 
-For better or worse, it was decided to use different default audio settings from standalone in the libretro port. 
+The first question you should be asking yourself is "what am i comparing this to ?", emulation is meant to be faithful to real hardware (here the original arcade board), not to some console port, remaster, other emulator, or ost.
+
+If you are comparing this to FBNeo standalone, you must be warned that the libretro port is using different default audio settings. 
 By default standalone has 44100 samplerate and both interpolations off, and that's what you should set in core options if you want the same audio output.
 
-You might also want to make sure you are running the game at the correct speed, most crt games don't run at 60Hz and if you want the proper refresh rate to be emulated you'll need to make sure `Force 60Hz` isn't enabled in core options and `Settings > Video > Synchronization > Sync to Exact Content Framerate` is enabled (`vrr_runloop_enable = "true"` in `retroarch.cfg`). Please note that your screen might not handle well the correct refresh rate, in which case you'll have to make a choice between smoothness and correct refresh rate.
+Last but not least, you might also want to make sure you are running the game at the correct speed, most crt games don't run at 60Hz and if you want the proper refresh rate to be emulated you'll need to make sure `Force 60Hz` isn't enabled in core options and `Settings > Video > Synchronization > Sync to Exact Content Framerate` is enabled (`vrr_runloop_enable = "true"` in `retroarch.cfg`). 
+Please note that it'll likely cause frame duping if your hardware is not compatible with VRR (Variable Refresh Rate), in which case you'll have to make a choice between animation smoothness and correct refresh rate.
 
 ### Why do i get a black screen and/or can't i change bios in neogeo games ?
 
@@ -449,6 +483,10 @@ It is common for arcade machines to execute self-tests at boot, and in many case
 
 Sometimes the NVRAM/EEPROM saved on your disk gets corrupted for some reason, Konami games are especially known for getting this issue *somewhat frequently*.
 NVRAM/EEPROM are saved in the `SAVEFILES_DIRECTORY/fbneo` folder, and you can get around this issue by finding the files corresponding to your game and deleting them.
+
+### Should i use retroarch's analog-to-digital feature ?
+
+You should **NEVER** use that feature with this core, it already converts analog to digital and digital to analog internally. Exceptionally it might not do that conversion because each of those controls are already doing their own thing.
 
 ### Where is SYSTEM_DIRECTORY ?
 

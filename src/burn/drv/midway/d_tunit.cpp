@@ -76,8 +76,8 @@ static struct BurnInputInfo Mk2InputList[] = {
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
 	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	nTUnitJoy2 + 3,  "tilt"      },
-	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 10, "p1 fire 7" },
-	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 11, "p1 fire 8" },
+	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 10, "volumedown"},
+	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 11, "volumeup"  },
 	{ "Dip A",			BIT_DIPSWITCH,	nTUnitDSW + 0,   "dip"       },
 	{ "Dip B",			BIT_DIPSWITCH,	nTUnitDSW + 1,   "dip"       },
 };
@@ -129,8 +129,8 @@ static struct BurnInputInfo NbajamInputList[] = {
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
 	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	nTUnitJoy2 + 3,  "tilt"      },
-	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 11, "p1 fire 7" },
-	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 12, "p1 fire 8" },
+	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 11, "volumedown"},
+	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 12, "volumeup"  },
 	{ "Dip A",			BIT_DIPSWITCH,	nTUnitDSW + 0,   "dip"       },
 	{ "Dip B",			BIT_DIPSWITCH,	nTUnitDSW + 1,   "dip"       },
 };
@@ -177,8 +177,8 @@ static struct BurnInputInfo JdreddpInputList[] = {
 	{ "Service",		BIT_DIGITAL,	nTUnitJoy2 + 6,  "service"   },
 	{ "Service Mode",	BIT_DIGITAL,	nTUnitJoy2 + 4,  "diag"      },
 	{ "Tilt",			BIT_DIGITAL,	nTUnitJoy2 + 3,  "tilt"      },
-	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 11, "p1 fire 7" },
-	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 12, "p1 fire 8" },
+	{ "Volume Down",	BIT_DIGITAL,	nTUnitJoy2 + 11, "volumedown"},
+	{ "Volume Up",		BIT_DIGITAL,	nTUnitJoy2 + 12, "volumeup"  },
 	{ "Dip A",			BIT_DIPSWITCH,	nTUnitDSW + 0,   "dip"       },
 	{ "Dip B",			BIT_DIPSWITCH,	nTUnitDSW + 1,   "dip"       },
 };
@@ -541,6 +541,45 @@ struct BurnDriver BurnDrvMkr4 = {
 	BDF_GAME_WORKING | BDF_CLONE, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
 	NULL, mkr4RomInfo, mkr4RomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
     MkInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
+    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
+};
+
+// Mortal Kombat Plus (Hack, BUILD 5.0.0741)
+static struct BurnRomInfo mkplusRomDesc[] = {
+	{ "mortal_kombat_plus.uj12",					0x080000, 0x8edf28c0, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
+	{ "mortal_kombat_plus.ug12",					0x080000, 0xbe771d8d, 1 | BRF_PRG | BRF_ESS }, //  1
+	
+	{ "sl1_mortal_kombat_u3_sound_rom.u3",			0x040000, 0xc615844c, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
+	
+	{ "sl1_mortal_kombat_u12_sound_rom.u12",		0x040000, 0x258bd7f9, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
+	{ "sl1_mortal_kombat_u13_sound_rom.u13",		0x040000, 0x7b7ec3b6, 2 | BRF_PRG | BRF_ESS }, //  4
+
+	{ "l1_mortal_kombat_t-unit_ug14_game_rom.ug14",	0x080000, 0x9e00834e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 0) }, //  5 GFX
+	{ "l1_mortal_kombat_t-unit_uj14_game_rom.uj14",	0x080000, 0xf4b0aaa7, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 1) }, //  6
+	{ "l1_mortal_kombat_t-unit_ug19_game_rom.ug19",	0x080000, 0x2d8c7ba1, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 2) }, //  7
+	{ "l1_mortal_kombat_t-unit_uj19_game_rom.uj19",	0x080000, 0x33b9b7a4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x00, 3) }, //  8
+
+	{ "l1_mortal_kombat_t-unit_ug16_game_rom.ug16",	0x080000, 0x52c9d1e5, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 0) }, //  9
+	{ "l1_mortal_kombat_t-unit_uj16_game_rom.uj16",	0x080000, 0xc94c58cf, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 1) }, // 10
+	{ "l1_mortal_kombat_t-unit_ug20_game_rom.ug20",	0x080000, 0x2f7e55d3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 2) }, // 11
+	{ "l1_mortal_kombat_t-unit_uj20_game_rom.uj20",	0x080000, 0xeae96df0, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x02, 3) }, // 12
+
+	{ "mortal_kombat_plus.ug17",					0x080000, 0x44b5de0e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 0) }, // 13
+	{ "mortal_kombat_plus.uj17",					0x080000, 0xc69cd46c, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
+	{ "mortal_kombat_plus.ug22",					0x080000, 0xe742a405, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
+	{ "mortal_kombat_plus.uj22",					0x080000, 0x34110899, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
+};
+
+STD_ROM_PICK(mkplus)
+STD_ROM_FN(mkplus)
+
+struct BurnDriver BurnDrvMkplus = {
+	"mkplus", "mk", NULL, NULL, "2020",
+	"Mortal Kombat Plus (Hack, BUILD 5.0.0741)\0", NULL, "Paul", "Midway T-Unit",
+	NULL, NULL, NULL, NULL,
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 2, HARDWARE_MIDWAY_TUNIT, GBF_VSFIGHT, 0,
+	NULL, mkplusRomInfo, mkplusRomName, NULL, NULL, NULL, NULL, MkInputInfo, MkDIPInfo,
+	MkInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
     TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
@@ -1830,13 +1869,13 @@ struct BurnDriver BurnDrvNbajamr4j = {
 	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
-// NBA JAM Special Edition (rev 5.02 4/26/25)
-static struct BurnRomInfo nbajamseRomDesc[] = {
+// NBA JAM Special Edition (T-Unit, rev 5.02 4/26/25)
+static struct BurnRomInfo nbajamse502RomDesc[] = {
 	{ "l5.2__nba_jam_tournament_game_rom_uj12.uj12",	0x080000, 0x08507007, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "l5.2__nba_jam_tournament_game_rom_ug12.ug12",	0x080000, 0xd784608e, 1 | BRF_PRG | BRF_ESS }, //  1
-	
+
 	{ "l1_nba_jam_tournament_u3_sound_rom.u3",			0x020000, 0xd4551195, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
-	
+
 	{ "l5.2_nba_jam_tournament_u12_sound_rom.u12",		0x080000, 0x7be1622b, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
 	{ "l5.2_nba_jam_tournament_u13_sound_rom.u13",		0x080000, 0xf939bfcb, 2 | BRF_PRG | BRF_ESS }, //  4
 
@@ -1861,25 +1900,26 @@ static struct BurnRomInfo nbajamseRomDesc[] = {
 	{ "l5.2__nba_jam_tournament_game_rom_uj23.uj23",	0x080000, 0xa659b604, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 3) }, // 20
 };
 
-STD_ROM_PICK(nbajamse)
-STD_ROM_FN(nbajamse)
+STD_ROM_PICK(nbajamse502)
+STD_ROM_FN(nbajamse502)
 
-struct BurnDriver BurnDrvNbajamse = {
-	"nbajamse", "nbajamte", NULL, NULL, "2025",
-	"NBA JAM Special Edition (rev 5.02 4/26/25)\0", NULL, "Team Jam", "Midway T-Unit",
+struct BurnDriver BurnDrvNbajamse502 = {
+	"nbajamse502", "nbajamte", NULL, NULL, "2025",
+	"NBA JAM Special Edition (T-Unit, rev 5.02 4/26/25)\0", NULL, "hack (Team Jam)", "Midway T-Unit",
 	NULL, NULL, NULL, NULL,
-	BDF_GAME_WORKING | BDF_CLONE, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
-	NULL, nbajamseRomInfo, nbajamseRomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
-    NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
-    TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
+	BDF_GAME_WORKING | BDF_CLONE | BDF_HACK, 4, HARDWARE_MIDWAY_TUNIT, GBF_SPORTSMISC, 0,
+	NULL, nbajamse502RomInfo, nbajamse502RomName, NULL, NULL, NULL, NULL, NbajamInputInfo, NbajamteDIPInfo,
+	NbajamteInit, TUnitExit, TUnitFrame, TUnitDraw, TUnitScan, &nTUnitRecalc, 0x8000,
+	TUNIT_SCREEN_WIDTH, TUNIT_SCREEN_HEIGHT, 4, 3
 };
 
+// Judge Dredd (rev TA1 7/12/92, location test)
 static struct BurnRomInfo jdreddpRomDesc[] = {
 	{ "t1_judge_dredd_game_rom_uj12.uj12",	0x080000, 0x7e5c8d5a, 1 | BRF_PRG | BRF_ESS }, //  0 TMS34010
 	{ "t1_judge_dredd_game_rom_ug12.ug12",	0x080000, 0xa16b8a4a, 1 | BRF_PRG | BRF_ESS }, //  1
-	
+
 	{ "t1_judge_dredd_sound_rom_u3.u3",		0x020000, 0x6154d108, 4 | BRF_PRG | BRF_ESS  }, // 2 Sound CPU
-	
+
 	{ "t1_judge_dredd_sound_rom_u12.u12",	0x080000, 0xef32f202, 2 | BRF_PRG | BRF_ESS }, //  3 ADPCM sound banks
 	{ "t1_judge_dredd_sound_rom_u13.u13",	0x080000, 0x3dc70473, 2 | BRF_PRG | BRF_ESS }, //  4
 
@@ -1897,7 +1937,7 @@ static struct BurnRomInfo jdreddpRomDesc[] = {
 	{ "t1_judge_dredd_game_rom_uj17.uj17",	0x080000, 0xddc76f0b, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 1) }, // 14
 	{ "t1_judge_dredd_game_rom_ug22.ug22",	0x080000, 0x6705d5b3, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 2) }, // 15
 	{ "t1_judge_dredd_game_rom_uj22.uj22",	0x080000, 0x7438295e, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x04, 3) }, // 16
-	
+
 	{ "t1_judge_dredd_game_rom_ug18.ug18",	0x080000, 0xc8a45e01, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 0) }, // 17
 	{ "t1_judge_dredd_game_rom_uj18.uj18",	0x080000, 0x3e16e7a9, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 1) }, // 18
 	{ "t1_judge_dredd_game_rom_ug23.ug23",	0x080000, 0x0c9edbc4, 3 | BRF_GRA | BRF_ESS | TUNIT_GFX(0x06, 2) }, // 19

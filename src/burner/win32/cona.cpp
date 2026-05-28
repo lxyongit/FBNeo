@@ -74,10 +74,33 @@ static void TraverseDirectory(const TCHAR* dirPath, TCHAR*** pszArray, UINT32* p
 			TCHAR subDirPath[MAX_PATH] = { 0 };
 			_stprintf(subDirPath, szFormatB, dirPath, findFileData.cFileName);
 
-			TCHAR** newArray = (TCHAR**)realloc(*pszArray, (*pnCount + 1) * sizeof(TCHAR*));
-			*pszArray = newArray;
-			(*pszArray)[*pnCount] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
-			_stprintf((*pszArray)[(*pnCount)++], _T("%s\\"), subDirPath);
+			bool bSkip = false;
+			TCHAR szCmpA[MAX_PATH] = { 0 }, szCmpB[MAX_PATH] = { 0 };
+			if (!ends_with_slash(subDirPath)) {
+				// The slash bar changes when the user reselects the ROMs directory
+				_stprintf(szCmpA, _T("%s/"),  subDirPath);
+				_stprintf(szCmpB, _T("%s\\"), subDirPath);
+			} else {
+				// After szFormatB formatting, there is almost no possibility to get to this step, reserved
+				INT32 nLen = _tcslen(subDirPath);
+				_tcscpy(szCmpA, subDirPath);
+				_tcscpy(szCmpB, subDirPath);
+				szCmpA[nLen - 1] = _T('/');
+				szCmpB[nLen - 1] = _T('\\');
+			}
+
+			// Ignore the default ROMs path
+			for (INT32 i = 0; i < sizeof(szAppRomPaths) / sizeof(szAppRomPaths[0]); i++) {
+				if ((0 == _tcscmp(szCmpA, szAppRomPaths[i])) || (0 == _tcscmp(szCmpB, szAppRomPaths[i]))) {
+					bSkip = true; break;
+				}
+			}
+			if (!bSkip) {
+				TCHAR** newArray = (TCHAR**)realloc(*pszArray, (*pnCount + 1) * sizeof(TCHAR*));
+				*pszArray = newArray;
+				(*pszArray)[*pnCount] = (TCHAR*)malloc(MAX_PATH * sizeof(TCHAR));
+				_stprintf((*pszArray)[(*pnCount)++], _T("%s\\"), subDirPath);
+			}
 
 			TraverseDirectory(subDirPath, pszArray, pnCount);
 		}
@@ -363,9 +386,16 @@ int ConfigAppLoad()
 		VAR(bAlwaysProcessKeyboardInput);
 		VAR(bAutoPause);
 		VAR(bSaveInputs);
+		VAR(nKailleraCheatEnableHack);
 
 		VAR(nCDEmuSelect);
 		PAT(CDEmuImage);
+
+		VAR(nRomsDlgWidth);
+		VAR(nRomsDlgHeight);
+
+		VAR(nSupportDlgWidth);
+		VAR(nSupportDlgHeight);
 
 		VAR(nSelDlgWidth);
 		VAR(nSelDlgHeight);
@@ -410,9 +440,11 @@ int ConfigAppLoad()
 		STR(szAppRomdataPath);
 		STR(szAppIconsPath);
 		STR(szNeoCDCoverDir);
+		STR(szNeoCDPreviewDir);
 		STR(szAppBlendPath);
 		STR(szAppSelectPath);
 		STR(szAppVersusPath);
+		STR(szAppHowtoPath);
 		STR(szAppScoresPath);
 		STR(szAppBossesPath);
 		STR(szAppGameoverPath);
@@ -422,6 +454,7 @@ int ConfigAppLoad()
 		STR(szAppCabinetsPath);
 		STR(szAppPCBsPath);
 		STR(szAppHistoryPath);
+		STR(szAppCommandPath);
 		STR(szAppEEPROMPath);
 
 		VAR(bEnableHighResTimer);
@@ -488,6 +521,14 @@ int ConfigAppLoad()
 		VAR(nPlayerDefaultControls[3]);
 		STR(szPlayerDefaultIni[3]);
 
+		// SOCD
+		VAR(nSocd[0]);
+		VAR(nSocd[1]);
+		VAR(nSocd[2]);
+		VAR(nSocd[3]);
+		VAR(nSocd[4]);
+		VAR(nSocd[5]);
+
 #undef DRV
 #undef PAT
 #undef STR
@@ -498,7 +539,6 @@ int ConfigAppLoad()
 	}
 
 	fclose(h);
-	LookupSubDirThreads();
 
 	return 0;
 }
@@ -775,6 +815,8 @@ int ConfigAppSave()
 	VAR(bAutoPause);
 	_ftprintf(h, _T("\n// If non-zero, save the inputs for each game\n"));
 	VAR(bSaveInputs);
+	_ftprintf(h, _T("\n// If non-zero, Allow cheats in Kaillera.  Experimental & might cause desyncs!  Both sides must enable the same cheat at the same time, usually on titlescreen before starting game.\n"));
+	VAR(nKailleraCheatEnableHack);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- CD emulation -----------------------------------------------------------\n"));
@@ -782,6 +824,18 @@ int ConfigAppSave()
 	VAR(nCDEmuSelect);
 	_ftprintf(h, _T("\n // The path to the CD image to use (.cue or .iso)\n"));
 	STR(CDEmuImage);
+
+	_ftprintf(h, _T("\n\n\n"));
+	_ftprintf(h, _T("// --- Edit ROMs Paths Dialogs ------------------------------------------------\n"));
+	_ftprintf(h, _T("\n// Edit roms path dialog dimensions (in win32 client co-ordinates)\n"));
+	VAR(nRomsDlgWidth);
+	VAR(nRomsDlgHeight);
+
+	_ftprintf(h, _T("\n\n\n"));
+	_ftprintf(h, _T("// --- Edit support file paths Dialogs ----------------------------------------\n"));
+	_ftprintf(h, _T("\n// Edit support file paths dialog dimensions (in win32 client co-ordinates)\n"));
+	VAR(nSupportDlgWidth);
+	VAR(nSupportDlgHeight);
 
 	_ftprintf(h, _T("\n\n\n"));
 	_ftprintf(h, _T("// --- Load Game Dialogs ------------------------------------------------------\n"));
@@ -842,9 +896,11 @@ int ConfigAppSave()
 	STR(szAppRomdataPath);
 	STR(szAppIconsPath);
 	STR(szNeoCDCoverDir);
+	STR(szNeoCDPreviewDir);
 	STR(szAppBlendPath);
 	STR(szAppSelectPath);
 	STR(szAppVersusPath);
+	STR(szAppHowtoPath);
 	STR(szAppScoresPath);
 	STR(szAppBossesPath);
 	STR(szAppGameoverPath);
@@ -854,6 +910,7 @@ int ConfigAppSave()
 	STR(szAppCabinetsPath);
 	STR(szAppPCBsPath);
 	STR(szAppHistoryPath);
+	STR(szAppCommandPath);
 	STR(szAppEEPROMPath);
 
 	_ftprintf(h, _T("\n// The cartridges to use for emulation of an MVS system\n"));
@@ -957,6 +1014,14 @@ int ConfigAppSave()
 	STR(szPlayerDefaultIni[2]);
 	VAR(nPlayerDefaultControls[3]);
 	STR(szPlayerDefaultIni[3]);
+
+	_ftprintf(h, _T("\n// Index of SOCD settings for each player.\n"));
+	VAR(nSocd[0]);
+	VAR(nSocd[1]);
+	VAR(nSocd[2]);
+	VAR(nSocd[3]);
+	VAR(nSocd[4]);
+	VAR(nSocd[5]);
 
 	_ftprintf(h, _T("\n\n\n"));
 

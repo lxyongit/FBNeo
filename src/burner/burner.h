@@ -25,6 +25,7 @@
 
 #include "title.h"
 #include "burn.h"
+#include "joyprocess.h"
 
 // ---------------------------------------------------------------------------
 // OS dependent functionality
@@ -119,7 +120,7 @@ INT32 GameInpBlank(INT32 bDipSwitch);
 INT32 GameInputAutoIni(INT32 nPlayer, TCHAR* lpszFile, bool bOverWrite);
 INT32 ConfigGameLoadHardwareDefaults();
 INT32 GameInpDefault();
-INT32 GameInpWrite(FILE* h);
+INT32 GameInpWrite(FILE* h, bool bSaveDips);
 INT32 GameInpRead(TCHAR* szVal, bool bOverWrite);
 INT32 GameInpMacroRead(TCHAR* szVal, bool bOverWrite);
 INT32 GameMacroAutofireRead(TCHAR* szVal, bool bOverWrite);
@@ -128,7 +129,9 @@ INT32 GameInpCustomRead(TCHAR* szVal, bool bOverWrite);
 struct tIniStruct {
 	TCHAR system[80];
 	TCHAR ini[MAX_PATH];
+	bool dips_in_preset;
 	INT32 hw[8];
+//	TCHAR possible[80];
 	char gameinfotoken[80];
 };
 
@@ -233,7 +236,7 @@ INT32 write_datfile(INT32 bType, FILE* fDat);
 INT32 create_datfile(TCHAR* szFilename, INT32 bType);
 
 // sshot.cpp
-INT32 MakeScreenShot();
+INT32 MakeScreenShot(INT32 bType);
 
 // state.cpp
 INT32 BurnStateLoadEmbed(FILE* fp, INT32 nOffset, INT32 bAll, INT32 (*pLoadGame)());
@@ -262,6 +265,7 @@ INT32 __cdecl ZipLoadOneFile(char* arcName, const char* fileName, void** Dest, I
 // retro_romdata.cpp
 
 extern TCHAR szRomdataName[MAX_PATH];
+TCHAR* AdaptiveEncodingReads(const TCHAR* pszFileName);
 
 // retro_ips.cpp 
 
@@ -299,3 +303,4 @@ extern TCHAR szAppControlsPath[MAX_PATH];
 extern TCHAR szAppCabinetsPath[MAX_PATH];
 extern TCHAR szAppPCBsPath[MAX_PATH];
 extern TCHAR szAppHistoryPath[MAX_PATH];
+extern TCHAR szAppCommandPath[MAX_PATH];

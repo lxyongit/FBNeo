@@ -1274,8 +1274,9 @@ static int dx9Init()
 
 		GetClientScreenRect(hVidWnd, &rect);
 		rect.top += nMenuHeight; rect.bottom += nMenuHeight;
-		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-		pD3DDevice->Present(&rect, &rect, NULL, NULL);
+		// this clear interferes with bezel (other blitters dont clear the entire screen!)
+//		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+//		pD3DDevice->Present(&rect, &rect, NULL, NULL);
 	}
 
 	// Create osd font
@@ -1335,6 +1336,39 @@ static int dx9Reset()
 static int dx9Scale(RECT* pRect, int nWidth, int nHeight)
 {
 	return VidSScaleImage(pRect, nWidth, nHeight, bVidScanRotate);
+}
+
+template <bool restore_viewport>
+static void ClearD3D9SurfaceEntirety()
+{
+	if (nVidFullscreen) {
+		D3DVIEWPORT9 vp;
+
+		// set the viewport to the entire screen
+		vp.X = 0;
+		vp.Y = 0;
+		vp.Width = nVidScrnWidth;
+		vp.Height = nVidScrnHeight;
+		vp.MinZ = 0.0f;
+		vp.MaxZ = 1.0f;
+
+		pD3DDevice->SetViewport(&vp);
+
+		// clear it
+		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 0.0f, 0);
+
+		if (restore_viewport) {
+			// set the viewport back to game's dimensions
+			vp.X = Dest.left;
+			vp.Y = Dest.top;
+			vp.Width = Dest.right - Dest.left;
+			vp.Height = Dest.bottom - Dest.top;
+			vp.MinZ = 0.0f;
+			vp.MaxZ = 1.0f;
+
+			pD3DDevice->SetViewport(&vp);
+		}
+	}
 }
 
 // Copy BlitFXsMem to pddsBlitFX
@@ -1519,6 +1553,8 @@ static int dx9MemToSurf()
 	}
 	ProfileProfileStart(0);
 #endif
+
+	ClearD3D9SurfaceEntirety<false>();
 
 	{
 		D3DVIEWPORT9 vp;
@@ -2073,29 +2109,27 @@ static void UpdateShaderVariables()
 {
 	if (pVidEffect && pVidEffect->IsValid()) {
 		pVidEffect->SetParamFloat2("texture_size", nTextureWidth, nTextureHeight);
-		pVidEffect->SetParamFloat2("video_size", ((nRotateGame & 1) ? nGameHeight : nGameWidth) + 0.5f, ((nRotateGame & 1) ? nGameWidth : nGameHeight) + 0.5f);
+		// dinknote: "+ 0.5f" causes weird vertical lines in some shaders (f.ex: crt_aperture.fx)
+//		pVidEffect->SetParamFloat2("video_size", ((nRotateGame & 1) ? nGameHeight : nGameWidth) + 0.5f, ((nRotateGame & 1) ? nGameWidth : nGameHeight) + 0.5f);
+		pVidEffect->SetParamFloat2("video_size", ((nRotateGame & 1) ? nGameHeight : nGameWidth) + 0.0f, ((nRotateGame & 1) ? nGameWidth : nGameHeight) + 0.0f);
 		pVidEffect->SetParamFloat2("video_time", nCurrentFrame, (float)nCurrentFrame / 60);
 		pVidEffect->SetParamFloat4("user_settings", HardFXConfigs[nDX9HardFX].fOptions[0], HardFXConfigs[nDX9HardFX].fOptions[1], HardFXConfigs[nDX9HardFX].fOptions[2], HardFXConfigs[nDX9HardFX].fOptions[3]);
 	}
 }
 
+// DINKNOTE: Changing HardFX needs a reinit of video. (or some will fail to display properly)
 static int dx9AltSetHardFX(int nHardFX)
 {
 	// cutre reload
 	//static bool reload = true; if (GetAsyncKeyState(VK_CONTROL)) { if (reload) { nDX9HardFX = 0; reload = false; } } else reload = true;
 
-	if (nHardFX == nDX9HardFX)
-	{
-		return 0;
-	}
-	
 	nDX9HardFX = nHardFX;
 
 	if (pVidEffect) {
 		delete pVidEffect;
 		pVidEffect = NULL;
 	}
-	
+
 	if (nDX9HardFX == 0)
 	{
 		return 0;
@@ -2300,6 +2334,9 @@ static int dx9AltInit()
 		}
 	}
 
+	// HardFX gets initted here
+	dx9AltSetHardFX(nVidDX9HardFX);
+
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MINFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
 	pD3DDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, bVidDX9Bilinear ? D3DTEXF_LINEAR : D3DTEXF_POINT);
 
@@ -2315,8 +2352,9 @@ static int dx9AltInit()
 		RECT rect;
 		GetClientScreenRect(hVidWnd, &rect);
 
-		pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
-		pD3DDevice->Present(&rect, &rect, NULL, NULL);
+		// this clear interferes with bezel (other blitters dont clear the entire screen!)
+		//pD3DDevice->Clear(0, NULL, D3DCLEAR_TARGET, D3DCOLOR_XRGB(0, 0, 0), 1.0f, 0);
+		//pD3DDevice->Present(&rect, &rect, NULL, NULL);
 	}
 
 	// Create osd font
@@ -2479,6 +2517,8 @@ static int dx9AltRender()  // MemToSurf
 		}
 	}
 
+	ClearD3D9SurfaceEntirety<true>();
+
 	UpdateShaderVariables(); // once per frame
 
 	pD3DDevice->BeginScene();
@@ -2549,8 +2589,6 @@ static int dx9AltRender()  // MemToSurf
 	vid_FontDraw(Dest);
 
 	pD3DDevice->EndScene();
-
-	dx9AltSetHardFX(nVidDX9HardFX);
 
 	return 0;
 }

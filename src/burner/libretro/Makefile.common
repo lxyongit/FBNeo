@@ -224,6 +224,7 @@ INCLUDE_DIRS := $(FBNEO_BURNER_DIR)/win32 \
 	$(SH4_CPU_DIR) \
 	$(FBNEO_LIB_DIR)/zlib \
 	$(FBNEO_LIB_DIR)/lib7z \
+	$(FBNEO_LIB_DIR)/dr_libs \
 	$(CAPCOM_DIR) \
 	$(KONAMI_DIR) \
 	$(DATAEAST_DIR) \
@@ -235,6 +236,7 @@ INCLUDE_DIRS := $(FBNEO_BURNER_DIR)/win32 \
 	$(TAITO_DIR) \
 	$(IREM_DIR) \
 	$(PCE_DIR) \
+	$(GALAXIAN_DIR) \
 	$(FBNEO_GENERATED_DIR) \
 	$(FBNEO_LIB_DIR) \
 	$(UGUI_DIR)
@@ -272,6 +274,10 @@ ifeq ($(HAVE_NEON), 1)
 	ifneq (,$(findstring android,$(platform)))
 		NEON_FLAGS =
 	endif
+endif
+
+ifeq ($(SUPPORT_LARGE_FILES), 1)
+	FBNEO_DEFINES += -D_FILE_OFFSET_BITS=64
 endif
 
 ifeq ($(EXTERNAL_ZLIB), 1)
@@ -331,7 +337,8 @@ SOURCES_C += $(UGUI_DIR)/ugui.c \
 	$(LIBRETRO_DIR)/ugui_tools.c
 
 # GIT HASH
-GIT_VERSION := " $(shell git rev-parse --short HEAD || echo unknown)"
-ifneq ($(GIT_VERSION)," unknown")
-	CXXFLAGS += -DGIT_VERSION=\"$(GIT_VERSION)\"
+GIT_VERSION := $(shell git rev-parse --short HEAD || echo unknown)
+ifneq ($(GIT_VERSION),unknown)
+	GIT_DATE := $(shell git log -1 --format="%at" | xargs -I{} date -d @{} +%y%m%d)
+	CXXFLAGS += -DGIT_DATE=\"$(GIT_DATE)\" -DGIT_VERSION=\"GIT$(GIT_VERSION)\"
 endif

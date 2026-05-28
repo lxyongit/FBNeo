@@ -2,6 +2,8 @@
 #include "burnint.h"
 #include "joyprocess.h"
 
+INT32 nSocd[6] = { 3,3,3,3,3,3 };	// Last Input Priority (8 Way)
+
 // Digital Processing
 void ProcessJoystick(UINT8 *input, INT8 playernum, INT8 up_bit, INT8 down_bit, INT8 left_bit, INT8 right_bit, UINT8 flags)
 { // limitations: 4 players max., processes 8-bit inputs only!
@@ -74,17 +76,17 @@ void CompileInput(UINT8 **input, void *output, INT32 num, INT32 bits, UINT32 *in
 }
 
 // Analog Processing
-INT32 AnalogDeadZone(INT32 anaval)
+INT32 AnalogDeadZone(INT32 anaval, INT32 dz)
 {
 	INT32 negative = (anaval < 0);
 
 	anaval = abs(anaval);
 
 	// < 4, hopefully a good value for mouse / analog [thumb]stick
-	if (anaval < 4) {
+	if (anaval < dz) {
 		anaval = 0;
 	} else {
-		anaval -= 4;
+		anaval -= dz;
 	}
 
 	return (negative) ? -anaval : anaval;

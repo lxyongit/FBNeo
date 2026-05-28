@@ -372,6 +372,10 @@ void BurnRandomSetSeed(UINT64 nSeed);               // Set the seed - useful for
 INT32 BurnSynchroniseStream(INT32 nSoundRate);
 double BurnGetTime();
 
+// Handy functions for changing resolution
+extern void (__cdecl *BurnResizeCallback)(INT32 width, INT32 height);
+void BurnSetResolution(INT32 width, INT32 height);
+
 // Handy debug binary-file dumper
 #if defined (FBNEO_DEBUG)
 void BurnDump_(char *filename, UINT8 *buffer, INT32 bufsize, INT32 append);
@@ -389,6 +393,11 @@ void BurnDumpLoad_(char *filename, UINT8 *buffer, INT32 bufsize);
 	BurnDumpLoad_(fn, b, bs); } while (0)
 
 #endif
+
+// Handy defines
+#define d_min(a, b) (((a) < (b)) ? (a) : (b))
+#define d_max(a, b) (((a) > (b)) ? (a) : (b))
+#define d_abs(z) (((z) < 0) ? -(z) : (z))
 
 // ---------------------------------------------------------------------------
 // Retrieve driver information
@@ -420,6 +429,7 @@ INT32 BurnDrvGetRomName(char** pszName, UINT32 i, INT32 nAka);
 INT32 BurnDrvGetInputInfo(struct BurnInputInfo* pii, UINT32 i);
 INT32 BurnDrvGetDIPInfo(struct BurnDIPInfo* pdi, UINT32 i);
 INT32 BurnDrvGetVisibleSize(INT32* pnWidth, INT32* pnHeight);
+INT32 BurnDrvGetOriginalVisibleSize(INT32* pnWidth, INT32* pnHeight);
 INT32 BurnDrvGetVisibleOffs(INT32* pnLeft, INT32* pnTop);
 INT32 BurnDrvGetFullSize(INT32* pnWidth, INT32* pnHeight);
 INT32 BurnDrvGetAspect(INT32* pnXAspect, INT32* pnYAspect);
@@ -437,7 +447,9 @@ INT32 BurnDrvGetHDDInfo(struct BurnHDDInfo *pri, UINT32 i);
 INT32 BurnDrvGetHDDName(char** pszName, UINT32 i, INT32 nAka);
 char* BurnDrvGetSourcefile();
 
-void Reinitialise();
+
+void Reinitialise(); // re-inits everything, including UI window
+void ReinitialiseVideo(); // re-init's video w/ new resolution/aspect ratio (see drv/megadrive.cpp)
 
 // ---------------------------------------------------------------------------
 // IPS Control
@@ -446,7 +458,7 @@ void Reinitialise();
 #define IPS_PGM_SPRHACK		(1 <<  1)	// For PGM hacks...
 #define IPS_PGM_MAPHACK		(1 <<  2)	// Id.
 #define IPS_PGM_SNDOFFS		(1 <<  3)	// Id.
-#define IPS_LOAD_EXPAND		(1 <<  4)	// Break the ips 16MB addressing limit.
+#define IPS_LOAD_EXPAND		(1 <<  4)	// Change temporary cache size on double load.
 #define IPS_EXTROM_INCL		(1 <<  5)	// Extra rom.
 #define IPS_PRG1_EXPAND		(1 <<  6)	// Additional request for prg length.
 #define IPS_PRG2_EXPAND		(1 <<  7)	// Id.
@@ -457,6 +469,7 @@ void Reinitialise();
 #define IPS_SND1_EXPAND		(1 << 12)	// Additional request for snd length.
 #define IPS_SND2_EXPAND		(1 << 13)	// Id.
 #define IPS_SNES_VRAMHK		(1 << 14)	// Allow invalid vram writes.
+#define IPS_NEO_RAMHACK		(1 << 15)	// Neo Geo 68kram hack.
 
 enum IpsRomTypes { EXP_FLAG, LOAD_ROM, EXTR_ROM, PRG1_ROM, PRG2_ROM, GRA1_ROM, GRA2_ROM, GRA3_ROM, ACPU_ROM, SND1_ROM, SND2_ROM };
 extern UINT32 nIpsDrvDefine, nIpsMemExpLen[SND2_ROM + 1];
@@ -652,9 +665,11 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_SMS_MAPPER_KOREA16K 					(0x06)
 #define HARDWARE_SMS_MAPPER_4PAK     					(0x07)
 #define HARDWARE_SMS_MAPPER_XIN1     					(0x08)
+#define HARDWARE_SMS_MAPPER_WONDERKID					(0x09)
 #define HARDWARE_SMS_MAPPER_NONE     					(0x0F)
 
 #define HARDWARE_SMS_CONTROL_PADDLE						(0x00010)
+#define HARDWARE_SMS_CONTROL_PHASER						(0x00020)
 
 #define HARDWARE_SMS_NO_CART_HEADER						(0x01000)
 #define HARDWARE_SMS_GG_SMS_MODE						(0x02000)
@@ -728,17 +743,16 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define HARDWARE_SEGA_MEGADRIVE_PCB_POKEMON2			(41)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_MULAN				(42)
 #define HARDWARE_SEGA_MEGADRIVE_PCB_16ZHANG             (43)
-#define HARDWARE_SEGA_MEGADRIVE_PCB_CHAOJIMJ            (44)
-#define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER              (0x40)
-#define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2        (0x80)
-#define HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY             (0xc0)
+#define HARDWARE_SEGA_MEGADRIVE_PCB_CHAOJIMJ            (44) // we can have 64 (0-63) of these
 
-#define HARDWARE_SEGA_MEGADRIVE_SRAM_00400				(0x0100)
-#define HARDWARE_SEGA_MEGADRIVE_SRAM_00800				(0x0200)
-#define HARDWARE_SEGA_MEGADRIVE_SRAM_01000				(0x0400)
-#define HARDWARE_SEGA_MEGADRIVE_SRAM_04000				(0x0800)
-#define HARDWARE_SEGA_MEGADRIVE_SRAM_10000				(0x1000)
-#define HARDWARE_SEGA_MEGADRIVE_FRAM_00400				(0x2000)
+#define HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_MENACER        (0x0100)
+#define HARDWARE_SEGA_MEGADRIVE_LIGHTGUN_JUSTIFIER      (0x0200)
+#define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER              (0x0400)
+#define HARDWARE_SEGA_MEGADRIVE_TEAMPLAYER_PORT2        (0x0800)
+#define HARDWARE_SEGA_MEGADRIVE_FOURWAYPLAY             (0x0c00)
+
+#define HARDWARE_SEGA_MEGADRIVE_SRAM_04000				(0x1000)
+#define HARDWARE_SEGA_MEGADRIVE_SRAM_10000				(0x2000)
 
 #define HARDWARE_PSIKYO									(HARDWARE_PREFIX_PSIKYO)
 
@@ -799,15 +813,16 @@ int BurnComputeSHA1(const UINT8 *buffer, int buffer_size, char *hash_str);
 #define GBF_MAHJONG										(1 << 17)
 #define GBF_RACING										(1 << 18)
 #define GBF_SHOOT										(1 << 19)
-#define GBF_ACTION  									(1 << 20)
-#define GBF_RUNGUN  									(1 << 21)
-#define GBF_STRATEGY									(1 << 22)
-#define GBF_VECTOR                                      (1 << 23)
-#define GBF_RPG                                         (1 << 24)
-#define GBF_SIM                                         (1 << 25)
-#define GBF_ADV                                         (1 << 26)
-#define GBF_CARD                                        (1 << 27)
-#define GBF_BOARD                                       (1 << 28)
+#define GBF_MULTISHOOT									(1 << 20)
+#define GBF_ACTION  									(1 << 21)
+#define GBF_RUNGUN  									(1 << 22)
+#define GBF_STRATEGY									(1 << 23)
+#define GBF_VECTOR                                      (1 << 24)
+#define GBF_RPG                                         (1 << 25)
+#define GBF_SIM                                         (1 << 26)
+#define GBF_ADV                                         (1 << 27)
+#define GBF_CARD                                        (1 << 28)
+#define GBF_BOARD                                       (1 << 29)
 
 // flags for the family member
 #define FBF_MSLUG										(1 << 0)

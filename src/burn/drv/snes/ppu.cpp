@@ -1081,6 +1081,13 @@ void ppu_write(uint8_t adr, uint8_t val) {
       break;
     }
     case 0x04: {
+      //bprintf(0, _T("oamdata_w: %x @ %x (buf: %x)  %d,%d  (high: %x  second: %x)\n"), val, oamAdr, oamBuffer, snes->hPos / 4, snes->vPos, oamInHigh, oamSecondWrite);
+      if (!snes->inVblank && !forcedBlank && (snes->vramhack & 2)) { // hack for uniracers
+        oamInHigh  = true;
+        oamSecondWrite = false;
+        oamBuffer = val;
+        oamAdr = 0xc;
+      }
       if(oamInHigh) {
         highOam[((oamAdr & 0xf) << 1) | oamSecondWrite] = val;
         if(oamSecondWrite) {
@@ -1116,7 +1123,7 @@ void ppu_write(uint8_t adr, uint8_t val) {
       bgLayer[2].mosaicEnabled = val & 0x4;
       bgLayer[3].mosaicEnabled = val & 0x8;
       mosaicSize = (val >> 4) + 1;
-      mosaicStartLine = snes->vPos;
+	  mosaicStartLine = snes->vPos + 1;
       break;
     }
     case 0x07:

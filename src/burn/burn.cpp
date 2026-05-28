@@ -6,6 +6,10 @@
 //#include "burn_sound.h" // included in burnint.h
 #include "driverlist.h"
 
+#ifdef BUILD_WIN32
+#include "mbtwc.h"
+#endif
+
 #ifndef __LIBRETRO__
 // filler function, used if the application is not printing debug messages
 static INT32 __cdecl BurnbprintfFiller(INT32, TCHAR* , ...) { return 0; }
@@ -456,9 +460,20 @@ extern "C" TCHAR* BurnDrvGetText(UINT32 i)
 	}
 
 	if (pszStringW && pszStringA && pszStringA[0]) {
-		if (mbstowcs(pszStringW, pszStringA, 256) != -1U) {
-			return pszStringW;
+#ifdef BUILD_WIN32
+		// CP_UTF8 65001
+		const int n = _MultiByteToWideChar(65001, 0, pszStringA, -1, NULL, 0);
+		if (0 == n)
+			return NULL;
+
+		if (0 == _MultiByteToWideChar(65001, 0, pszStringA, -1, pszStringW, n))
+			return NULL;
+#else
+		if (mbstowcs(pszStringW, pszStringA, 256) == -1U) {
+			return NULL;
 		}
+#endif
+		return pszStringW;
 	}
 
 #else
@@ -774,6 +789,17 @@ static INT32 DrvAspectX, DrvAspectY;
 static INT32 DrvX, DrvY;
 static INT32 DrvCached = 0;
 
+// Game's original resolution
+// Some games change the resolution by modifying the original size with
+// BurnDrvSetVisibleSize() then running Reinitialise() or ReinitialiseVideo()
+extern "C" INT32 BurnDrvGetOriginalVisibleSize(INT32* pnWidth, INT32* pnHeight)
+{
+	*pnWidth  = DrvX;
+	*pnHeight = DrvY;
+
+	return 0;
+}
+
 static void BurnCacheSizeAspect_Internal()
 {
 	BurnDrvGetFullSize(&DrvX, &DrvY);
@@ -1032,6 +1058,15 @@ INT32 BurnUpdateProgress(double fProgress, const TCHAR* pszText, bool bAbs)
 	}
 
 	return 1;
+}
+
+// ----------------------------------------------------------------------------
+
+void (__cdecl *BurnResizeCallback)(INT32 width, INT32 height) = NULL;
+
+void BurnSetResolution(INT32 width, INT32 height)
+{
+	if (BurnResizeCallback) BurnResizeCallback(width, height);
 }
 
 // ----------------------------------------------------------------------------

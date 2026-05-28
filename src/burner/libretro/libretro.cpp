@@ -19,7 +19,6 @@
 #include <streams/file_stream.h>
 #include <string/stdstring.h>
 
-#define snprintf_nowarn(...) (snprintf(__VA_ARGS__) < 0 ? abort() : (void)0)
 #define PRINTF_BUFFER_SIZE 512
 
 #define STAT_NOFIND  0
@@ -27,6 +26,7 @@
 #define STAT_CRC     2
 #define STAT_SMALL   3
 #define STAT_LARGE   4
+#define STAT_SKIP    5
 
 #ifdef SUBSET
 #undef APP_TITLE
@@ -210,11 +210,11 @@ INT32 CoreRomPathsLoad()
 	for (INT32 i = 0; i < DIRS_MAX; i++)
 		memset(CoreRomPaths[i], 0, MAX_PATH * sizeof(TCHAR));
 
-	snprintf(szConfig, MAX_PATH - 1, "%srom_path.opt", szAppPathDefPath);
+	snprintf_nowarn(szConfig, MAX_PATH - 1, "%srom_path.opt", szAppPathDefPath);
 
 	if (NULL == (h = fopen(szConfig, "rt"))) {
 		memset(szConfig, 0, MAX_PATH * sizeof(TCHAR));
-		snprintf(szConfig, MAX_PATH - 1, "%s%crom_path.opt", g_rom_dir, PATH_DEFAULT_SLASH_C());
+		snprintf_nowarn(szConfig, MAX_PATH - 1, "%s%crom_path.opt", g_rom_dir, PATH_DEFAULT_SLASH_C());
 
 		if (NULL == (h = fopen(szConfig, "rt")))
 			return 1;
@@ -500,13 +500,17 @@ extern unsigned int (__cdecl *BurnHighCol) (signed int r, signed int g, signed i
 
 void retro_get_system_info(struct retro_system_info *info)
 {
-	char *library_version = (char*)calloc(22, sizeof(char));
+	char *library_version = (char*)calloc(38, sizeof(char));
+
+#ifndef GIT_DATE
+#define GIT_DATE ""
+#endif
 
 #ifndef GIT_VERSION
 #define GIT_VERSION ""
 #endif
 
-	sprintf(library_version, "v%x.%x.%x.%02x %s", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF, GIT_VERSION);
+	sprintf(library_version, "v%x.%x.%x.%02x %s %s", nBurnVer >> 20, (nBurnVer >> 16) & 0x0F, (nBurnVer >> 8) & 0xFF, nBurnVer & 0xFF, GIT_DATE, GIT_VERSION);
 
 	info->library_name = APP_TITLE;
 	info->library_version = strdup(library_version);
@@ -707,36 +711,44 @@ static int create_variables_from_cheats()
 	CheatInfo* pCurrentCheat = pCheatInfo;
 	int num = 0;
 
+	std::string heading_name;
+
 	while (pCurrentCheat) {
-		// Ignore "empty" cheats, they seem common in cheat bundles (as separators and/or hints ?)
-		int count = 0;
-		for (int i = 0; i < CHEAT_MAX_OPTIONS; i++) {
-			if(pCurrentCheat->pOption[i] == NULL || pCurrentCheat->pOption[i]->szOptionName[0] == '\0') break;
-			count++;
-		}
-		if (count > 0 && count < RETRO_NUM_CORE_OPTION_VALUES_MAX)
-		{
-			cheat_core_options.push_back(cheat_core_option());
-			cheat_core_option *cheat_option = &cheat_core_options.back();
-			std::string option_name = nl_remover(pCurrentCheat->szCheatName);
-			cheat_option->friendly_name = SSTR( "[Cheat] " << option_name.c_str() );
-			cheat_option->friendly_name_categorized = option_name.c_str();
-			std::replace( option_name.begin(), option_name.end(), ' ', '_');
-			std::replace( option_name.begin(), option_name.end(), '=', '_');
-			std::replace( option_name.begin(), option_name.end(), ':', '_');
-			std::replace( option_name.begin(), option_name.end(), '#', '_');
-			cheat_option->option_name = SSTR( "fbneo-cheat-" << num << "-" << drvname << "-" << option_name.c_str() );
-			cheat_option->num = num;
-			cheat_option->values.reserve(count);
-			cheat_option->values.assign(count, cheat_core_option_value());
-			for (int i = 0; i < count; i++) {
-				cheat_core_option_value *cheat_value = &cheat_option->values[i];
-				cheat_value->nValue = i;
-				// prepending name with value, some cheats from official pack have 2 values matching default's name,
-				// and picking the wrong one prevents some games to boot
-				std::string option_value_name = nl_remover(pCurrentCheat->pOption[i]->szOptionName);
-				cheat_value->friendly_name = SSTR( i << " - " << option_value_name.c_str());
-				if (pCurrentCheat->nDefault == i) cheat_option->default_value = SSTR( i << " - " << option_value_name.c_str());
+		if (pCurrentCheat->pOption[0] == NULL && (pCurrentCheat->szCheatName[0] != '\0' && pCurrentCheat->szCheatName[0] != ' ')) {
+			// This is a heading line, we'll use it later
+			heading_name = nl_remover(pCurrentCheat->szCheatName);
+		} else {
+			// Ignore "empty" cheats, they seem common in cheat bundles (as separators and/or hints ?)
+			int count = 0;
+			for (int i = 0; i < CHEAT_MAX_OPTIONS; i++) {
+				if (pCurrentCheat->pOption[i] == NULL || pCurrentCheat->pOption[i]->szOptionName[0] == '\0') break;
+				count++;
+			}
+			if (count > 0 && count < RETRO_NUM_CORE_OPTION_VALUES_MAX)
+			{
+				cheat_core_options.push_back(cheat_core_option());
+				cheat_core_option *cheat_option = &cheat_core_options.back();
+				std::string option_name = nl_remover(pCurrentCheat->szCheatName);
+				std::string option_filename = nl_remover(pCurrentCheat->szCheatFilename);
+				cheat_option->friendly_name = SSTR( "[Cheat][" << option_filename.c_str() << "] " << heading_name.c_str() << option_name.c_str() );
+				cheat_option->friendly_name_categorized = SSTR( "[" << option_filename.c_str() << "] " << heading_name.c_str() << option_name.c_str() );
+				std::replace( option_name.begin(), option_name.end(), ' ', '_');
+				std::replace( option_name.begin(), option_name.end(), '=', '_');
+				std::replace( option_name.begin(), option_name.end(), ':', '_');
+				std::replace( option_name.begin(), option_name.end(), '#', '_');
+				cheat_option->option_name = SSTR( "fbneo-cheat-" << num << "-" << drvname << "-" << option_name.c_str() );
+				cheat_option->num = num;
+				cheat_option->values.reserve(count);
+				cheat_option->values.assign(count, cheat_core_option_value());
+				for (int i = 0; i < count; i++) {
+					cheat_core_option_value *cheat_value = &cheat_option->values[i];
+					cheat_value->nValue = i;
+					// prepending name with value, some cheats from official pack have 2 values matching default's name,
+					// and picking the wrong one prevents some games to boot
+					std::string option_value_name = nl_remover(pCurrentCheat->pOption[i]->szOptionName);
+					cheat_value->friendly_name = SSTR( i << " - " << option_value_name.c_str());
+					if (pCurrentCheat->nDefault == i) cheat_option->default_value = SSTR( i << " - " << option_value_name.c_str());
+				}
 			}
 		}
 		num++;
@@ -802,6 +814,11 @@ void Reinitialise(void)
 	retro_get_system_av_info(&av_info);
 	environ_cb(nNextGeometryCall, &av_info);
 	nNextGeometryCall = RETRO_ENVIRONMENT_SET_GEOMETRY;
+}
+
+void ReinitialiseVideo()
+{
+	Reinitialise();
 }
 
 static void ForceFrameStep()
@@ -891,19 +908,20 @@ static int archive_load_rom(uint8_t *dest, int *wrote, int i)
 
 	int archive = pRomFind[i].nZip;
 
+	// We want to return an error code even if the rom is not needed, that's what standalone does
+	if (pRomFind[i].nState != STAT_OK)
+		return 1;
+
 	if (ZipOpen((char*)g_find_list_path[archive].path.c_str()) != 0)
 		return 1;
 
 	BurnRomInfo ri = {0};
 	BurnDrvGetRomInfo(&ri, i);
 
-	if (!(ri.nType & BRF_NODUMP))
+	if (ZipLoadFile(dest, ri.nLen, wrote, pRomFind[i].nPos) != 0)
 	{
-		if (ZipLoadFile(dest, ri.nLen, wrote, pRomFind[i].nPos) != 0)
-		{
-			ZipClose();
-			return 1;
-		}
+		ZipClose();
+		return 1;
 	}
 
 	ZipClose();
@@ -952,7 +970,7 @@ static void locate_archive(std::vector<located_archive>& pathList, const char* c
 		for (INT32 nType = 0; nType < TYPES_MAX; nType++)
 		{
 			memset(path, 0, sizeof(path));
-			snprintf(path, MAX_PATH - 1, "%s%c%s%c%s", g_rom_dir, PATH_DEFAULT_SLASH_C(), szTypeEnum[0][nType], PATH_DEFAULT_SLASH_C(), romName);
+			snprintf_nowarn(path, MAX_PATH - 1, "%s%c%s%c%s", g_rom_dir, PATH_DEFAULT_SLASH_C(), szTypeEnum[0][nType], PATH_DEFAULT_SLASH_C(), romName);
 			if (ZipOpen(path) == 0)
 			{
 				g_find_list_path.push_back(located_archive());
@@ -988,7 +1006,7 @@ static void locate_archive(std::vector<located_archive>& pathList, const char* c
 		for (INT32 nType = 0; nType < TYPES_MAX; nType++)
 		{
 			memset(path, 0, sizeof(path));
-			snprintf(path, MAX_PATH, "%s%cfbneo%c%s%c%s", g_system_dir, PATH_DEFAULT_SLASH_C(), PATH_DEFAULT_SLASH_C(), szTypeEnum[0][nType], PATH_DEFAULT_SLASH_C(), romName);
+			snprintf_nowarn(path, MAX_PATH, "%s%cfbneo%c%s%c%s", g_system_dir, PATH_DEFAULT_SLASH_C(), PATH_DEFAULT_SLASH_C(), szTypeEnum[0][nType], PATH_DEFAULT_SLASH_C(), romName);
 			if (ZipOpen(path) == 0)
 			{
 				g_find_list_path.push_back(located_archive());
@@ -1029,7 +1047,7 @@ static void locate_archive(std::vector<located_archive>& pathList, const char* c
 
 			// custom_dir/romName
 			memset(path, 0, sizeof(path));
-			snprintf(path, MAX_PATH-1,"%s%c%s", CoreRomPaths[i], PATH_DEFAULT_SLASH_C(), romName);
+			snprintf_nowarn(path, MAX_PATH-1,"%s%c%s", CoreRomPaths[i], PATH_DEFAULT_SLASH_C(), romName);
 			if (ZipOpen(path) == 0)
 			{
 				g_find_list_path.push_back(located_archive());
@@ -1048,7 +1066,7 @@ static void locate_archive(std::vector<located_archive>& pathList, const char* c
 			for (INT32 nType = 0; nType < TYPES_MAX; nType++)
 			{
 				memset(path, 0, sizeof(path));
-				snprintf(path, MAX_PATH - 1, "%s%c%s%c%s", CoreRomPaths[i], PATH_DEFAULT_SLASH_C(), szTypeEnum[0][nType], PATH_DEFAULT_SLASH_C(), romName);
+				snprintf_nowarn(path, MAX_PATH - 1, "%s%c%s%c%s", CoreRomPaths[i], PATH_DEFAULT_SLASH_C(), szTypeEnum[0][nType], PATH_DEFAULT_SLASH_C(), romName);
 				if (ZipOpen(path) == 0)
 				{
 					g_find_list_path.push_back(located_archive());
@@ -1120,16 +1138,18 @@ static bool open_archive()
 				// Try to map the ROMs FBNeo wants to ROMs we find inside our pretty archives ...
 				for (unsigned i = 0; i < nRomCount; i++)
 				{
-					if (pRomFind[i].nState == STAT_OK)
+					// Don't bother with roms that have already been found or are never needed
+					if (pRomFind[i].nState == STAT_OK || pRomFind[i].nState == STAT_SKIP)
 						continue;
 
 					struct BurnRomInfo ri;
 					memset(&ri, 0, sizeof(ri));
 					BurnDrvGetRomInfo(&ri, i);
 
+					// If a rom is never needed, let's flag it as skippable
 					if ((ri.nType & BRF_NODUMP) || (ri.nType == 0) || (ri.nLen == 0) || ((NULL == pDataRomDesc) && (0 == ri.nCrc)))
 					{
-						pRomFind[i].nState = STAT_OK;
+						pRomFind[i].nState = STAT_SKIP;
 						continue;
 					}
 
@@ -1193,7 +1213,8 @@ static bool open_archive()
 		bool ret = true;
 		for (unsigned i = 0; i < nRomCount; i++)
 		{
-			if (pRomFind[i].nState != STAT_OK)
+			// Neither the available roms nor the unneeded ones should trigger an error here
+			if (pRomFind[i].nState != STAT_OK && pRomFind[i].nState != STAT_SKIP)
 			{
 				struct BurnRomInfo ri;
 				memset(&ri, 0, sizeof(ri));
@@ -1557,6 +1578,8 @@ void retro_run()
 	{
 		UINT32 old_nVerticalMode = nVerticalMode;
 		UINT32 old_nFrameskipType = nFrameskipType;
+		UINT32 old_nNewWidth = nNewWidth;
+		UINT32 old_nNewHeight = nNewHeight;
 
 		check_variables();
 
@@ -1570,6 +1593,12 @@ void retro_run()
 			struct retro_system_av_info av_info;
 			retro_get_system_av_info(&av_info);
 			environ_cb(RETRO_ENVIRONMENT_SET_GEOMETRY, &av_info);
+		}
+
+		// change resolution
+		if (old_nNewWidth != nNewWidth && old_nNewHeight != nNewHeight)
+		{
+			BurnSetResolution(nNewWidth, nNewHeight);
 		}
 
 		if (old_nFrameskipType != nFrameskipType)
@@ -1730,7 +1759,10 @@ static void extract_basename(char *buf, const char *path, size_t size, char *pre
 
 static void extract_directory(char *buf, const char *path, size_t size)
 {
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstringop-truncation"
 	strncpy(buf, path, size - 1);
+#pragma GCC diagnostic pop
 	buf[size - 1] = '\0';
 
 	char *base = strrchr(buf, PATH_DEFAULT_SLASH_C());
@@ -2188,6 +2220,7 @@ static bool retro_load_game_common()
 		// Initializing display, autorotate if needed
 		BurnDrvGetFullSize(&nGameWidth, &nGameHeight);
 		SetRotation();
+		BurnSetResolution(nNewWidth, nNewHeight);
 		SetColorDepth();
 
 		VideoBufferInit();

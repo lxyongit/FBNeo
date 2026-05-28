@@ -1,6 +1,10 @@
 #include "retro_common.h"
 #include "retro_input.h"
 
+#include <file/file_path.h>
+#include <retro_dirent.h>
+#include <streams/file_stream.h>
+
 struct RomBiosInfo neogeo_bioses[] = {
 	{"sp-s3.sp1",         0x91b64be3, 0x00, "MVS Asia/Europe ver. 6 (1 slot)", NEOGEO_MVS | NEOGEO_EUR, 0 },
 	{"sp-s2.sp1",         0x9036d879, 0x01, "MVS Asia/Europe ver. 5 (1 slot)", NEOGEO_MVS | NEOGEO_EUR, 0 },
@@ -50,6 +54,8 @@ bool bPatchedRomsetsEnabled           = true;
 bool bLibretroSupportsAudioBuffStatus = false;
 bool bLowPassFilterEnabled            = false;
 UINT32 nVerticalMode                  = 0;
+UINT32 nNewWidth                      = 640;
+UINT32 nNewHeight                     = 480;
 UINT32 nFrameskip                     = 1;
 INT32 g_audio_samplerate              = 48000;
 UINT32 nMemcardMode                   = 0;
@@ -117,6 +123,27 @@ static struct retro_core_option_v2_definition var_fbneo_force_60hz = {
 		{ NULL,       NULL },
 	},
 	"disabled"
+};
+static struct retro_core_option_v2_definition var_fbneo_resolution = {
+	"fbneo-resolution",
+	"Resolution",
+	NULL,
+	"Set resolution in certain games (vector)",
+	NULL,
+	NULL,
+	{
+		{ "640x480",        NULL },
+		{ "800x600",        NULL },
+		{ "1024x768",       NULL },
+		{ "1080x810",       NULL },
+		{ "1280x960",       NULL },
+		{ "1440x1080",      NULL },
+		{ "1600x1200",      NULL },
+		{ "1920x1440",      NULL },
+		{ "2160x1620",      NULL },
+		{ "2880x2160",      NULL },
+	},
+	"640x480"
 };
 static struct retro_core_option_v2_definition var_fbneo_fixed_frameskip = {
 	"fbneo-fixed-frameskip",
@@ -311,6 +338,27 @@ static struct retro_core_option_v2_definition var_fbneo_analog_speed = {
 		PERCENT_VALUES
 	},
 	"100%"
+};
+// note : socd is made global for all users, standalone is handling different modes for each user but we really don't want this here... 
+//        libretro doesn't really support multiple keyboard users and this setting is mostly (only ?) useful for keyboard users...
+static struct retro_core_option_v2_definition var_fbneo_socd = {
+	"fbneo-socd",
+	"SOCD Setting",
+	NULL,
+	"Change ULDR priority, mostly useful for keyboard users",
+	NULL,
+	NULL,
+	{
+		{ "0",  "disabled" },
+		{ "1",  "Simultaneous Neutral" },
+		{ "2",  "Last Input Priority (4 Way)" },
+		{ "3",  "Last Input Priority (8 Way)" },
+		{ "4",  "First Input Priority" },
+		{ "5",  "Up Priority (Up-override Down)" },
+		{ "6",  "Down Priority (Left/Right Last Input Priority)" },
+		{ NULL, NULL },
+	},
+	"3"
 };
 static struct retro_core_option_v2_definition var_fbneo_lightgun_crosshair_emulation = {
 	"fbneo-lightgun-crosshair-emulation",
@@ -882,17 +930,7 @@ void set_environment()
 {
 	std::vector<const retro_core_option_v2_definition*> vars_systems;
 	struct retro_core_option_v2_definition *option_defs_us;
-#ifdef _MSC_VER
-#if WINAPI_FAMILY_PARTITION(WINAPI_PARTITION_APP)
-	#ifndef FORCE_USE_VFS
-	#define FORCE_USE_VFS
-	#endif
-#endif
-#endif
-
-#ifdef FORCE_USE_VFS
 	struct retro_vfs_interface_info vfs_iface_info;
-#endif
 
 	// Add the Global core options
 	var_fbneo_allow_depth_32.desc                          = RETRO_DEPTH32_CAT_DESC;
@@ -905,9 +943,14 @@ void set_environment()
 	var_fbneo_vertical_mode.values[4].value                = RETRO_VERTICAL_VALUE_4;
 	vars_systems.push_back(&var_fbneo_vertical_mode);
 
+	var_fbneo_resolution.desc                              = RETRO_RESOLUTION_DESC;
+	var_fbneo_resolution.info                              = RETRO_RESOLUTION_INFO;
+
 	var_fbneo_force_60hz.desc                              = RETRO_FORCE60_CAT_DESC;
 	var_fbneo_force_60hz.info                              = RETRO_FORCE60_CAT_INFO;
 	vars_systems.push_back(&var_fbneo_force_60hz);
+
+	vars_systems.push_back(&var_fbneo_resolution);
 
 	var_fbneo_allow_patched_romsets.desc                   = RETRO_PATCHED_CAT_DESC;
 	var_fbneo_allow_patched_romsets.info                   = RETRO_PATCHED_CAT_INFO;
@@ -916,6 +959,16 @@ void set_environment()
 	var_fbneo_analog_speed.desc                            = RETRO_ANALOG_CAT_DESC;
 	var_fbneo_analog_speed.info                            = RETRO_ANALOG_CAT_INFO;
 	vars_systems.push_back(&var_fbneo_analog_speed);
+
+	var_fbneo_socd.desc                                    = RETRO_SOCD_DESC;
+	var_fbneo_socd.info                                    = RETRO_SOCD_INFO;
+	var_fbneo_socd.values[1].label                         = RETRO_SOCD_LABEL_1;
+	var_fbneo_socd.values[2].label                         = RETRO_SOCD_LABEL_2;
+	var_fbneo_socd.values[3].label                         = RETRO_SOCD_LABEL_3;
+	var_fbneo_socd.values[4].label                         = RETRO_SOCD_LABEL_4;
+	var_fbneo_socd.values[5].label                         = RETRO_SOCD_LABEL_5;
+	var_fbneo_socd.values[6].label                         = RETRO_SOCD_LABEL_6;
+	vars_systems.push_back(&var_fbneo_socd);
 
 	var_fbneo_lightgun_crosshair_emulation.desc            = RETRO_CROSSHAIR_CAT_DESC;
 	var_fbneo_lightgun_crosshair_emulation.info            = RETRO_CROSSHAIR_CAT_INFO;
@@ -1458,14 +1511,19 @@ error:
 		}
 	}
 
-	// Initialize VFS
-	// Only on UWP for now, since EEPROM saving is not VFS aware
-#ifdef FORCE_USE_VFS
 	vfs_iface_info.required_interface_version = FILESTREAM_REQUIRED_VFS_VERSION;
 	vfs_iface_info.iface                      = NULL;
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VFS_INTERFACE, &vfs_iface_info))
+	{
+		dirent_vfs_init(&vfs_iface_info);
 		filestream_vfs_init(&vfs_iface_info);
-#endif
+		path_vfs_init(&vfs_iface_info);
+	}
+}
+
+TCHAR* AdaptiveEncodingReads(const TCHAR* pszFileName)
+{
+	return NULL;
 }
 
 static int percent_parser(const char *value)
@@ -1525,6 +1583,12 @@ void check_variables(void)
 		}
 		else
 			bForce60Hz = false;
+	}
+
+	var.key = var_fbneo_resolution.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+	{
+		sscanf(var.value, "%dx%d", &nNewWidth, &nNewHeight);
 	}
 
 	if (bLibretroSupportsAudioBuffStatus)
@@ -1883,6 +1947,13 @@ void check_variables(void)
 	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
 	{
 		nAnalogSpeed = percent_parser(var.value);
+	}
+
+	var.key = var_fbneo_socd.key;
+	if (environ_cb(RETRO_ENVIRONMENT_GET_VARIABLE, &var) && var.value)
+	{
+		for (int i = 0; i < 6; i++)
+			nSocd[i] = atoi(var.value);
 	}
 
 	var.key = var_fbneo_lightgun_crosshair_emulation.key;

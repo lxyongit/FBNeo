@@ -28,11 +28,11 @@ struct Snes {
   uint32_t ramAdr;
   uint8_t ramFill;
   // frame timing
-  int16_t hPos;
+  uint16_t hPos;
   uint16_t vPos;
   uint32_t frames;
   uint64_t cycles;
-  uint64_t syncCycle;
+  uint32_t syncCycle;
   uint32_t nextHoriEvent;
   // cpu handling
   // nmi / irq
@@ -61,7 +61,7 @@ struct Snes {
   bool fastMem;
   uint32_t adrBus;
   uint8_t openBus;
-  uint8_t vramhack;
+  uint8_t vramhack; // 1. allow vram writes during rendering, 2. oam hack for uniracers
 };
 
 Snes* snes_init(void);
@@ -71,6 +71,7 @@ void snes_handleState(Snes* snes, StateHandler* sh);
 void snes_runFrame(Snes* snes);
 // used by dma, cpu
 void snes_runCycles(Snes* snes, int cycles);
+void snes_runCyclesDma(Snes* snes, int cycles);
 void snes_runCycles4(Snes* snes);
 void snes_runCycles6(Snes* snes);
 void snes_runCycles8(Snes* snes);

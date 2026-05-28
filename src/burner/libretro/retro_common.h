@@ -9,6 +9,7 @@
 #include "retro_string.h"
 
 #define SSTR( x ) static_cast< const std::ostringstream & >(( std::ostringstream() << std::dec << x ) ).str()
+#define snprintf_nowarn(...) (snprintf(__VA_ARGS__) < 0 ? abort() : (void)0)
 
 #define RETRO_GAME_TYPE_CV		1
 #define RETRO_GAME_TYPE_GG		2
@@ -244,6 +245,8 @@ extern bool bPatchedRomsetsEnabled;
 extern bool bLibretroSupportsAudioBuffStatus;
 extern bool bLowPassFilterEnabled;
 extern UINT32 nVerticalMode;
+extern UINT32 nNewWidth;
+extern UINT32 nNewHeight;
 extern UINT32 nFrameskip;
 extern UINT32 nFrameskipType;
 extern UINT32 nFrameskipThreshold;

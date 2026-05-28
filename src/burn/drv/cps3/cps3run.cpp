@@ -1813,8 +1813,9 @@ INT32 DrvCps3Draw()
 		if (Width != 496) {
 			BurnDrvSetVisibleSize(496, 224);
 			BurnDrvSetAspect(16, 9);
-			Reinitialise();
+			ReinitialiseVideo();
 			WideScreenFrameDelay = GetCurrentFrame() + 1;
+			return 1;
 		}
 	} else {
 		INT32 Width, Height;
@@ -1823,8 +1824,9 @@ INT32 DrvCps3Draw()
 		if (Width != 384) {
 			BurnDrvSetVisibleSize(384, 224);
 			BurnDrvSetAspect(4, 3);
-			Reinitialise();
+			ReinitialiseVideo();
 			WideScreenFrameDelay = GetCurrentFrame() + 1;
+			return 1;
 		}
 	}
 	
@@ -2127,8 +2129,8 @@ INT32 cps3Frame()
 	}
 
 	// Clear Opposites
-	clear_opposite.check(0, Cps3Input[0], 0x0003, 0x000c);
-	clear_opposite.check(1, Cps3Input[0], 0x0300, 0x0c00);
+	clear_opposite.check(0, Cps3Input[0], 0x0001, 0x0002, 0x0004, 0x0008, nSocd[0]);
+	clear_opposite.check(1, Cps3Input[0], 0x0100, 0x0200, 0x0400, 0x0800, nSocd[1]);
 
 	Sh2NewFrame();
 

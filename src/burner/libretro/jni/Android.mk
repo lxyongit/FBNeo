@@ -9,11 +9,17 @@ BUILD_X64_EXE             := 0
 WANT_NEOGEOCD             := 0
 HAVE_NEON                 := 0
 USE_CYCLONE               := 0
+SUPPORT_LARGE_FILES       := 1
 
 ifeq ($(TARGET_ARCH_ABI),armeabi-v7a)
   HAVE_NEON               := 1
-  #INCLUDE_7Z_SUPPORT      := 0
-  #USE_CYCLONE             := 1
+  # see https://github.com/finalburnneo/FBNeo/issues/2201
+  SUPPORT_LARGE_FILES     := 0
+endif
+
+ifeq ($(TARGET_ARCH_ABI),x86)
+  # see https://github.com/finalburnneo/FBNeo/issues/2201
+  SUPPORT_LARGE_FILES     := 0
 endif
 
 CFLAGS      :=

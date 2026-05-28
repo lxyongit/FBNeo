@@ -80,6 +80,8 @@ UINT32 nDiagInputHoldCounter = 0;
 #define RETRO_DEVICE_ID_FIRE09 RETRO_DEVICE_ID_JOYPAD_R3
 #define RETRO_DEVICE_ID_FIRE10 RETRO_DEVICE_ID_JOYPAD_L3
 
+#define ENABLE_2_AND_3_BUTTONS_MACROS 0
+
 void SetDiagInpHoldFrameDelay(unsigned val)
 {
 	nDiagInputHoldFrameDelay = val;
@@ -322,7 +324,7 @@ static void AnalyzeGameLayout()
 			nMacroCount++;
 			pgi++;
 		}
-#if 0
+#if ENABLE_2_AND_3_BUTTONS_MACROS
 		if (nRealFireButtons <= 3)
 		{
 			if (nRealFireButtons >= 2 && (HW_MISC || HW_NES))
@@ -626,6 +628,8 @@ static INT32 GameInpAnalog2RetroInpAnalog(struct GameInp* pgi, unsigned port, un
 			descriptor.port = port;
 			descriptor.device = (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON ? RETRO_DEVICE_JOYPAD : RETRO_DEVICE_ANALOG);
 			descriptor.index = (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON ? 0 : index);
+			if (index == RETRO_DEVICE_INDEX_ANALOG_BUTTON)
+				bDigitalMappingDone[port][id] = true;
 			descriptor.id = id;
 			descriptor.description = szn;
 			normal_input_descriptors.push_back(descriptor);
@@ -715,9 +719,9 @@ static INT32 GameInpDigital2RetroInpKey(struct GameInp* pgi, unsigned port, unsi
 	descriptor.description = szn;
 	normal_input_descriptors.push_back(descriptor);
 	bButtonMapped = true;
-	bDigitalMappingDone[port][id] = true;
 	if (device == RETRO_DEVICE_JOYPAD)
 	{
+		bDigitalMappingDone[port][id] = true;
 		switch (id)
 		{
 			case RETRO_DEVICE_ID_JOYPAD_UP:
@@ -795,30 +799,6 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 	const char * parentrom	= BurnDrvGetTextA(DRV_PARENT);
 	const char * drvname	= BurnDrvGetTextA(DRV_NAME);
 	int nHardwareCode = BurnDrvGetHardwareCode();
-
-	if (strncmp("Volume", description, 6) == 0)
-	{
-		if ((parentrom && strcmp(parentrom, "revx") == 0) ||
-			(drvname && strcmp(drvname, "revx") == 0)
-		) {
-			// revx needs this to navigate diagnostic menu
-			if (strcmp("Volume Up", description) == 0) {
-				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R3, description);
-			}
-			if (strcmp("Volume Down", description) == 0) {
-				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_L3, description);
-			}
-		} else {
-			// We don't map volume buttons
-			pgi->nInput = GIT_SWITCH;
-			if (!bInputInitialized) {
-				pgi->Input.Switch.nCode = (UINT16)(nSwitchCode++);
-				HandleMessage(RETRO_LOG_DEBUG, "[FBNeo] nSwitchCode 0x%02X : P%d %s (not mapped)\n", pgi->Input.Switch.nCode, nPlayer+1, szn);
-			}
-			bButtonMapped = true;
-			return 0;
-		}
-	}
 
 	// This one is such a special case : "Lucky & Wild" has 2 x-axis inputs, and we don't want the steering one to be caught by the pointer/lightgun/mouse logic
 	if ((parentrom && strcmp(parentrom, "luckywld") == 0) ||
@@ -1029,10 +1009,16 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 
 	// Space Duel
 	// Scud Hammer
+	// Invinco / Head On 2
+	// Invinco / Deep Scan
 	if ((parentrom && strcmp(parentrom, "spacduel") == 0) ||
 		(drvname && strcmp(drvname, "spacduel") == 0) ||
 		(parentrom && strcmp(parentrom, "scudhamm") == 0) ||
-		(drvname && strcmp(drvname, "scudhamm") == 0)
+		(drvname && strcmp(drvname, "scudhamm") == 0) ||
+		(parentrom && strcmp(parentrom, "invds") == 0) ||
+		(drvname && strcmp(drvname, "invds") == 0) ||
+		(parentrom && strcmp(parentrom, "invho2") == 0) ||
+		(drvname && strcmp(drvname, "invho2") == 0)
 	) {
 		if (strcmp("Select", description) == 0) {
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_JOYPAD_R3, description);
@@ -2130,7 +2116,7 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 		if (strncmp("Buttons CD", description, 10) == 0)
 			GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_FIRE06, description, RETRO_DEVICE_JOYPAD, GIT_MACRO_AUTO);
 	}
-#if 0
+#if ENABLE_2_AND_3_BUTTONS_MACROS
 	// This code will assign macros to the next unmapped retropad buttons based on order preference from the device type
 	// However, is it really ok ? Disabled for now
 	if (nRealFireButtons == 2 || nRealFireButtons == 3) {
@@ -2146,28 +2132,46 @@ static INT32 GameInpSpecialOne(struct GameInp* pgi, INT32 nPlayer, char* szb, ch
 
 	// Handle megadrive
 	if ((nHardwareCode & HARDWARE_PUBLIC_MASK) == HARDWARE_SEGA_MEGADRIVE) {
-		// Street Fighter 2 mapping (which is the only 6 button megadrive game ?)
-		// Use same layout as arcade
+		// Those games were clearly designed to be played with 6 buttons
+		// So let's use the original 6-buttons layout for them.
 		if ((parentrom && strcmp(parentrom, "md_sf2") == 0) ||
-			(drvname && strcmp(drvname, "md_sf2") == 0)
+			(drvname && strcmp(drvname, "md_sf2") == 0) ||
+			(parentrom && strcmp(parentrom, "md_ssf2") == 0) ||
+			(drvname && strcmp(drvname, "md_ssf2") == 0) ||
+			(parentrom && strcmp(parentrom, "md_eternalc") == 0) ||
+			(drvname && strcmp(drvname, "md_eternalc") == 0) ||
+			(parentrom && strcmp(parentrom, "md_paprium") == 0) ||
+			(drvname && strcmp(drvname, "md_paprium") == 0) ||
+			(parentrom && strcmp(parentrom, "md_mk") == 0) ||
+			(drvname && strcmp(drvname, "md_mk") == 0) ||
+			(parentrom && strcmp(parentrom, "md_mk3") == 0) ||
+			(drvname && strcmp(drvname, "md_mk3") == 0) ||
+			(parentrom && strcmp(parentrom, "md_umk3") == 0) ||
+			(drvname && strcmp(drvname, "md_umk3") == 0) ||
+			(parentrom && strcmp(parentrom, "md_umk3t") == 0) ||
+			(drvname && strcmp(drvname, "md_umk3t") == 0) ||
+			// mk2 requires enabling 6-buttons in options, while others auto-detect it,
+			// is this maybe an emulation bug ?
+			(parentrom && strcmp(parentrom, "md_mk2") == 0) ||
+			(drvname && strcmp(drvname, "md_mk2") == 0)
 		) {
 			if (strcmp("Button A", description) == 0) {
-				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_1ST_COL_BOTTOM, "Weak Kick");
+				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_1ST_COL_BOTTOM, description);
 			}
 			if (strcmp("Button B", description) == 0) {
-				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_2ND_COL_BOTTOM, "Medium Kick");
+				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_2ND_COL_BOTTOM, description);
 			}
 			if (strcmp("Button C", description) == 0) {
-				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_3RD_COL_BOTTOM, "Strong Kick");
+				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_3RD_COL_BOTTOM, description);
 			}
 			if (strcmp("Button X", description) == 0) {
-				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_1ST_COL_TOP, "Weak Punch");
+				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_1ST_COL_TOP, description);
 			}
 			if (strcmp("Button Y", description) == 0) {
-				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_2ND_COL_TOP, "Medium Punch");
+				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_2ND_COL_TOP, description);
 			}
 			if (strcmp("Button Z", description) == 0) {
-				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_3RD_COL_TOP, "Strong Punch");
+				GameInpDigital2RetroInpKey(pgi, nPlayer, RETRO_DEVICE_ID_3RD_COL_TOP, description);
 			}
 		}
 		// Generic megadrive mapping
@@ -2496,6 +2500,9 @@ static INT32 GameInpStandardOne(struct GameInp* pgi, INT32 nPlayer, char* szb, c
 	// note : some games need to be fixed for this to work (player number must be set in szName)
 	if (nMahjongKeyboards > 0)
 	{
+		// https://github.com/finalburnneo/FBNeo/issues/2117
+		if (nPlayer > 0) return 0;
+
 		int mahjongKeyboardPort = nMaxPlayers+nPlayer;
 		if (strcmp("mah a", szb) == 0)
 			GameInpDigital2RetroInpKey(pgi, mahjongKeyboardPort, RETROK_a, szn, RETRO_DEVICE_KEYBOARD);
@@ -2811,6 +2818,17 @@ static INT32 GameInpOtherOne(struct GameInp* pgi, char* szi, char *szn)
 		(drvname && strcmp(drvname, "pulirula") == 0)) {
 		if (strcmp("Service", szn) == 0) {
 			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R3, szn);
+		}
+	}
+
+	// revx needs this to navigate diagnostic menu
+	if ((parentrom && strcmp(parentrom, "revx") == 0) ||
+		(drvname && strcmp(drvname, "revx") == 0)) {
+		if (strcmp(szi, "volumeup") == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_R3, szn);
+		}
+		if (strcmp(szi, "volumedown") == 0) {
+			GameInpDigital2RetroInpKey(pgi, 0, RETRO_DEVICE_ID_JOYPAD_L3, szn);
 		}
 	}
 
@@ -3395,6 +3413,12 @@ void InputMake(void)
 				if (pgi->nType == BIT_ANALOG_REL) {
 					nJoy *= nAnalogSpeed;
 					nJoy >>= 13;
+
+					// -- Deadzone handling --
+					// Scale Deadzone to the Speed.  200 seems perfect for thumbsticks @ default speed
+					const INT32 nDeadZone = 200 * nAnalogSpeed / 256;
+
+					nJoy = AnalogDeadZone(nJoy, nDeadZone);
 
 					// Clip axis to 8 bits
 					if (nJoy < -32768) {

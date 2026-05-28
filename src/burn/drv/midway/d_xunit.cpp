@@ -76,8 +76,8 @@ static struct BurnInputInfo RevxInputList[] = {
 	{"Service",			BIT_DIGITAL,	DrvJoy3 + 6,	"service"	},
 	{"Service Mode",	BIT_DIGITAL,	DrvJoy3 + 4,	"diag"		},
 	{"Tilt",			BIT_DIGITAL,	DrvJoy3 + 3,	"tilt"		},
-	{"Volume Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"p1 fire 7"	},
-	{"Volume Up",		BIT_DIGITAL,	DrvJoy3 + 12,	"p1 fire 8"	},
+	{"Volume Down",		BIT_DIGITAL,	DrvJoy3 + 11,	"volumedown"},
+	{"Volume Up",		BIT_DIGITAL,	DrvJoy3 + 12,	"volumeup"	},
 	{"Dip A",			BIT_DIPSWITCH,	DrvDips + 0,	"dip"		},
 	{"Dip B",			BIT_DIPSWITCH,	DrvDips + 1,	"dip"		},
 	{"Dip C",			BIT_DIPSWITCH,	DrvDips + 2,	"dip"		},
@@ -789,6 +789,16 @@ static INT32 DrvFrame()
 {
 	if (DrvReset) {
 		DrvDoReset();
+	}
+
+	// normalize volume with other drivers by increasing it from its default 25% to around 60% in service menu
+	// note : this can't be done at init because the cmos has to be initialized first
+	// note2: we could also normalize by boosting volume with Dcs2kSetVolume,
+	//        but then the volume would be way too loud for anyone who did increase it in service menu
+	if (DrvNVRAM[0x41cc] == 0x3f && DrvNVRAM[0x4360] == 0xfd && DrvNVRAM[0x4364] == 0x05) {
+		DrvNVRAM[0x41cc] = 0xac;
+		DrvNVRAM[0x4360] = 0xfc;
+		DrvNVRAM[0x4364] = 0x98;
 	}
 
 	{

@@ -117,6 +117,8 @@ extern bool bAutoLoadGameList;
 extern bool bQuietLoading;
 extern bool bNoPopups;
 extern bool bShonkyProfileMode;
+extern int nKailleraCheatEnableHack;
+extern bool bDontInitMedia;
 
 extern bool bNoChangeNumLock;
 extern bool bMonitorAutoCheck;
@@ -229,6 +231,7 @@ void DisableHighResolutionTiming();
 // drv.cpp
 extern int bDrvOkay;								// 1 if the Driver has been initted okay, and it's okay to use the BurnDrv functions
 extern TCHAR szAppRomPaths[DIRS_MAX][MAX_PATH];
+extern TCHAR szAppQuickPath[MAX_PATH];
 int DrvInit(int nDrvNum, bool bRestore);
 int DrvInitCallback();								// Used when Burn library needs to load a game. DrvInit(nBurnSelect, false)
 int DrvExit();
@@ -263,6 +266,7 @@ extern HWND hRebar;									// Handle to the Rebar control containing the menu
 extern HWND hwndChat;
 extern bool bRescanRoms;
 extern bool bMenuEnabled;
+extern INT32 nQuickOpen;
 
 extern RECT SystemWorkArea;							// The full screen area
 extern int nWindowPosX, nWindowPosY;
@@ -276,17 +280,23 @@ int ScrnTitle();
 void SetPauseMode(bool bPause);
 int ActivateChat();
 void DeActivateChat();
-int BurnerLoadDriver(TCHAR *szDriverName);
+int BurnerLoadDriver(TCHAR *pszDriverName);
 int StartFromReset(TCHAR *szDriverName, bool bLoadSram);
 void PausedRedraw(void);
 INT32 is_netgame_or_recording();
 void ScrnInitLua();
 void ScrnExitLua();
 char* DecorateKailleraGameName(UINT32 nBurnDrv);
+INT32 CreateAllDatfilesWindows(bool bSilent = false, const TCHAR* pszSpecDir = NULL);
+INT32 RomDataLoadDriver(const TCHAR* pszSelDat);
+INT32 BurnerQuickLoad(const INT32 nMode, const TCHAR* pszSelect);
+
+// bzip.cpp
+INT32 ArchiveNameFindDrv(const TCHAR* pszSelArc);
 
 // menu.cpp
 #define UM_DISPLAYPOPUP (WM_USER + 0x0100)
-#define UM_CANCELPOPUP (WM_USER + 0x0101)
+#define UM_CANCELPOPUP  (WM_USER + 0x0101)
 
 extern HANDLE hMenuThread;							// Handle to the thread that executes TrackPopupMenuEx
 extern DWORD nMenuThreadID;							// ID of the thread that executes TrackPopupMenuEx
@@ -362,6 +372,7 @@ extern int NeoCDList_Init();
 extern bool bNeoCDListScanSub;
 extern bool bNeoCDListScanOnlyISO;
 extern TCHAR szNeoCDCoverDir[MAX_PATH];
+extern TCHAR szNeoCDPreviewDir[MAX_PATH];
 extern TCHAR szNeoCDGamesDir[MAX_PATH];
 
 HBITMAP ImageToBitmap(HWND hwnd, IMAGE* img);
@@ -371,7 +382,18 @@ int NeoCDList_CheckISO(TCHAR* pszFile, void (*pfEntryCallBack)(INT32, TCHAR*));
 
 // romdata.cpp
 extern bool bRDListScanSub;
+TCHAR* _strqtoken(TCHAR* s, const TCHAR* delims);
+INT32 RomdataGetDrvIndex(const TCHAR* pszDrvName);
+TCHAR* RomdataGetZipName(const TCHAR* pszFileName);
+TCHAR* RomdataGetDrvName(const TCHAR* pszFileName);
+TCHAR* RomdataGetFullName(const TCHAR* pszFileName);
+bool FindZipNameFromDats(const TCHAR* dirPath, const char* pszZipName, TCHAR* pszFindDat);
 INT32 RomDataManagerInit();
+bool RomDataSetQuickPath(const TCHAR* pszSelDat);
+INT32 RomDataCheck(const TCHAR* pszDatFile);
+void RomDataStateBackup();
+void RomDataStateRestore();
+bool RomDataExportTemplate(HWND hWnd, const INT32 nDrvSelect);
 
 // cona.cpp
 struct SubDirInfo {
@@ -456,17 +478,21 @@ void CubicSharpnessDialog();
 int SFactdCreate();
 
 // roms.cpp
+extern INT32 nRomsDlgWidth;
+extern INT32 nRomsDlgHeight;
 extern char* gameAv;
 extern bool avOk;
 extern bool bSkipStartupCheck;
-int RomsDirCreate(HWND hParentWND);
-int CreateROMInfo(HWND hParentWND);
+INT32 RomsDirCreate(HWND hParentWND);
+INT32 CreateROMInfo(HWND hParentWND);
 void FreeROMInfo();
-int WriteGameAvb();
+INT32 WriteGameAvb();
 
 // support_paths.cpp
-int SupportDirCreate(HWND hParentWND);
-int SupportDirCreateTab(int nTab, HWND hParentWND);
+extern INT32 nSupportDlgWidth;
+extern INT32 nSupportDlgHeight;
+INT32 SupportDirCreate(HWND hParentWND);
+//int SupportDirCreateTab(int nTab, HWND hParentWND);
 
 // res.cpp
 int ResCreate(int);
@@ -529,9 +555,9 @@ int PaletteViewerDialogCreate(HWND hParentWND);
 // ips_manager.cpp
 extern INT32 nIpsSelectedLanguage;
 INT32 GetIpsNumPatches();
-void LoadIpsActivePatches();
-INT32 GetIpsNumActivePatches();
+INT32 LoadIpsActivePatches();
 INT32 IpsManagerCreate(HWND hParentWND);
+INT32 IpsGetDrvForQuickOpen(const TCHAR* pszSelDat);
 
 // localise_download.cpp
 int LocaliseDownloadCreate(HWND hParentWND);

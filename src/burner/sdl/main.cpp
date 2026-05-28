@@ -172,6 +172,9 @@ void generateDats()
 	_stprintf(filename, _T("%sFBNeo_-_Nintendo_Famicom_Disk_System.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_FDS_ONLY);
 
+	_stprintf(filename, _T("%sFBNeo_-_Super_Nintendo_Entertainment_System.dat"), szAppDatListsPath);
+	create_datfile(filename, DAT_SNES_ONLY);
+
 	_stprintf(filename, _T("%sFBNeo_-_Neo_Geo_Pocket.dat"), szAppDatListsPath);
 	create_datfile(filename, DAT_NGP_ONLY);
 
@@ -227,6 +230,9 @@ void generateDats()
 	sprintf(filename, "FBNeo_-_Nintendo_Famicom_Disk_System.dat");
 	create_datfile(filename, DAT_FDS_ONLY);
 
+	sprintf(filename, "FBNeo_-_Super_Nintendo_Entertainment_System.dat");
+	create_datfile(filename, DAT_SNES_ONLY);
+
 	sprintf(filename, "FBNeo_-_Neo_Geo_Pocket.dat");
 	create_datfile(filename, DAT_NGP_ONLY);
 
@@ -267,6 +273,11 @@ void bye(void)
 	MediaExit();
 	BurnLibExit();
 	SDL_Quit();
+}
+
+TCHAR* AdaptiveEncodingReads(const TCHAR* pszFileName)
+{
+	return NULL;
 }
 
 static int __cdecl AppDebugPrintf(int nStatus, TCHAR* pszFormat, ...)
